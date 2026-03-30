@@ -1,0 +1,1378 @@
+fileFormatVersion: 2
+guid: 5c438bc4d0a42dd47be9e80a36be23a7
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8198636272939261769
+    second: boat_horizontal_strip_no_player_0
+  - first:
+      213: 1925806523158207472
+    second: boat_horizontal_strip_no_player_1
+  - first:
+      213: 478160710326391535
+    second: boat_horizontal_strip_no_player_2
+  - first:
+      213: 6296875583113254925
+    second: boat_horizontal_strip_no_player_3
+  - first:
+      213: 9203379442013743055
+    second: boat_horizontal_strip_no_player_4
+  - first:
+      213: 8816262869795719132
+    second: boat_horizontal_strip_no_player_5
+  - first:
+      213: -1628965648586127194
+    second: boat_horizontal_strip_no_player_6
+  - first:
+      213: -2538049724280747743
+    second: boat_horizontal_strip_no_player_7
+  - first:
+      213: 5364047277721292813
+    second: boat_horizontal_strip_no_player_8
+  - first:
+      213: -1896065091070615150
+    second: boat_horizontal_strip_no_player_9
+  - first:
+      213: -2074141909953126790
+    second: boat_horizontal_strip_no_player_10
+  - first:
+      213: 1027112672808020637
+    second: boat_horizontal_strip_no_player_11
+  - first:
+      213: -887879438603378812
+    second: boat_horizontal_strip_no_player_12
+  - first:
+      213: 3767656320800259986
+    second: boat_horizontal_strip_no_player_13
+  - first:
+      213: -8013401154733418099
+    second: boat_horizontal_strip_no_player_14
+  - first:
+      213: 2688470387888752371
+    second: boat_horizontal_strip_no_player_15
+  - first:
+      213: -6807580867297786317
+    second: boat_horizontal_strip_no_player_16
+  - first:
+      213: 1489571054260569628
+    second: boat_horizontal_strip_no_player_17
+  - first:
+      213: -7988693675880057280
+    second: boat_horizontal_strip_no_player_18
+  - first:
+      213: -2896004653062534036
+    second: boat_horizontal_strip_no_player_19
+  - first:
+      213: -7539239534475899909
+    second: boat_horizontal_strip_no_player_20
+  - first:
+      213: -2498536110309289072
+    second: boat_horizontal_strip_no_player_21
+  - first:
+      213: -2690978279978541610
+    second: boat_horizontal_strip_no_player_22
+  - first:
+      213: -4985591079627173235
+    second: boat_horizontal_strip_no_player_23
+  - first:
+      213: -8491354072473262156
+    second: boat_horizontal_strip_no_player_24
+  - first:
+      213: 3770856785332931997
+    second: boat_horizontal_strip_no_player_25
+  - first:
+      213: -161468433367633659
+    second: boat_horizontal_strip_no_player_26
+  - first:
+      213: -3823734578761669024
+    second: boat_horizontal_strip_no_player_27
+  - first:
+      213: -4072905367995380455
+    second: boat_horizontal_strip_no_player_28
+  - first:
+      213: 5999571870022706381
+    second: boat_horizontal_strip_no_player_29
+  - first:
+      213: -2622564747442352058
+    second: boat_horizontal_strip_no_player_30
+  - first:
+      213: 5160035142726785645
+    second: boat_horizontal_strip_no_player_31
+  - first:
+      213: 2129248482515708949
+    second: boat_horizontal_strip_no_player_32
+  - first:
+      213: -3363409325588167008
+    second: boat_horizontal_strip_no_player_33
+  - first:
+      213: -5694614235612119754
+    second: boat_horizontal_strip_no_player_34
+  - first:
+      213: -1763758980182778352
+    second: boat_horizontal_strip_no_player_35
+  - first:
+      213: -2095938701524773131
+    second: boat_horizontal_strip_no_player_36
+  - first:
+      213: 8498709590250269768
+    second: boat_horizontal_strip_no_player_37
+  - first:
+      213: -3483050523418226218
+    second: boat_horizontal_strip_no_player_38
+  - first:
+      213: 5601549964419009090
+    second: boat_horizontal_strip_no_player_39
+  - first:
+      213: 8165612977191115821
+    second: boat_horizontal_strip_no_player_40
+  - first:
+      213: -6570841424123579792
+    second: boat_horizontal_strip_no_player_41
+  - first:
+      213: 6098405532683236544
+    second: boat_horizontal_strip_no_player_42
+  - first:
+      213: -8179569226849859725
+    second: boat_horizontal_strip_no_player_43
+  - first:
+      213: 2696691293031855980
+    second: boat_horizontal_strip_no_player_44
+  - first:
+      213: 4509196596404724758
+    second: boat_horizontal_strip_no_player_45
+  - first:
+      213: 2237590532866375985
+    second: boat_horizontal_strip_no_player_46
+  - first:
+      213: -742550187084774015
+    second: boat_horizontal_strip_no_player_47
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_0
+      rect:
+        serializedVersion: 2
+        x: 970
+        y: 5
+        width: 35
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b0a2dc7fb7983e80800000000000000
+      internalID: -8198636272939261769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_1
+      rect:
+        serializedVersion: 2
+        x: 1619
+        y: 12
+        width: 18
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fb99f654d6d9ba10800000000000000
+      internalID: 1925806523158207472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_2
+      rect:
+        serializedVersion: 2
+        x: 1684
+        y: 52
+        width: 15
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe29d84f1a4c2a600800000000000000
+      internalID: 478160710326391535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_3
+      rect:
+        serializedVersion: 2
+        x: 1748
+        y: 55
+        width: 15
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d08db460bfef26750800000000000000
+      internalID: 6296875583113254925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_4
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 21
+        width: 36
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc7ac5647d8f8bf70800000000000000
+      internalID: 9203379442013743055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_5
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 17
+        width: 41
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd7c3a89e58a95a70800000000000000
+      internalID: 8816262869795719132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_6
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 16
+        width: 50
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a8c5bc8f50c469e0800000000000000
+      internalID: -1628965648586127194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_7
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 22
+        width: 6
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 129c7f1193907ccd0800000000000000
+      internalID: -2538049724280747743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_8
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 13
+        width: 48
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d009af2449ce07a40800000000000000
+      internalID: 5364047277721292813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_9
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 22
+        width: 8
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 291a7bf68d2dfa5e0800000000000000
+      internalID: -1896065091070615150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_10
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 21
+        width: 36
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7e5e731cea2733e0800000000000000
+      internalID: -2074141909953126790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_11
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 17
+        width: 41
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9a2607b889014e00800000000000000
+      internalID: 1027112672808020637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_12
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 16
+        width: 50
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48f1ca2da5e9da3f0800000000000000
+      internalID: -887879438603378812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_13
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 22
+        width: 6
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29ffd0d3677694430800000000000000
+      internalID: 3767656320800259986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_14
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 13
+        width: 48
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d89d8694b1eaac090800000000000000
+      internalID: -8013401154733418099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_15
+      rect:
+        serializedVersion: 2
+        x: 457
+        y: 37
+        width: 13
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f6044bd29d5f4520800000000000000
+      internalID: 2688470387888752371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_16
+      rect:
+        serializedVersion: 2
+        x: 499
+        y: 22
+        width: 8
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33648f0f44d9681a0800000000000000
+      internalID: -6807580867297786317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_17
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 13
+        width: 18
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c16c7e45bf40ca410800000000000000
+      internalID: 1489571054260569628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_18
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 6
+        width: 25
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04672cd7d65722190800000000000000
+      internalID: -7988693675880057280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_19
+      rect:
+        serializedVersion: 2
+        x: 652
+        y: 6
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6c445a9c135fc7d0800000000000000
+      internalID: -2896004653062534036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_20
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 12
+        width: 28
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfb8bf6869d3f5790800000000000000
+      internalID: -7539239534475899909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_21
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 2
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 093578e35aa635dd0800000000000000
+      internalID: -2498536110309289072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_22
+      rect:
+        serializedVersion: 2
+        x: 741
+        y: 21
+        width: 8
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6dd56930389b7aad0800000000000000
+      internalID: -2690978279978541610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_23
+      rect:
+        serializedVersion: 2
+        x: 787
+        y: 13
+        width: 18
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d82577fe35f9fcab0800000000000000
+      internalID: -4985591079627173235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_24
+      rect:
+        serializedVersion: 2
+        x: 848
+        y: 8
+        width: 24
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b72a20d576a82a80800000000000000
+      internalID: -8491354072473262156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_25
+      rect:
+        serializedVersion: 2
+        x: 908
+        y: 7
+        width: 32
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9d04a47446c45430800000000000000
+      internalID: 3770856785332931997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_26
+      rect:
+        serializedVersion: 2
+        x: 1035
+        y: 21
+        width: 37
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 501feaab05952cdf0800000000000000
+      internalID: -161468433367633659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_27
+      rect:
+        serializedVersion: 2
+        x: 1096
+        y: 20
+        width: 40
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 066688dd8ad5feac0800000000000000
+      internalID: -3823734578761669024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_28
+      rect:
+        serializedVersion: 2
+        x: 1157
+        y: 22
+        width: 8
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91d8ad0a5222a77c0800000000000000
+      internalID: -4072905367995380455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_29
+      rect:
+        serializedVersion: 2
+        x: 1163
+        y: 20
+        width: 37
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc4212524d2c24350800000000000000
+      internalID: 5999571870022706381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_30
+      rect:
+        serializedVersion: 2
+        x: 1220
+        y: 22
+        width: 6
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6409c34d147ca9bd0800000000000000
+      internalID: -2622564747442352058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_31
+      rect:
+        serializedVersion: 2
+        x: 1227
+        y: 20
+        width: 37
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6a13ce8f902c9740800000000000000
+      internalID: 5160035142726785645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_32
+      rect:
+        serializedVersion: 2
+        x: 1292
+        y: 21
+        width: 37
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51c63eea63c9c8d10800000000000000
+      internalID: 2129248482515708949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_33
+      rect:
+        serializedVersion: 2
+        x: 1356
+        y: 20
+        width: 40
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a6c41ad905c251d0800000000000000
+      internalID: -3363409325588167008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_34
+      rect:
+        serializedVersion: 2
+        x: 1420
+        y: 20
+        width: 37
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63df479268aa8f0b0800000000000000
+      internalID: -5694614235612119754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_35
+      rect:
+        serializedVersion: 2
+        x: 1455
+        y: 22
+        width: 8
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01edcc46d8ed587e0800000000000000
+      internalID: -1763758980182778352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_36
+      rect:
+        serializedVersion: 2
+        x: 1484
+        y: 20
+        width: 37
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f65f901bdab9e2e0800000000000000
+      internalID: -2095938701524773131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_37
+      rect:
+        serializedVersion: 2
+        x: 1522
+        y: 22
+        width: 6
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84ca210285b71f570800000000000000
+      internalID: 8498709590250269768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_38
+      rect:
+        serializedVersion: 2
+        x: 1555
+        y: 13
+        width: 18
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d11be0c008b9afc0800000000000000
+      internalID: -3483050523418226218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_39
+      rect:
+        serializedVersion: 2
+        x: 1683
+        y: 12
+        width: 18
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24a0ccca304bcbd40800000000000000
+      internalID: 5601549964419009090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_40
+      rect:
+        serializedVersion: 2
+        x: 1747
+        y: 12
+        width: 18
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2cdbce4db5125170800000000000000
+      internalID: 8165612977191115821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_41
+      rect:
+        serializedVersion: 2
+        x: 1811
+        y: 13
+        width: 18
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07231bfd98eafc4a0800000000000000
+      internalID: -6570841424123579792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_42
+      rect:
+        serializedVersion: 2
+        x: 1875
+        y: 8
+        width: 18
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c47cdf6583e1a450800000000000000
+      internalID: 6098405532683236544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_43
+      rect:
+        serializedVersion: 2
+        x: 1939
+        y: 12
+        width: 18
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 377c5e910255c7e80800000000000000
+      internalID: -8179569226849859725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_44
+      rect:
+        serializedVersion: 2
+        x: 2003
+        y: 12
+        width: 18
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c677d0e71729c6520800000000000000
+      internalID: 2696691293031855980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_45
+      rect:
+        serializedVersion: 2
+        x: 717
+        y: 2
+        width: 15
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 614aa17e962e39e30800000000000000
+      internalID: 4509196596404724758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_46
+      rect:
+        serializedVersion: 2
+        x: 1940
+        y: 5
+        width: 15
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13107400cb48d0f10800000000000000
+      internalID: 2237590532866375985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boat_horizontal_strip_no_player_47
+      rect:
+        serializedVersion: 2
+        x: 2004
+        y: 3
+        width: 15
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18589eef98ee1b5f0800000000000000
+      internalID: -742550187084774015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      boat_horizontal_strip_no_player_0: -8198636272939261769
+      boat_horizontal_strip_no_player_1: 1925806523158207472
+      boat_horizontal_strip_no_player_10: -2074141909953126790
+      boat_horizontal_strip_no_player_11: 1027112672808020637
+      boat_horizontal_strip_no_player_12: -887879438603378812
+      boat_horizontal_strip_no_player_13: 3767656320800259986
+      boat_horizontal_strip_no_player_14: -8013401154733418099
+      boat_horizontal_strip_no_player_15: 2688470387888752371
+      boat_horizontal_strip_no_player_16: -6807580867297786317
+      boat_horizontal_strip_no_player_17: 1489571054260569628
+      boat_horizontal_strip_no_player_18: -7988693675880057280
+      boat_horizontal_strip_no_player_19: -2896004653062534036
+      boat_horizontal_strip_no_player_2: 478160710326391535
+      boat_horizontal_strip_no_player_20: -7539239534475899909
+      boat_horizontal_strip_no_player_21: -2498536110309289072
+      boat_horizontal_strip_no_player_22: -2690978279978541610
+      boat_horizontal_strip_no_player_23: -4985591079627173235
+      boat_horizontal_strip_no_player_24: -8491354072473262156
+      boat_horizontal_strip_no_player_25: 3770856785332931997
+      boat_horizontal_strip_no_player_26: -161468433367633659
+      boat_horizontal_strip_no_player_27: -3823734578761669024
+      boat_horizontal_strip_no_player_28: -4072905367995380455
+      boat_horizontal_strip_no_player_29: 5999571870022706381
+      boat_horizontal_strip_no_player_3: 6296875583113254925
+      boat_horizontal_strip_no_player_30: -2622564747442352058
+      boat_horizontal_strip_no_player_31: 5160035142726785645
+      boat_horizontal_strip_no_player_32: 2129248482515708949
+      boat_horizontal_strip_no_player_33: -3363409325588167008
+      boat_horizontal_strip_no_player_34: -5694614235612119754
+      boat_horizontal_strip_no_player_35: -1763758980182778352
+      boat_horizontal_strip_no_player_36: -2095938701524773131
+      boat_horizontal_strip_no_player_37: 8498709590250269768
+      boat_horizontal_strip_no_player_38: -3483050523418226218
+      boat_horizontal_strip_no_player_39: 5601549964419009090
+      boat_horizontal_strip_no_player_4: 9203379442013743055
+      boat_horizontal_strip_no_player_40: 8165612977191115821
+      boat_horizontal_strip_no_player_41: -6570841424123579792
+      boat_horizontal_strip_no_player_42: 6098405532683236544
+      boat_horizontal_strip_no_player_43: -8179569226849859725
+      boat_horizontal_strip_no_player_44: 2696691293031855980
+      boat_horizontal_strip_no_player_45: 4509196596404724758
+      boat_horizontal_strip_no_player_46: 2237590532866375985
+      boat_horizontal_strip_no_player_47: -742550187084774015
+      boat_horizontal_strip_no_player_5: 8816262869795719132
+      boat_horizontal_strip_no_player_6: -1628965648586127194
+      boat_horizontal_strip_no_player_7: -2538049724280747743
+      boat_horizontal_strip_no_player_8: 5364047277721292813
+      boat_horizontal_strip_no_player_9: -1896065091070615150
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

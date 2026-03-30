@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b3483c6398aa8a43845cb9329b3c380, type: 3}
+  m_Name: PotatoData
+  m_EditorClassIdentifier: Assembly-CSharp::SunnysideIsland.GameData.CropData
+  cropId: potato
+  cropName: "\uAC10\uC790"
+  growthDays: 5
+  yieldAmount: 1
+  seasons: Spring
+  buyPrice: 10
+  sellPrice: 20
+  seedItemId: potato_seed
+  cropItemId: item_potato
+  specialEffect: 
+  growthSprites:
+  - {fileID: -4541760308731362826, guid: fca1cbacbfa5ffc41892cddfa94f628f, type: 3}
+  - {fileID: 2382208071769853359, guid: 2e956a8e065e2284f8832c923c7d8c3a, type: 3}
+  - {fileID: -6210164549916450422, guid: 837769c886acb884492b3e496802486f, type: 3}
+  - {fileID: 1293537405293182323, guid: 1aef79445b5503b45aad5d4dc53ce61c, type: 3}
+  - {fileID: -1840190759907527076, guid: 272b1b6cdeeed284e912c79835a37622, type: 3}
+  - {fileID: -8837905132163604103, guid: 5790871d326542e47b60ed0ed6ab8ff5, type: 3}
+  _cropScale: 2.3

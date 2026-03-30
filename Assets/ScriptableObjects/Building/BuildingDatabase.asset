@@ -1,0 +1,970 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c66889ea70181a54d92f8426273079bc, type: 3}
+  m_Name: BuildingDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::SunnysideIsland.Building.BuildingDatabase
+  _buildings:
+  - BuildingId: Tent
+    BuildingName: "\uD150\uD2B8"
+    Description: "\uAC00\uC7A5 \uAE30\uBCF8\uC801\uC778 \uAC70\uCC98. \uBE44\uBC14\uB78C\uC744
+      \uD53C\uD560 \uC218 \uC788\uB2E4."
+    Category: 0
+    Type: 0
+    Size:
+      Width: 2
+      Height: 2
+    BuildTime: 0
+    Cost:
+      Gold: 0
+      Materials:
+      - Wood
+      - Cloth
+      Amounts: 0a00000005000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: Rest
+      Value: 0.5
+      Description: "\uD734\uC2DD \uD6A8\uC728 50%"
+    MaxResidents: 1
+    TouristCapacity: 0
+    DailyIncome: 0
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 1
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: Hut
+    BuildingName: "\uC624\uB450\uB9C9"
+    Description: "\uB098\uBB34\uB85C \uC9C0\uC740 \uAC04\uB2E8\uD55C \uC9D1. \uD150\uD2B8\uBCF4\uB2E4
+      \uD3B8\uC548\uD558\uB2E4."
+    Category: 0
+    Type: 0
+    Size:
+      Width: 3
+      Height: 3
+    BuildTime: 1
+    Cost:
+      Gold: 200
+      Materials:
+      - Wood
+      - Stone
+      Amounts: 1e00000014000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: Rest
+      Value: 0.75
+      Description: "\uD734\uC2DD \uD6A8\uC728 75%"
+    MaxResidents: 2
+    TouristCapacity: 0
+    DailyIncome: 0
+    UnlocksAtQuest: []
+    UpgradeFrom: Tent
+    UpgradeTo: House
+    IsUnlockedDefault: 0
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: House
+    BuildingName: "\uC9D1"
+    Description: "\uC81C\uB300\uB85C \uC9C0\uC740 \uC9D1. \uD55C \uAC00\uC871\uC774
+      \uC0B4\uAE30 \uCDA9\uBD84\uD558\uB2E4."
+    Category: 0
+    Type: 0
+    Size:
+      Width: 4
+      Height: 4
+    BuildTime: 3
+    Cost:
+      Gold: 0
+      Materials:
+      - wood
+      Amounts: 0a000000
+    PlacementType: 0
+    PreviewScale: 0.35
+    Effects:
+    - EffectType: Rest
+      Value: 1
+      Description: "\uD734\uC2DD \uD6A8\uC728 100%"
+    - EffectType: Happiness
+      Value: 10
+      Description: "\uD589\uBCF5\uB3C4 +10"
+    MaxResidents: 4
+    TouristCapacity: 0
+    DailyIncome: 0
+    UnlocksAtQuest: []
+    UpgradeFrom: Hut
+    UpgradeTo: LargeHouse
+    IsUnlockedDefault: 1
+    BuildingPrefab: {fileID: 1216983113221114870, guid: 9528e523ef2f4cf40a54f3bdba850ba7, type: 3}
+  - BuildingId: LargeHouse
+    BuildingName: "\uD070 \uC9D1"
+    Description: "\uB113\uC740 2\uCE35 \uC9D1. \uC5EC\uB7EC \uAC00\uC871\uC774 \uC0B4
+      \uC218 \uC788\uB2E4."
+    Category: 0
+    Type: 0
+    Size:
+      Width: 5
+      Height: 5
+    BuildTime: 6
+    Cost:
+      Gold: 0
+      Materials:
+      - wood
+      Amounts: 1e000000
+    PlacementType: 0
+    PreviewScale: 0.6
+    Effects:
+    - EffectType: Rest
+      Value: 1.2
+      Description: "\uD734\uC2DD \uD6A8\uC728 120%"
+    - EffectType: Happiness
+      Value: 20
+      Description: "\uD589\uBCF5\uB3C4 +20"
+    MaxResidents: 8
+    TouristCapacity: 0
+    DailyIncome: 0
+    UnlocksAtQuest: []
+    UpgradeFrom: House
+    UpgradeTo: Mansion
+    IsUnlockedDefault: 1
+    BuildingPrefab: {fileID: 2570175521707891072, guid: fab13c677fa93c9419a1350473315576, type: 3}
+  - BuildingId: Mansion
+    BuildingName: "\uC800\uD0DD"
+    Description: "\uD638\uD654\uB85C\uC6B4 \uC800\uD0DD. \uC12C\uC5D0\uC11C \uAC00\uC7A5
+      \uC88B\uC740 \uC9D1\uC774\uB2E4."
+    Category: 0
+    Type: 0
+    Size:
+      Width: 6
+      Height: 6
+    BuildTime: 5
+    Cost:
+      Gold: 5000
+      Materials:
+      - Wood
+      - Stone
+      - Iron
+      - Glass
+      - Gold
+      Amounts: 64000000640000001e0000001400000005000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: Rest
+      Value: 1.5
+      Description: "\uD734\uC2DD \uD6A8\uC728 150%"
+    - EffectType: Happiness
+      Value: 50
+      Description: "\uD589\uBCF5\uB3C4 +50"
+    - EffectType: TouristAttraction
+      Value: 1
+      Description: "\uAD00\uAD11 \uBA85\uC18C"
+    MaxResidents: 12
+    TouristCapacity: 0
+    DailyIncome: 10
+    UnlocksAtQuest: []
+    UpgradeFrom: LargeHouse
+    UpgradeTo: 
+    IsUnlockedDefault: 0
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: Stall
+    BuildingName: "\uB178\uC810"
+    Description: "\uAC04\uB2E8\uD55C \uAC00\uD310\uB300. \uAE30\uBCF8\uC801\uC778
+      \uBB3C\uAC74\uC744 \uD314 \uC218 \uC788\uB2E4."
+    Category: 1
+    Type: 2
+    Size:
+      Width: 2
+      Height: 2
+    BuildTime: 0
+    Cost:
+      Gold: 100
+      Materials:
+      - Wood
+      Amounts: 0f000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: ShopSlots
+      Value: 4
+      Description: "\uD310\uB9E4 \uC2AC\uB86F 4\uAC1C"
+    MaxResidents: 1
+    TouristCapacity: 0
+    DailyIncome: 20
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 1
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: GroceryStore
+    BuildingName: "\uC2DD\uB8CC\uD488\uC810"
+    Description: "\uC2E0\uC120\uD55C \uC2DD\uD488\uC744 \uD30C\uB294 \uAC00\uAC8C."
+    Category: 1
+    Type: 2
+    Size:
+      Width: 3
+      Height: 3
+    BuildTime: 2
+    Cost:
+      Gold: 500
+      Materials:
+      - Wood
+      - Stone
+      Amounts: 280000001e000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: ShopSlots
+      Value: 8
+      Description: "\uD310\uB9E4 \uC2AC\uB86F 8\uAC1C"
+    - EffectType: FoodPrice
+      Value: 1.2
+      Description: "\uC2DD\uD488 \uAC00\uACA9 +20%"
+    MaxResidents: 2
+    TouristCapacity: 0
+    DailyIncome: 50
+    UnlocksAtQuest: []
+    UpgradeFrom: Stall
+    UpgradeTo: 
+    IsUnlockedDefault: 0
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: Blacksmith
+    BuildingName: "\uB300\uC7A5\uAC04"
+    Description: "\uBB34\uAE30\uC640 \uB3C4\uAD6C\uB97C \uB9CC\uB4E4\uACE0 \uD30C\uB294
+      \uACF3."
+    Category: 1
+    Type: 2
+    Size:
+      Width: 3
+      Height: 3
+    BuildTime: 2
+    Cost:
+      Gold: 600
+      Materials:
+      - Stone
+      - Iron
+      Amounts: 3200000014000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: ShopSlots
+      Value: 6
+      Description: "\uD310\uB9E4 \uC2AC\uB86F 6\uAC1C"
+    - EffectType: WeaponPrice
+      Value: 1.3
+      Description: "\uBB34\uAE30 \uAC00\uACA9 +30%"
+    - EffectType: CraftBonus
+      Value: 0.1
+      Description: "\uC81C\uC791 \uD488\uC9C8 +10%"
+    MaxResidents: 2
+    TouristCapacity: 0
+    DailyIncome: 40
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 0
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: Restaurant
+    BuildingName: "\uC2DD\uB2F9"
+    Description: "\uB9DB\uC788\uB294 \uC694\uB9AC\uB97C \uC81C\uACF5\uD558\uB294
+      \uC2DD\uB2F9."
+    Category: 1
+    Type: 2
+    Size:
+      Width: 4
+      Height: 3
+    BuildTime: 2
+    Cost:
+      Gold: 800
+      Materials:
+      - Wood
+      - Stone
+      Amounts: 3200000028000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: CookingBonus
+      Value: 1.2
+      Description: "\uC694\uB9AC \uD6A8\uC728 +20%"
+    - EffectType: TouristFood
+      Value: 1
+      Description: "\uAD00\uAD11\uAC1D \uC2DD\uC0AC \uC81C\uACF5"
+    MaxResidents: 3
+    TouristCapacity: 0
+    DailyIncome: 80
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 0
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: Inn
+    BuildingName: "\uC5EC\uAD00"
+    Description: "\uC5EC\uD589\uC790\uAC00 \uBB35\uC744 \uC218 \uC788\uB294 \uC219\uC18C."
+    Category: 1
+    Type: 2
+    Size:
+      Width: 4
+      Height: 4
+    BuildTime: 3
+    Cost:
+      Gold: 1200
+      Materials:
+      - Wood
+      - Stone
+      - Cloth
+      Amounts: 3c0000003200000014000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: TouristCapacity
+      Value: 5
+      Description: "\uAD00\uAD11\uAC1D \uC218\uC6A9 +5"
+    - EffectType: TouristHappiness
+      Value: 10
+      Description: "\uAD00\uAD11\uAC1D \uB9CC\uC871\uB3C4 +10"
+    MaxResidents: 4
+    TouristCapacity: 5
+    DailyIncome: 100
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 0
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: Market
+    BuildingName: "\uC2DC\uC7A5"
+    Description: "\uB2E4\uC591\uD55C \uC0C1\uD488\uC744 \uAC70\uB798\uD558\uB294
+      \uD65C\uAE30\uCC2C \uC2DC\uC7A5."
+    Category: 1
+    Type: 2
+    Size:
+      Width: 5
+      Height: 5
+    BuildTime: 4
+    Cost:
+      Gold: 2000
+      Materials:
+      - Wood
+      - Stone
+      - Cloth
+      Amounts: 64000000500000001e000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: ShopSlots
+      Value: 20
+      Description: "\uD310\uB9E4 \uC2AC\uB86F 20\uAC1C"
+    - EffectType: PriceBonus
+      Value: 1.1
+      Description: "\uD310\uB9E4 \uAC00\uACA9 +10%"
+    MaxResidents: 6
+    TouristCapacity: 0
+    DailyIncome: 150
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 0
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: Dock
+    BuildingName: "\uBD80\uB450"
+    Description: "\uBC30\uAC00 \uC815\uBC15\uD560 \uC218 \uC788\uB294 \uC120\uCC29\uC7A5."
+    Category: 2
+    Type: 3
+    Size:
+      Width: 4
+      Height: 2
+    BuildTime: 2
+    Cost:
+      Gold: 800
+      Materials:
+      - Wood
+      - Rope
+      Amounts: 3200000014000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: TouristCapacity
+      Value: 10
+      Description: "\uAD00\uAD11\uAC1D \uC218\uC6A9 +10"
+    - EffectType: FishingBonus
+      Value: 1.2
+      Description: "\uB09A\uC2DC \uD6A8\uC728 +20%"
+    MaxResidents: 1
+    TouristCapacity: 10
+    DailyIncome: 50
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 0
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: Lighthouse
+    BuildingName: "\uB4F1\uB300"
+    Description: "\uBC24\uC5D0 \uBE5B\uC744 \uBE44\uCD94\uC5B4 \uBC30\uB97C \uC778\uB3C4\uD55C\uB2E4."
+    Category: 2
+    Type: 3
+    Size:
+      Width: 2
+      Height: 2
+    BuildTime: 3
+    Cost:
+      Gold: 1500
+      Materials:
+      - Stone
+      - Glass
+      - Iron
+      Amounts: 3c000000140000000f000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: TouristCapacity
+      Value: 5
+      Description: "\uAD00\uAD11\uAC1D \uC218\uC6A9 +5"
+    - EffectType: Safety
+      Value: 20
+      Description: "\uC548\uC804 +20"
+    - EffectType: TouristAttraction
+      Value: 1.5
+      Description: "\uAD00\uAD11 \uBA85\uC18C"
+    MaxResidents: 1
+    TouristCapacity: 5
+    DailyIncome: 30
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 0
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: Plaza
+    BuildingName: "\uAD11\uC7A5"
+    Description: "\uC8FC\uBBFC\uACFC \uAD00\uAD11\uAC1D\uC774 \uBAA8\uC774\uB294
+      \uC5F4\uB9B0 \uACF5\uAC04."
+    Category: 2
+    Type: 3
+    Size:
+      Width: 5
+      Height: 5
+    BuildTime: 2
+    Cost:
+      Gold: 500
+      Materials:
+      - Stone
+      Amounts: 1e000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: Happiness
+      Value: 15
+      Description: "\uD589\uBCF5\uB3C4 +15"
+    - EffectType: EventBonus
+      Value: 1.2
+      Description: "\uC774\uBCA4\uD2B8 \uD6A8\uACFC +20%"
+    MaxResidents: 0
+    TouristCapacity: 0
+    DailyIncome: 10
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 0
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: Park
+    BuildingName: "\uACF5\uC6D0"
+    Description: "\uC544\uB984\uB2E4\uC6B4 \uC815\uC6D0\uACFC \uBCA4\uCE58\uAC00
+      \uC788\uB294 \uACF5\uC6D0."
+    Category: 2
+    Type: 3
+    Size:
+      Width: 4
+      Height: 4
+    BuildTime: 2
+    Cost:
+      Gold: 600
+      Materials:
+      - Wood
+      - Flower
+      Amounts: 140000001e000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: Happiness
+      Value: 20
+      Description: "\uD589\uBCF5\uB3C4 +20"
+    - EffectType: TouristAttraction
+      Value: 0.5
+      Description: "\uAD00\uAD11 \uBA85\uC18C"
+    MaxResidents: 1
+    TouristCapacity: 0
+    DailyIncome: 20
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 0
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: FestivalGround
+    BuildingName: "\uCD95\uC81C\uC7A5"
+    Description: "\uCD95\uC81C\uC640 \uC774\uBCA4\uD2B8\uB97C \uC5F4 \uC218 \uC788\uB294
+      \uC7A5\uC18C."
+    Category: 2
+    Type: 3
+    Size:
+      Width: 6
+      Height: 6
+    BuildTime: 3
+    Cost:
+      Gold: 1500
+      Materials:
+      - Wood
+      - Cloth
+      - Decoration
+      Amounts: 280000001e00000014000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: EventBonus
+      Value: 2
+      Description: "\uC774\uBCA4\uD2B8 \uD6A8\uACFC +100%"
+    - EffectType: TouristCapacity
+      Value: 20
+      Description: "\uAD00\uAD11\uAC1D \uC218\uC6A9 +20"
+    MaxResidents: 2
+    TouristCapacity: 20
+    DailyIncome: 50
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 0
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: HotSpring_Inn
+    BuildingName: "\uC628\uCC9C \uC5EC\uAD00"
+    Description: "\uCC9C\uC5F0 \uC628\uCC9C\uC744 \uC990\uAE38 \uC218 \uC788\uB294
+      \uACE0\uAE09 \uC5EC\uAD00."
+    Category: 2
+    Type: 3
+    Size:
+      Width: 5
+      Height: 4
+    BuildTime: 4
+    Cost:
+      Gold: 3000
+      Materials:
+      - Wood
+      - Stone
+      - Cloth
+      Amounts: 500000003c00000028000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: TouristCapacity
+      Value: 15
+      Description: "\uAD00\uAD11\uAC1D \uC218\uC6A9 +15"
+    - EffectType: TouristHappiness
+      Value: 30
+      Description: "\uAD00\uAD11\uAC1D \uB9CC\uC871\uB3C4 +30"
+    - EffectType: Healing
+      Value: 2
+      Description: "\uCCB4\uB825 \uD68C\uBCF5 +100%"
+    MaxResidents: 4
+    TouristCapacity: 15
+    DailyIncome: 200
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 0
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: Resort_Hotel
+    BuildingName: "\uB9AC\uC870\uD2B8 \uD638\uD154"
+    Description: "\uC12C \uCD5C\uACE0\uC758 \uB7ED\uC154\uB9AC \uB9AC\uC870\uD2B8
+      \uD638\uD154."
+    Category: 2
+    Type: 3
+    Size:
+      Width: 6
+      Height: 6
+    BuildTime: 7
+    Cost:
+      Gold: 10000
+      Materials:
+      - Wood
+      - Stone
+      - Iron
+      - Glass
+      - Gold
+      Amounts: 9600000078000000280000001e0000000a000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: TouristCapacity
+      Value: 50
+      Description: "\uAD00\uAD11\uAC1D \uC218\uC6A9 +50"
+    - EffectType: TouristHappiness
+      Value: 50
+      Description: "\uAD00\uAD11\uAC1D \uB9CC\uC871\uB3C4 +50"
+    - EffectType: IslandReputation
+      Value: 100
+      Description: "\uC12C \uD3C9\uD310 +100"
+    MaxResidents: 10
+    TouristCapacity: 50
+    DailyIncome: 500
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 0
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: FarmPlot
+    BuildingName: "\uBC2D"
+    Description: "\uC791\uBB3C\uC744 \uC7AC\uBC30\uD560 \uC218 \uC788\uB294 \uBC2D."
+    Category: 3
+    Type: 1
+    Size:
+      Width: 1
+      Height: 1
+    BuildTime: 0
+    Cost:
+      Gold: 10
+      Materials: []
+      Amounts: 
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: FarmSlots
+      Value: 1
+      Description: "\uB18D\uC0AC \uC2AC\uB86F 1\uAC1C"
+    MaxResidents: 0
+    TouristCapacity: 0
+    DailyIncome: 0
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 1
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: Storage
+    BuildingName: "\uC800\uC7A5\uACE0"
+    Description: "\uC544\uC774\uD15C\uC744 \uBCF4\uAD00\uD560 \uC218 \uC788\uB294
+      \uCC3D\uACE0."
+    Category: 3
+    Type: 4
+    Size:
+      Width: 3
+      Height: 2
+    BuildTime: 1
+    Cost:
+      Gold: 300
+      Materials:
+      - Wood
+      - Stone
+      Amounts: 1e00000014000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: StorageSlots
+      Value: 50
+      Description: "\uC800\uC7A5 \uC2AC\uB86F +50"
+    MaxResidents: 0
+    TouristCapacity: 0
+    DailyIncome: 0
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 0
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: FishingSpot
+    BuildingName: "\uB09A\uC2DC\uD130"
+    Description: "\uB09A\uC2DC\uB97C \uD560 \uC218 \uC788\uB294 \uC790\uB9AC."
+    Category: 3
+    Type: 4
+    Size:
+      Width: 2
+      Height: 2
+    BuildTime: 0
+    Cost:
+      Gold: 0
+      Materials: []
+      Amounts: 
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: FishingBonus
+      Value: 1.1
+      Description: "\uB09A\uC2DC \uD6A8\uC728 +10%"
+    MaxResidents: 0
+    TouristCapacity: 0
+    DailyIncome: 0
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 1
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: Farm_Tour
+    BuildingName: "\uCCB4\uD5D8 \uB18D\uC7A5"
+    Description: "\uAD00\uAD11\uAC1D\uC774 \uB18D\uC0AC\uB97C \uCCB4\uD5D8\uD560
+      \uC218 \uC788\uB294 \uB18D\uC7A5."
+    Category: 3
+    Type: 1
+    Size:
+      Width: 4
+      Height: 4
+    BuildTime: 2
+    Cost:
+      Gold: 400
+      Materials:
+      - Wood
+      - Fence
+      Amounts: 140000000a000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: FarmSlots
+      Value: 8
+      Description: "\uB18D\uC0AC \uC2AC\uB86F 8\uAC1C"
+    - EffectType: TouristAttraction
+      Value: 0.3
+      Description: "\uCCB4\uD5D8 \uAD00\uAD11"
+    MaxResidents: 1
+    TouristCapacity: 5
+    DailyIncome: 30
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 0
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: Bench
+    BuildingName: "\uBCA4\uCE58"
+    Description: "\uC26C\uC5B4\uAC08 \uC218 \uC788\uB294 \uBCA4\uCE58."
+    Category: 4
+    Type: 4
+    Size:
+      Width: 1
+      Height: 1
+    BuildTime: 0
+    Cost:
+      Gold: 20
+      Materials:
+      - Wood
+      Amounts: 03000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: Happiness
+      Value: 2
+      Description: "\uD589\uBCF5\uB3C4 +2"
+    MaxResidents: 0
+    TouristCapacity: 0
+    DailyIncome: 0
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 1
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: StreetLight
+    BuildingName: "\uAC00\uB85C\uB4F1"
+    Description: "\uBC24\uAE38\uC744 \uBC1D\uD600\uC8FC\uB294 \uAC00\uB85C\uB4F1."
+    Category: 4
+    Type: 4
+    Size:
+      Width: 1
+      Height: 1
+    BuildTime: 0
+    Cost:
+      Gold: 50
+      Materials:
+      - Iron
+      - Glass
+      Amounts: 0200000001000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: Safety
+      Value: 5
+      Description: "\uC548\uC804 +5"
+    MaxResidents: 0
+    TouristCapacity: 0
+    DailyIncome: 0
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 1
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: FlowerBed
+    BuildingName: "\uAF43\uBC2D"
+    Description: "\uC544\uB984\uB2E4\uC6B4 \uAF43\uC774 \uD53C\uC5B4\uC788\uB294
+      \uAF43\uBC2D."
+    Category: 4
+    Type: 4
+    Size:
+      Width: 2
+      Height: 1
+    BuildTime: 0
+    Cost:
+      Gold: 30
+      Materials:
+      - Flower
+      Amounts: 0a000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: Happiness
+      Value: 5
+      Description: "\uD589\uBCF5\uB3C4 +5"
+    - EffectType: TouristAttraction
+      Value: 0.1
+      Description: "\uAD00\uAD11 \uB9E4\uB825 +0.1"
+    MaxResidents: 0
+    TouristCapacity: 0
+    DailyIncome: 0
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 1
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: Fountain
+    BuildingName: "\uBD84\uC218\uB300"
+    Description: "\uC544\uB984\uB2E4\uC6B4 \uBD84\uC218\uB300."
+    Category: 4
+    Type: 4
+    Size:
+      Width: 2
+      Height: 2
+    BuildTime: 1
+    Cost:
+      Gold: 300
+      Materials:
+      - Stone
+      - Iron
+      Amounts: 1400000005000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: Happiness
+      Value: 15
+      Description: "\uD589\uBCF5\uB3C4 +15"
+    - EffectType: TouristAttraction
+      Value: 0.5
+      Description: "\uAD00\uAD11 \uBA85\uC18C"
+    MaxResidents: 0
+    TouristCapacity: 0
+    DailyIncome: 5
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 0
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: Watchtower
+    BuildingName: "\uAC10\uC2DC\uD0D1"
+    Description: "\uC8FC\uBCC0\uC744 \uAC10\uC2DC\uD560 \uC218 \uC788\uB294 \uD0D1."
+    Category: 5
+    Type: 4
+    Size:
+      Width: 2
+      Height: 2
+    BuildTime: 1
+    Cost:
+      Gold: 400
+      Materials:
+      - Wood
+      - Stone
+      Amounts: 1e00000014000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: Defense
+      Value: 20
+      Description: "\uBC29\uC5B4\uB825 +20"
+    - EffectType: DetectionRange
+      Value: 10
+      Description: "\uAC10\uC9C0 \uBC94\uC704 +10"
+    MaxResidents: 1
+    TouristCapacity: 0
+    DailyIncome: 0
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 0
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: Fence
+    BuildingName: "\uB2F4\uC7A5"
+    Description: "\uB9C8\uC744\uC744 \uBCF4\uD638\uD558\uB294 \uB2F4\uC7A5."
+    Category: 5
+    Type: 4
+    Size:
+      Width: 1
+      Height: 1
+    BuildTime: 0
+    Cost:
+      Gold: 20
+      Materials:
+      - Wood
+      Amounts: 05000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: Defense
+      Value: 5
+      Description: "\uBC29\uC5B4\uB825 +5"
+    MaxResidents: 0
+    TouristCapacity: 0
+    DailyIncome: 0
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 1
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: StoneWall
+    BuildingName: "\uC11D\uBCBD"
+    Description: "\uD2BC\uD2BC\uD55C \uB3CC\uB85C \uC313\uC740 \uBCBD."
+    Category: 5
+    Type: 4
+    Size:
+      Width: 1
+      Height: 1
+    BuildTime: 0
+    Cost:
+      Gold: 50
+      Materials:
+      - Stone
+      Amounts: 0a000000
+    PlacementType: 0
+    PreviewScale: 1
+    Effects:
+    - EffectType: Defense
+      Value: 15
+      Description: "\uBC29\uC5B4\uB825 +15"
+    MaxResidents: 0
+    TouristCapacity: 0
+    DailyIncome: 0
+    UnlocksAtQuest: []
+    UpgradeFrom: Fence
+    UpgradeTo: 
+    IsUnlockedDefault: 0
+    BuildingPrefab: {fileID: 0}
+  - BuildingId: Boat
+    BuildingName: "\uD0C8\uCD9C\uC6A9 \uBC30"
+    Description: "\uC12C\uC744 \uD0C8\uCD9C\uD560 \uC218 \uC788\uB294 \uBC30. \uBC14\uB2F7\uAC00\uC5D0\uB9CC
+      \uC9C0\uC744 \uC218 \uC788\uB2E4."
+    Category: 3
+    Type: 4
+    Size:
+      Width: 3
+      Height: 2
+    BuildTime: 10
+    Cost:
+      Gold: 0
+      Materials:
+      - wood
+      Amounts: 32000000
+    PlacementType: 1
+    PreviewScale: 1
+    Effects: []
+    MaxResidents: 0
+    TouristCapacity: 0
+    DailyIncome: 0
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 1
+    BuildingPrefab: {fileID: 1708952839880366167, guid: eaa45036dacfa8840b171f421bd8dd73, type: 3}

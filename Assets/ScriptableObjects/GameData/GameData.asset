@@ -1,0 +1,1243 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0d300d45016f5a46bcaecf41f2813cc, type: 3}
+  m_Name: GameData
+  m_EditorClassIdentifier: Assembly-CSharp::SunnysideIsland.GameData.GameData
+  items:
+  - itemId: wood
+    itemName: "\uB098\uBB34"
+    itemType: 2
+    maxStack: 999
+    baseValue: 2
+    canSell: 1
+    description: "\uAE30\uBCF8\uC801\uC778 \uBAA9\uC7AC\uC785\uB2C8\uB2E4."
+    iconPath: Items/wood
+    _iconReference:
+      m_AssetGUID: 78252f912af31ac488fc04e3bad1989e
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - itemId: stone
+    itemName: "\uB3CC"
+    itemType: 2
+    maxStack: 999
+    baseValue: 3
+    canSell: 1
+    description: "\uAE30\uBCF8\uC801\uC778 \uB3CC\uC785\uB2C8\uB2E4."
+    iconPath: Items/stone
+    _iconReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - itemId: iron_ore
+    itemName: "\uCCA0\uAD11\uC11D"
+    itemType: 2
+    maxStack: 999
+    baseValue: 15
+    canSell: 1
+    description: "\uCCA0\uC744 \uCD94\uCD9C\uD560 \uC218 \uC788\uB294 \uAD11\uC11D\uC785\uB2C8\uB2E4."
+    iconPath: Items/iron_ore
+    _iconReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - itemId: carrot
+    itemName: "\uB2F9\uADFC"
+    itemType: 1
+    maxStack: 99
+    baseValue: 45
+    canSell: 1
+    description: "\uC2E0\uC120\uD55C \uB2F9\uADFC\uC785\uB2C8\uB2E4."
+    iconPath: Items/carrot
+    _iconReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - itemId: wood_axe
+    itemName: "\uB098\uBB34 \uB3C4\uB07C"
+    itemType: 0
+    maxStack: 1
+    baseValue: 100
+    canSell: 1
+    description: "\uB098\uBB34\uB97C \uBCA8 \uC218 \uC788\uB294 \uAE30\uBCF8 \uB3C4\uAD6C\uC785\uB2C8\uB2E4."
+    iconPath: Items/wood_axe
+    _iconReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - itemId: boat
+    itemName: "\uBC30"
+    itemType: 4
+    maxStack: 1
+    baseValue: 1000
+    canSell: 0
+    description: "\uC12C\uC744 \uD0C8\uCD9C\uD560 \uC218 \uC788\uB294 \uBC30"
+    iconPath: 
+    _iconReference:
+      m_AssetGUID: eaa45036dacfa8840b171f421bd8dd73
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  tools: []
+  crops:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  defaultPlotScale: 1
+  defaultCropScale: 1
+  fishData:
+  - fishId: bass
+    fishName: "\uB18D\uC5B4"
+    grade: 1
+    location: "\uBC14\uB2E4"
+    timeCondition: "\uC804\uC2DC\uAC04"
+    difficulty: 0
+    sellPrice: 30
+    hungerRestore: 15
+    itemId: fish_bass
+  - fishId: carp
+    fishName: "\uC789\uC5B4"
+    grade: 1
+    location: "\uD638\uC218"
+    timeCondition: "\uC804\uC2DC\uAC04"
+    difficulty: 0
+    sellPrice: 25
+    hungerRestore: 12
+    itemId: fish_carp
+  - fishId: catfish
+    fishName: "\uBA54\uAE30"
+    grade: 1
+    location: "\uAC15"
+    timeCondition: "\uBC24"
+    difficulty: 0
+    sellPrice: 35
+    hungerRestore: 18
+    itemId: fish_catfish
+  - fishId: tuna
+    fishName: "\uCC38\uCE58"
+    grade: 2
+    location: "\uBC14\uB2E4 \uAE4A\uC740 \uACF3"
+    timeCondition: "\uB0AE"
+    difficulty: 1
+    sellPrice: 80
+    hungerRestore: 30
+    itemId: fish_tuna
+  - fishId: salmon
+    fishName: "\uC5F0\uC5B4"
+    grade: 2
+    location: "\uD3ED\uD3EC"
+    timeCondition: "\uC544\uCE68"
+    difficulty: 1
+    sellPrice: 100
+    hungerRestore: 35
+    itemId: fish_salmon
+  - fishId: swordfish
+    fishName: "\uD669\uC0C8\uCE58"
+    grade: 3
+    location: "\uBC14\uB2E4"
+    timeCondition: "\uB0AE"
+    difficulty: 2
+    sellPrice: 250
+    hungerRestore: 50
+    itemId: fish_swordfish
+  - fishId: shark
+    fishName: "\uC0C1\uC5B4"
+    grade: 3
+    location: "\uBC14\uB2E4 \uAE4A\uC740 \uACF3"
+    timeCondition: "\uBC24"
+    difficulty: 3
+    sellPrice: 500
+    hungerRestore: 80
+    itemId: fish_shark
+  - fishId: golden_fish
+    fishName: "\uD669\uAE08 \uBB3C\uACE0\uAE30"
+    grade: 4
+    location: "\uD2B9\uBCC4 \uC7A5\uC18C"
+    timeCondition: "\uBB34\uC9C0\uAC1C \uB0A0"
+    difficulty: 4
+    sellPrice: 2000
+    hungerRestore: 100
+    itemId: fish_golden
+  fishingRods:
+  - rodId: wooden_rod
+    rodName: "\uB098\uBB34 \uB09A\uC2EF\uB300"
+    successRate: 0
+    durability: 50
+    rareFishBonus: 0
+    itemId: rod_wooden
+  - rodId: iron_rod
+    rodName: "\uCCA0\uC81C \uB09A\uC2EF\uB300"
+    successRate: 20
+    durability: 100
+    rareFishBonus: 10
+    itemId: rod_iron
+  - rodId: gold_rod
+    rodName: "\uAE08 \uB09A\uC2EF\uB300"
+    successRate: 35
+    durability: 150
+    rareFishBonus: 20
+    itemId: rod_gold
+  - rodId: legendary_rod
+    rodName: "\uC804\uC124\uC758 \uB09A\uC2EF\uB300"
+    successRate: 50
+    durability: 200
+    rareFishBonus: 30
+    itemId: rod_legendary
+  animals:
+  - animalId: rabbit
+    animalName: "\uD1A0\uB07C"
+    hp: 20
+    attackPower: 0
+    speed: 2
+    aiType: 0
+    dropItems: meat:1,leather:1
+  - animalId: deer
+    animalName: "\uC0AC\uC2B4"
+    hp: 40
+    attackPower: 0
+    speed: 3
+    aiType: 0
+    dropItems: meat:2,leather:2
+  - animalId: fox
+    animalName: "\uC5EC\uC6B0"
+    hp: 30
+    attackPower: 5
+    speed: 2
+    aiType: 1
+    dropItems: meat:1,leather:1,tail:1
+  - animalId: boar
+    animalName: "\uBA67\uB3FC\uC9C0"
+    hp: 80
+    attackPower: 15
+    speed: 1
+    aiType: 2
+    dropItems: meat:3,leather:2,tusk:2
+  - animalId: wolf
+    animalName: "\uB291\uB300"
+    hp: 60
+    attackPower: 20
+    speed: 2
+    aiType: 2
+    dropItems: meat:2,leather:2,fang:2
+  - animalId: bear
+    animalName: "\uACF0"
+    hp: 150
+    attackPower: 30
+    speed: 0
+    aiType: 3
+    dropItems: meat:5,leather:4,paw:1
+  buildings:
+  - buildingId: tent
+    buildingName: "\uD150\uD2B8"
+    buildingType: 0
+    sizeX: 2
+    sizeY: 2
+    buildTime: 0
+    requiredResources: cloth:3,wood:5
+    effectDescription: "\uC784\uC2DC \uAC70\uCC98"
+  - buildingId: hut
+    buildingName: "\uC624\uB450\uB9C9"
+    buildingType: 0
+    sizeX: 3
+    sizeY: 3
+    buildTime: 60
+    requiredResources: wood:30,stone:10
+    effectDescription: "\uAE30\uBCF8 \uC8FC\uAC70"
+  - buildingId: house
+    buildingName: "\uC9D1"
+    buildingType: 0
+    sizeX: 4
+    sizeY: 4
+    buildTime: 120
+    requiredResources: wood:50,stone:30,iron:10
+    effectDescription: "\uC8FC\uBBFC \uC218\uC6A9 \uAC00\uB2A5"
+  - buildingId: large_house
+    buildingName: "\uD070 \uC9D1"
+    buildingType: 0
+    sizeX: 5
+    sizeY: 5
+    buildTime: 240
+    requiredResources: wood:100,stone:60,iron:30
+    effectDescription: "2\uC778 \uC8FC\uAC70"
+  - buildingId: mansion
+    buildingName: "\uC800\uD0DD"
+    buildingType: 0
+    sizeX: 6
+    sizeY: 6
+    buildTime: 480
+    requiredResources: stone:200,iron:50,glass:20
+    effectDescription: "\uACE0\uAE09 \uAC70\uCC98"
+  - buildingId: farm_plot
+    buildingName: "\uBC2D"
+    buildingType: 1
+    sizeX: 2
+    sizeY: 2
+    buildTime: 0
+    requiredResources: wood:10
+    effectDescription: "4\uCE78 \uC791\uBB3C \uC7AC\uBC30"
+  - buildingId: large_farm
+    buildingName: "\uD070 \uBC2D"
+    buildingType: 1
+    sizeX: 4
+    sizeY: 4
+    buildTime: 0
+    requiredResources: wood:30,stone:10
+    effectDescription: "16\uCE78 \uC791\uBB3C \uC7AC\uBC30"
+  - buildingId: greenhouse
+    buildingName: "\uBE44\uB2D0\uD558\uC6B0\uC2A4"
+    buildingType: 1
+    sizeX: 6
+    sizeY: 4
+    buildTime: 0
+    requiredResources: glass:20,iron:15
+    effectDescription: "\uACC4\uC808 \uBB34\uAD00, \uC131\uC7A5 +20%"
+  - buildingId: barn
+    buildingName: "\uCD95\uC0AC"
+    buildingType: 1
+    sizeX: 4
+    sizeY: 4
+    buildTime: 0
+    requiredResources: wood:40,stone:20
+    effectDescription: "\uB3D9\uBB3C \uC0AC\uC721"
+  - buildingId: storage
+    buildingName: "\uC800\uC7A5\uACE0"
+    buildingType: 1
+    sizeX: 3
+    sizeY: 3
+    buildTime: 0
+    requiredResources: wood:50,iron:10
+    effectDescription: "\uC2DD\uB7C9 \uBCF4\uAD00"
+  - buildingId: windmill
+    buildingName: "\uD48D\uCC28"
+    buildingType: 1
+    sizeX: 2
+    sizeY: 2
+    buildTime: 0
+    requiredResources: wood:30,iron:20
+    effectDescription: "\uC790\uB3D9 \uBB3C \uACF5\uAE09"
+  - buildingId: workbench
+    buildingName: "\uC791\uC5C5\uB300"
+    buildingType: 4
+    sizeX: 2
+    sizeY: 2
+    buildTime: 0
+    requiredResources: wood:20
+    effectDescription: "\uAE30\uBCF8 \uC81C\uC791"
+  - buildingId: furnace
+    buildingName: "\uD654\uB355"
+    buildingType: 4
+    sizeX: 2
+    sizeY: 2
+    buildTime: 0
+    requiredResources: stone:30
+    effectDescription: "\uC694\uB9AC, \uAD11\uC11D \uC6A9\uD574"
+  - buildingId: blast_furnace
+    buildingName: "\uC6A9\uAD11\uB85C"
+    buildingType: 4
+    sizeX: 3
+    sizeY: 3
+    buildTime: 0
+    requiredResources: stone:50,iron:10
+    effectDescription: "\uACE0\uAE09 \uC81C\uB828"
+  commercialBuildings:
+  - buildingId: market_stall
+    dailyIncomeMin: 50
+    dailyIncomeMax: 100
+    specialEffect: "\uAE30\uBCF8 \uAC70\uB798"
+  - buildingId: grocery
+    dailyIncomeMin: 150
+    dailyIncomeMax: 300
+    specialEffect: "\uB18D\uC791\uBB3C \uD310\uB9E4 +20%"
+  - buildingId: blacksmith
+    dailyIncomeMin: 200
+    dailyIncomeMax: 400
+    specialEffect: "\uC7A5\uBE44 \uC218\uB9AC/\uAC15\uD654"
+  - buildingId: fishing_shop
+    dailyIncomeMin: 100
+    dailyIncomeMax: 250
+    specialEffect: "\uB09A\uC2DC \uB3C4\uAD6C \uD310\uB9E4"
+  - buildingId: gift_shop
+    dailyIncomeMin: 250
+    dailyIncomeMax: 500
+    specialEffect: "\uAD00\uAD11\uAC1D \uC804\uC6A9"
+  - buildingId: restaurant
+    dailyIncomeMin: 400
+    dailyIncomeMax: 800
+    specialEffect: "\uC694\uB9AC \uD310\uB9E4"
+  - buildingId: inn
+    dailyIncomeMin: 500
+    dailyIncomeMax: 1000
+    specialEffect: "\uAD00\uAD11\uAC1D \uC219\uBC15"
+  - buildingId: market
+    dailyIncomeMin: 1000
+    dailyIncomeMax: 2000
+    specialEffect: "\uBAA8\uB4E0 NPC \uAC70\uB798"
+  touristBuildings:
+  - buildingId: pier
+    touristIncrease: 0
+  - buildingId: lighthouse
+    touristIncrease: 10
+  - buildingId: plaza
+    touristIncrease: 15
+  - buildingId: park
+    touristIncrease: 20
+  - buildingId: museum
+    touristIncrease: 25
+  - buildingId: festival_ground
+    touristIncrease: 30
+  - buildingId: hot_spring
+    touristIncrease: 35
+  - buildingId: resort_hotel
+    touristIncrease: 50
+  residents:
+  - residentId: merchant
+    residentType: 0
+    function: "\uC790\uB3D9 \uD310\uB9E4, \uC7AC\uACE0 \uAD00\uB9AC"
+    dailyWage: 50
+    specialAbility: "\uAC00\uACA9 \uD611\uC0C1 +10%"
+    requiredCondition: "\uC0C1\uC810 1\uAC1C"
+  - residentId: blacksmith_npc
+    residentType: 1
+    function: "\uC7A5\uBE44 \uC218\uB9AC, \uAC15\uD654"
+    dailyWage: 80
+    specialAbility: "\uC218\uB9AC\uBE44 -20%"
+    requiredCondition: "\uB300\uC7A5\uAC04"
+  - residentId: chef
+    residentType: 2
+    function: "\uC74C\uC2DD \uB300\uB7C9 \uC81C\uC791"
+    dailyWage: 60
+    specialAbility: "\uC694\uB9AC \uD488\uC9C8 \uC0C1\uC2B9"
+    requiredCondition: "\uC2DD\uB2F9"
+  - residentId: farmer
+    residentType: 3
+    function: "\uB18D\uC0AC \uC790\uB3D9\uD654"
+    dailyWage: 40
+    specialAbility: "\uC791\uBB3C \uC131\uC7A5 +10%"
+    requiredCondition: "\uBC2D 8\uCE78 \uC774\uC0C1"
+  - residentId: carpenter
+    residentType: 4
+    function: "\uAC00\uAD6C \uC81C\uC791"
+    dailyWage: 50
+    specialAbility: "\uAC74\uC124 \uC18D\uB3C4 +20%"
+    requiredCondition: "\uACF5\uBC29"
+  - residentId: guard
+    residentType: 5
+    function: "\uB9C8\uC744 \uBC29\uC5B4"
+    dailyWage: 70
+    specialAbility: "\uCE58\uC548 \uB808\uBCA8 \uC0C1\uC2B9"
+    requiredCondition: "\uACE0\uBE14\uB9B0 \uC704\uD611 \uC788\uC74C"
+  - residentId: researcher
+    residentType: 6
+    function: "\uB9C8\uBC95 \uC544\uC774\uD15C \uAC1C\uBC1C"
+    dailyWage: 100
+    specialAbility: "\uC0C8\uB85C\uC6B4 \uB808\uC2DC\uD53C"
+    requiredCondition: "\uB9C8\uBC95 \uC5F0\uAD6C\uC18C"
+  - residentId: guide
+    residentType: 7
+    function: "\uAD00\uAD11\uAC1D \uC548\uB0B4"
+    dailyWage: 60
+    specialAbility: "\uAD00\uAD11\uAC1D \uB9CC\uC871\uB3C4 +20%"
+    requiredCondition: "\uAD00\uAD11\uAC1D 10\uBA85 \uC774\uC0C1"
+  touristTypes:
+  - typeId: normal
+    typeName: "\uC77C\uBC18"
+    ratio: 50
+    preferredFacilities: "\uC2DD\uB2F9,\uAE30\uB150\uD488"
+    spendingMin: 200
+    spendingMax: 300
+  - typeId: premium
+    typeName: "\uACE0\uAE09"
+    ratio: 20
+    preferredFacilities: "\uC628\uCC9C,\uACE0\uAE09\uC2DD\uB2F9"
+    spendingMin: 500
+    spendingMax: 1000
+  - typeId: explorer
+    typeName: "\uD0D0\uD5D8\uAC00"
+    ratio: 20
+    preferredFacilities: "\uB3D9\uAD74,\uB4F1\uC0B0"
+    spendingMin: 300
+    spendingMax: 500
+  - typeId: group
+    typeName: "\uB2E8\uCCB4"
+    ratio: 10
+    preferredFacilities: "\uCD95\uC81C\uC7A5,\uAD11\uC7A5"
+    spendingMin: 1500
+    spendingMax: 3000
+  recipes:
+  - recipeId: grilled_fish
+    recipeName: "\uAD6C\uC6B4 \uC0DD\uC120"
+    resultItemId: grilled_fish_item
+    ingredients: fish:1
+    hungerRestore: 20
+    additionalEffect: 
+    cookTime: 30
+  - recipeId: fish_roast
+    recipeName: "\uC0DD\uC120\uAD6C\uC774"
+    resultItemId: fish_roast_item
+    ingredients: fish:2,salt:1
+    hungerRestore: 45
+    additionalEffect: "\uCCB4\uB825 +5"
+    cookTime: 60
+  - recipeId: stew
+    recipeName: "\uC2A4\uD29C"
+    resultItemId: stew_item
+    ingredients: meat:2,potato:2,carrot:1
+    hungerRestore: 60
+    additionalEffect: "\uCCB4\uB825 +10"
+    cookTime: 120
+  - recipeId: salad
+    recipeName: "\uC0D0\uB7EC\uB4DC"
+    resultItemId: salad_item
+    ingredients: vegetable:3
+    hungerRestore: 30
+    additionalEffect: "\uC2A4\uD0DC\uBBF8\uB098 +20"
+    cookTime: 30
+  - recipeId: bread
+    recipeName: "\uBE75"
+    resultItemId: bread_item
+    ingredients: flour:2
+    hungerRestore: 40
+    additionalEffect: 
+    cookTime: 180
+  - recipeId: sandwich
+    recipeName: "\uC0CC\uB4DC\uC704\uCE58"
+    resultItemId: sandwich_item
+    ingredients: bread:2,meat:1,vegetable:1
+    hungerRestore: 50
+    additionalEffect: 
+    cookTime: 60
+  - recipeId: pie
+    recipeName: "\uD30C\uC774"
+    resultItemId: pie_item
+    ingredients: flour:2,fruit:3
+    hungerRestore: 55
+    additionalEffect: "\uAE30\uBD84 \uC0C1\uC2B9"
+    cookTime: 240
+  - recipeId: steak
+    recipeName: "\uC2A4\uD14C\uC774\uD06C"
+    resultItemId: steak_item
+    ingredients: premium_meat:2
+    hungerRestore: 80
+    additionalEffect: "\uACF5\uACA9\uB825 +10% (10\uBD84)"
+    cookTime: 120
+  - recipeId: seafood_pasta
+    recipeName: "\uD574\uC0B0\uBB3C \uD30C\uC2A4\uD0C0"
+    resultItemId: seafood_pasta_item
+    ingredients: fish:2,flour:2
+    hungerRestore: 70
+    additionalEffect: "\uBAA8\uB4E0 \uB2A5\uB825\uCE58 +5"
+    cookTime: 180
+  - recipeId: royal_platter
+    recipeName: "\uB85C\uC584 \uD50C\uB798\uD130"
+    resultItemId: royal_platter_item
+    ingredients: fish:3,meat:3,vegetable:3
+    hungerRestore: 100
+    additionalEffect: "\uBAA8\uB4E0 \uB2A5\uB825\uCE58 +15 (30\uBD84)"
+    cookTime: 300
+  craftingRecipes:
+  - recipeId: recipe_wood_axe
+    category: 0
+    resultItemId: wood_axe
+    resultAmount: 1
+    ingredients: wood:10
+    requiredTool: 
+  - recipeId: recipe_stone_pickaxe
+    category: 0
+    resultItemId: stone_pickaxe
+    resultAmount: 1
+    ingredients: wood:5,stone:10
+    requiredTool: 
+  - recipeId: recipe_iron_fishing_rod
+    category: 0
+    resultItemId: iron_fishing_rod
+    resultAmount: 1
+    ingredients: wood:10,iron:5
+    requiredTool: 
+  - recipeId: recipe_iron_sword
+    category: 1
+    resultItemId: iron_sword
+    resultAmount: 1
+    ingredients: iron:10,wood:5
+    requiredTool: 
+  - recipeId: recipe_wood_bow
+    category: 1
+    resultItemId: wood_bow
+    resultAmount: 1
+    ingredients: wood:15,rope:5
+    requiredTool: 
+  - recipeId: recipe_wood_plank
+    category: 3
+    resultItemId: wood_plank
+    resultAmount: 2
+    ingredients: wood:2
+    requiredTool: 
+  - recipeId: recipe_stone_brick
+    category: 3
+    resultItemId: stone_brick
+    resultAmount: 2
+    ingredients: stone:2
+    requiredTool: 
+  - recipeId: recipe_iron_ingot
+    category: 5
+    resultItemId: iron_ingot
+    resultAmount: 1
+    ingredients: iron_ore:3
+    requiredTool: furnace
+  - recipeId: recipe_steel
+    category: 5
+    resultItemId: steel
+    resultAmount: 1
+    ingredients: iron_ingot:2,coal:1
+    requiredTool: blast_furnace
+  - recipeId: recipe_bed
+    category: 2
+    resultItemId: bed
+    resultAmount: 1
+    ingredients: wood:20,cloth:10
+    requiredTool: workbench
+  - recipeId: recipe_desk
+    category: 2
+    resultItemId: desk
+    resultAmount: 1
+    ingredients: wood:15
+    requiredTool: workbench
+  quests:
+  - questId: quest_crash
+    questName: "\uBD88\uC2DC\uCC29"
+    questType: 0
+    chapter: 1
+    description: "\uD150\uD2B8\uB97C \uAC74\uC124\uD558\uC138\uC694"
+    objectives: build:tent
+    rewards: basic_tool_set
+    prerequisites: 
+  - questId: quest_first_meal
+    questName: "\uCCAB \uC2DD\uC0AC"
+    questType: 0
+    chapter: 1
+    description: "\uB09A\uC2DC\uB85C \uC0DD\uC120 3\uB9C8\uB9AC\uB97C \uC7A1\uC73C\uC138\uC694"
+    objectives: fish:3
+    rewards: fishing_rod_upgrade
+    prerequisites: quest_crash
+  - questId: quest_safe_place
+    questName: "\uC548\uC804\uD55C \uACF3"
+    questType: 0
+    chapter: 1
+    description: "\uC624\uB450\uB9C9\uC744 \uC644\uC131\uD558\uC138\uC694"
+    objectives: build:hut
+    rewards: bed_recipe
+    prerequisites: quest_first_meal
+  - questId: quest_farmer_start
+    questName: "\uB18D\uBD80\uC758 \uC2DC\uC791"
+    questType: 0
+    chapter: 2
+    description: "\uCCAB \uC791\uBB3C\uC744 \uC218\uD655\uD558\uC138\uC694"
+    objectives: harvest:1
+    rewards: seeds:20
+    prerequisites: quest_safe_place
+  - questId: quest_new_neighbor
+    questName: "\uC0C8\uB85C\uC6B4 \uC774\uC6C3"
+    questType: 0
+    chapter: 2
+    description: "\uCCAB \uC8FC\uBBFC\uC744 \uC720\uCE58\uD558\uC138\uC694"
+    objectives: recruit:1
+    rewards: resident_furniture_set
+    prerequisites: quest_farmer_start
+  - questId: quest_goblin_threat
+    questName: "\uACE0\uBE14\uB9B0\uC758 \uC704\uD611"
+    questType: 0
+    chapter: 2
+    description: "\uACE0\uBE14\uB9B0 5\uB9C8\uB9AC\uB97C \uCC98\uCE58\uD558\uC138\uC694"
+    objectives: defeat:goblin:5
+    rewards: combat_tool_recipe
+    prerequisites: quest_new_neighbor
+  - questId: quest_discover_village
+    questName: "\uACE0\uBE14\uB9B0 \uB9C8\uC744 \uBC1C\uACAC"
+    questType: 0
+    chapter: 3
+    description: "\uACE0\uBE14\uB9B0 \uB9C8\uC744\uC744 \uD0D0\uC0C9\uD558\uC138\uC694"
+    objectives: explore:goblin_village
+    rewards: goblin_translator
+    prerequisites: quest_goblin_threat
+  - questId: quest_peace
+    questName: "\uD3C9\uD654\uC758 \uC870\uAC74"
+    questType: 0
+    chapter: 3
+    description: "\uACE0\uBE14\uB9B0 \uC871\uC7A5\uC744 \uCC98\uCE58\uD558\uAC70\uB098
+      \uAD50\uC5ED \uD611\uC815\uC744 \uCCB4\uACB0\uD558\uC138\uC694"
+    objectives: defeat:goblin_chief OR trade:goblin
+    rewards: goblin_alliance OR treasure
+    prerequisites: quest_discover_village
+  - questId: quest_first_tourist
+    questName: "\uCCAB \uAD00\uAD11\uAC1D"
+    questType: 0
+    chapter: 3
+    description: "\uAD00\uAD11\uAC1D 10\uBA85\uC744 \uC720\uCE58\uD558\uC138\uC694"
+    objectives: attract_tourist:10
+    rewards: pier_upgrade
+    prerequisites: quest_peace
+  - questId: quest_merchant_path
+    questName: "\uC0C1\uC778\uC758 \uAE38"
+    questType: 0
+    chapter: 4
+    description: "\uC0C1\uC810 5\uAC1C\uB97C \uAC74\uC124\uD558\uC138\uC694"
+    objectives: build:shop:5
+    rewards: market_unlock
+    prerequisites: quest_first_tourist
+  - questId: quest_festival
+    questName: "\uCD95\uC81C\uC758 \uB0A0"
+    questType: 0
+    chapter: 4
+    description: "\uCCAB \uCD95\uC81C\uB97C \uAC1C\uCD5C\uD558\uC138\uC694"
+    objectives: host:festival
+    rewards: reputation_boost
+    prerequisites: quest_merchant_path
+  - questId: quest_resort_complete
+    questName: "\uB9AC\uC870\uD2B8 \uC644\uC131"
+    questType: 0
+    chapter: 4
+    description: "\uB9AC\uC870\uD2B8 \uD638\uD154\uC744 \uAC74\uC124\uD558\uC138\uC694"
+    objectives: build:resort_hotel
+    rewards: game_clear,free_mode
+    prerequisites: quest_festival
+  - questId: quest_fisherman_john
+    questName: "\uC804\uC124\uC758 \uBB3C\uACE0\uAE30"
+    questType: 1
+    chapter: 0
+    description: "\uB09A\uC2DC\uAFBC \uC874\uC758 \uC694\uCCAD"
+    objectives: catch:golden_fish
+    rewards: legendary_fishing_rod
+    prerequisites: 
+  - questId: quest_blacksmith
+    questName: "\uD76C\uADC0 \uAD11\uC11D"
+    questType: 1
+    chapter: 0
+    description: "\uB300\uC7A5\uC7A5\uC774\uC758 \uC694\uCCAD"
+    objectives: mine:mithril:10
+    rewards: steel_armor
+    prerequisites: 
+  - questId: quest_chef
+    questName: "\uBBF8\uC2DD \uB300\uD68C"
+    questType: 1
+    chapter: 0
+    description: "\uC694\uB9AC\uC0AC\uC758 \uC694\uCCAD"
+    objectives: cook:special:3
+    rewards: chef_resident
+    prerequisites: 
+  - questId: quest_goblin_merchant
+    questName: "\uBB3C\uBB3C\uAD50\uD658"
+    questType: 1
+    chapter: 0
+    description: "\uACE0\uBE14\uB9B0 \uC0C1\uC778\uC758 \uC694\uCCAD"
+    objectives: trade:human_items:10
+    rewards: goblin_special_goods
+    prerequisites: 
+  - questId: quest_explorer
+    questName: "\uC783\uC5B4\uBC84\uB9B0 \uC720\uBB3C"
+    questType: 1
+    chapter: 0
+    description: "\uD0D0\uD5D8\uAC00\uC758 \uC694\uCCAD"
+    objectives: explore:ancient_ruins
+    rewards: map,treasure
+    prerequisites: 
+  skills:
+  - skillId: skill_gather_1
+    skillTree: 0
+    level: 1
+    skillName: "\uBC8C\uBAA9 \uC18D\uB3C4 \uC99D\uAC00"
+    effect: "\uBC8C\uBAA9 \uC18D\uB3C4 +10%"
+    value: 10
+  - skillId: skill_gather_2
+    skillTree: 0
+    level: 2
+    skillName: "\uCC44\uAD11 \uC18D\uB3C4 \uC99D\uAC00"
+    effect: "\uCC44\uAD11 \uC18D\uB3C4 +10%"
+    value: 10
+  - skillId: skill_gather_3
+    skillTree: 0
+    level: 3
+    skillName: "\uD76C\uADC0 \uC790\uC6D0 \uBC1C\uACAC"
+    effect: "\uD76C\uADC0 \uC790\uC6D0 \uBC1C\uACAC +5%"
+    value: 5
+  - skillId: skill_gather_4
+    skillTree: 0
+    level: 4
+    skillName: "\uB0B4\uAD6C\uB3C4 \uC808\uC57D"
+    effect: "\uB0B4\uAD6C\uB3C4 \uC18C\uBAA8 -20%"
+    value: 20
+  - skillId: skill_gather_5
+    skillTree: 0
+    level: 5
+    skillName: "\uB354\uBE14 \uCC44\uC9D1"
+    effect: "\uD55C \uBC88\uC5D0 2\uAC1C \uCC44\uC9D1 \uAC00\uB2A5"
+    value: 2
+  - skillId: skill_farm_1
+    skillTree: 1
+    level: 1
+    skillName: "\uC131\uC7A5 \uAC00\uC18D"
+    effect: "\uC131\uC7A5 \uC18D\uB3C4 +10%"
+    value: 10
+  - skillId: skill_farm_2
+    skillTree: 1
+    level: 2
+    skillName: "\uC218\uD655\uB7C9 \uC99D\uAC00"
+    effect: "\uC218\uD655\uB7C9 +1"
+    value: 1
+  - skillId: skill_farm_3
+    skillTree: 1
+    level: 3
+    skillName: "\uBB3C \uC8FC\uAE30 \uAC04\uACA9 \uAC10\uC18C"
+    effect: "\uBB3C \uC8FC\uAE30 \uD544\uC694 \uC8FC\uAE30 -1\uC77C"
+    value: 1
+  - skillId: skill_farm_4
+    skillTree: 1
+    level: 4
+    skillName: "\uD488\uC9C8 \uC0C1\uC2B9"
+    effect: "\uD488\uC9C8 \uC0C1\uC2B9 \uD655\uB960 +20%"
+    value: 20
+  - skillId: skill_farm_5
+    skillTree: 1
+    level: 5
+    skillName: "\uACC4\uC808 \uBB34\uAD00"
+    effect: "\uACC4\uC808 \uBB34\uAD00 \uC791\uBB3C \uC7AC\uBC30"
+    value: 1
+  - skillId: skill_fish_1
+    skillTree: 2
+    level: 1
+    skillName: "\uBE60\uB978 \uBBF8\uB07C"
+    effect: "\uBBF8\uB07C \uB300\uAE30 \uC2DC\uAC04 -20%"
+    value: 20
+  - skillId: skill_fish_2
+    skillTree: 2
+    level: 2
+    skillName: "\uC26C\uC6B4 \uB09A\uC2DC"
+    effect: "\uBBF8\uB2C8\uAC8C\uC784 \uB09C\uC774\uB3C4 -10%"
+    value: 10
+  - skillId: skill_fish_3
+    skillTree: 2
+    level: 3
+    skillName: "\uD76C\uADC0 \uBB3C\uACE0\uAE30"
+    effect: "\uD76C\uADC0 \uBB3C\uACE0\uAE30 \uD655\uB960 +10%"
+    value: 10
+  - skillId: skill_fish_4
+    skillTree: 2
+    level: 4
+    skillName: "\uB09A\uC2EF\uB300 \uC218\uBA85"
+    effect: "\uB09A\uC2EF\uB300 \uB0B4\uAD6C\uB3C4 \uC18C\uBAA8 -30%"
+    value: 30
+  - skillId: skill_fish_5
+    skillTree: 2
+    level: 5
+    skillName: "\uB300\uBB3C \uB09A\uC2DC"
+    effect: "\uBB3C\uACE0\uAE30 \uD06C\uAE30/\uD488\uC9C8 \uC0C1\uC2B9"
+    value: 1
+  - skillId: skill_combat_1
+    skillTree: 3
+    level: 1
+    skillName: "\uACF5\uACA9\uB825 \uC99D\uAC00"
+    effect: "\uACF5\uACA9\uB825 +10%"
+    value: 10
+  - skillId: skill_combat_2
+    skillTree: 3
+    level: 2
+    skillName: "\uBC29\uC5B4\uB825 \uC99D\uAC00"
+    effect: "\uBC29\uC5B4\uB825 +10%"
+    value: 10
+  - skillId: skill_combat_3
+    skillTree: 3
+    level: 3
+    skillName: "\uCE58\uBA85\uD0C0"
+    effect: "\uCE58\uBA85\uD0C0 \uD655\uB960 +5%"
+    value: 5
+  - skillId: skill_combat_4
+    skillTree: 3
+    level: 4
+    skillName: "\uC2A4\uD0DC\uBBF8\uB098 \uC808\uC57D"
+    effect: "\uC2A4\uD0DC\uBBF8\uB098 \uC18C\uBAA8 -20%"
+    value: 20
+  - skillId: skill_combat_5
+    skillTree: 3
+    level: 5
+    skillName: "\uD68C\uC804\uBCA0\uAE30"
+    effect: "\uD2B9\uC218 \uACF5\uACA9 \uD574\uAE08 (\uD68C\uC804\uBCA0\uAE30)"
+    value: 1
+  - skillId: skill_build_1
+    skillTree: 4
+    level: 1
+    skillName: "\uBE60\uB978 \uAC74\uC124"
+    effect: "\uAC74\uC124 \uC18D\uB3C4 +20%"
+    value: 20
+  - skillId: skill_build_2
+    skillTree: 4
+    level: 2
+    skillName: "\uAC74\uC124 \uBE44\uC6A9 \uC808\uAC10"
+    effect: "\uAC74\uC124 \uBE44\uC6A9 -10%"
+    value: 10
+  - skillId: skill_build_3
+    skillTree: 4
+    level: 3
+    skillName: "\uD310\uB9E4 \uAC00\uACA9 \uC99D\uAC00"
+    effect: "\uD310\uB9E4 \uAC00\uACA9 +10%"
+    value: 10
+  - skillId: skill_build_4
+    skillTree: 4
+    level: 4
+    skillName: "\uC8FC\uBBFC \uC0DD\uC0B0\uC131"
+    effect: "\uC8FC\uBBFC \uC0DD\uC0B0\uC131 +15%"
+    value: 15
+  - skillId: skill_build_5
+    skillTree: 4
+    level: 5
+    skillName: "\uAD00\uAD11\uAC1D \uC720\uCE58"
+    effect: "\uAD00\uAD11\uAC1D \uC720\uCE58 +25%"
+    value: 25
+  events: []
+  achievements:
+  - achievementId: ach_woodcutter
+    achievementName: "\uB098\uBB34\uAFBC"
+    category: 0
+    requirementType: 0
+    targetId: wood
+    targetAmount: 1000
+    reward: "title:\uB098\uBB34\uAFBC"
+  - achievementId: ach_miner
+    achievementName: "\uAD11\uBD80"
+    category: 0
+    requirementType: 0
+    targetId: iron_ore
+    targetAmount: 500
+    reward: "title:\uAD11\uBD80"
+  - achievementId: ach_collector
+    achievementName: "\uC218\uC9D1\uAC00"
+    category: 0
+    requirementType: 3
+    targetId: all_resources
+    targetAmount: 999
+    reward: "title:\uC218\uC9D1\uAC00"
+  - achievementId: ach_farmer
+    achievementName: "\uB18D\uBD80"
+    category: 1
+    requirementType: 0
+    targetId: crop
+    targetAmount: 1
+    reward: 
+  - achievementId: ach_big_farmer
+    achievementName: "\uB300\uB18D\uC7A5\uC8FC"
+    category: 1
+    requirementType: 0
+    targetId: crop
+    targetAmount: 1000
+    reward: "title:\uB300\uB18D\uC7A5\uC8FC"
+  - achievementId: ach_gardener
+    achievementName: "\uC6D0\uC608\uAC00"
+    category: 1
+    requirementType: 0
+    targetId: all_crops
+    targetAmount: 1
+    reward: "title:\uC6D0\uC608\uAC00"
+  - achievementId: ach_fisherman
+    achievementName: "\uB09A\uC2DC\uAFBC"
+    category: 2
+    requirementType: 0
+    targetId: fish
+    targetAmount: 1
+    reward: 
+  - achievementId: ach_fishing_king
+    achievementName: "\uB09A\uC2DC\uC655"
+    category: 2
+    requirementType: 0
+    targetId: fish
+    targetAmount: 1000
+    reward: "title:\uB09A\uC2DC\uC655"
+  - achievementId: ach_legendary_fisherman
+    achievementName: "\uC804\uC124\uC758 \uB09A\uC2DC\uAFBC"
+    category: 2
+    requirementType: 0
+    targetId: golden_fish
+    targetAmount: 1
+    reward: "title:\uC804\uC124\uC758 \uB09A\uC2DC\uAFBC"
+  - achievementId: ach_warrior
+    achievementName: "\uC804\uC0AC"
+    category: 3
+    requirementType: 1
+    targetId: monster
+    targetAmount: 1
+    reward: 
+  - achievementId: ach_goblin_killer
+    achievementName: "\uACE0\uBE14\uB9B0 \uD0AC\uB7EC"
+    category: 3
+    requirementType: 1
+    targetId: goblin
+    targetAmount: 100
+    reward: "title:\uACE0\uBE14\uB9B0 \uD0AC\uB7EC"
+  - achievementId: ach_boss_slayer
+    achievementName: "\uBCF4\uC2A4 \uC2AC\uB808\uC774\uC5B4"
+    category: 3
+    requirementType: 1
+    targetId: all_bosses
+    targetAmount: 1
+    reward: "title:\uBCF4\uC2A4 \uC2AC\uB808\uC774\uC5B4"
+  - achievementId: ach_builder
+    achievementName: "\uAC74\uCD95\uAC00"
+    category: 4
+    requirementType: 2
+    targetId: building
+    targetAmount: 1
+    reward: 
+  - achievementId: ach_developer
+    achievementName: "\uB3C4\uC2DC \uAC1C\uBC1C\uC790"
+    category: 4
+    requirementType: 2
+    targetId: building
+    targetAmount: 50
+    reward: "title:\uB3C4\uC2DC \uAC1C\uBC1C\uC790"
+  - achievementId: ach_resort_king
+    achievementName: "\uB9AC\uC870\uD2B8 \uC655"
+    category: 4
+    requirementType: 2
+    targetId: all_buildings
+    targetAmount: 1
+    reward: "title:\uB9AC\uC870\uD2B8 \uC655"
+  - achievementId: ach_rich
+    achievementName: "\uBD80\uC790"
+    category: 5
+    requirementType: 3
+    targetId: coin
+    targetAmount: 10000
+    reward: "title:\uBD80\uC790"
+  - achievementId: ach_mogul
+    achievementName: "\uAC70\uBB3C"
+    category: 5
+    requirementType: 3
+    targetId: coin
+    targetAmount: 100000
+    reward: "title:\uAC70\uBB3C"
+  - achievementId: ach_president
+    achievementName: "\uACBD\uC81C \uB300\uD1B5\uB839"
+    category: 5
+    requirementType: 3
+    targetId: coin
+    targetAmount: 1000000
+    reward: "title:\uACBD\uC81C \uB300\uD1B5\uB839"
+  - achievementId: ach_perfectionist
+    achievementName: "\uC644\uBCBD\uC8FC\uC758\uC790"
+    category: 6
+    requirementType: 0
+    targetId: all_achievements
+    targetAmount: 1
+    reward: "title:\uC644\uBCBD\uC8FC\uC758\uC790"
+  - achievementId: ach_speedrunner
+    achievementName: "\uC2A4\uD53C\uB4DC\uB7EC\uB108"
+    category: 6
+    requirementType: 0
+    targetId: game
+    targetAmount: 120
+    reward: "title:\uC2A4\uD53C\uB4DC\uB7EC\uB108"
+  - achievementId: ach_irman
+    achievementName: "\uCCA0\uC778"
+    category: 6
+    requirementType: 0
+    targetId: game_no_combat
+    targetAmount: 1
+    reward: "title:\uCCA0\uC778"
+  timeOfDayData:
+  - timeSlot: 0
+    startHour: 4
+    endHour: 6
+    feature: "\uC5B4\uB450\uC6C0, \uBAAC\uC2A4\uD130 \uD65C\uB3D9 \uC99D\uAC00"
+    recommendedActivity: '-'
+  - timeSlot: 1
+    startHour: 6
+    endHour: 9
+    feature: "\uBC1D\uC544\uC9D0, NPC \uAE30\uC0C1"
+    recommendedActivity: "\uB18D\uC0AC, \uCC44\uC9D1"
+  - timeSlot: 2
+    startHour: 9
+    endHour: 12
+    feature: "\uD65C\uB3D9 \uCD5C\uC801\uAE30"
+    recommendedActivity: "\uAC74\uC124, \uD0D0\uD5D8"
+  - timeSlot: 3
+    startHour: 12
+    endHour: 14
+    feature: "NPC \uD734\uC2DD \uC2DC\uAC04"
+    recommendedActivity: "\uB09A\uC2DC, \uC0AC\uB0E5"
+  - timeSlot: 4
+    startHour: 14
+    endHour: 18
+    feature: "\uD669\uAE08 \uC2DC\uAC04"
+    recommendedActivity: "\uC804\uD22C, \uCC44\uC9D1"
+  - timeSlot: 5
+    startHour: 18
+    endHour: 21
+    feature: "\uC5B4\uB450\uC6CC\uC9D0"
+    recommendedActivity: "\uC0C1\uC810 \uC6B4\uC601, \uC694\uB9AC"
+  - timeSlot: 0
+    startHour: 21
+    endHour: 4
+    feature: "\uC5B4\uB450\uC6C0, \uBAAC\uC2A4\uD130 \uD65C\uB3D9 \uCD5C\uB300"
+    recommendedActivity: "\uD734\uC2DD, \uB3D9\uAD74 \uD0D0\uD5D8"
+  weatherData:
+  - weatherType: 0
+    probability: 50
+    effect: "\uAE30\uBCF8 \uC0C1\uD0DC, \uBAA8\uB4E0 \uD65C\uB3D9 \uAC00\uB2A5"
+  - weatherType: 1
+    probability: 20
+    effect: "\uB09A\uC2DC \uC131\uACF5\uB960 +10%"
+  - weatherType: 2
+    probability: 15
+    effect: "\uB18D\uC0AC \uC790\uB3D9 \uBB3C\uC8FC\uAE30, \uCC44\uC9D1 \uBD88\uD3B8"
+  - weatherType: 3
+    probability: 10
+    effect: "\uC678\uBD80 \uD65C\uB3D9 \uC704\uD5D8, \uC2E4\uB0B4 \uAD8C\uC7A5"
+  - weatherType: 4
+    probability: 5
+    effect: "\uD76C\uADC0, \uD589\uC6B4 +20, \uAD00\uAD11\uAC1D \uC99D\uAC00"
+  resourceSpawns:
+  - resourceId: tree
+    resourceName: "\uB098\uBB34"
+    regenDays: 3
+    maxQuantity: 100
+    spawnAreas: Forest,Mountain,Beach
+  - resourceId: stone_ore
+    resourceName: "\uB3CC"
+    regenDays: 5
+    maxQuantity: 50
+    spawnAreas: Mountain,Cave
+  - resourceId: iron_ore
+    resourceName: "\uCCA0\uAD11\uC11D"
+    regenDays: 7
+    maxQuantity: 30
+    spawnAreas: Mountain,Cave
+  - resourceId: mithril_ore
+    resourceName: "\uBBF8\uC2A4\uB9B4"
+    regenDays: 14
+    maxQuantity: 10
+    spawnAreas: Cave
+  - resourceId: herb
+    resourceName: "\uC57D\uCD08"
+    regenDays: 2
+    maxQuantity: 20
+    spawnAreas: Forest
+  - resourceId: mushroom
+    resourceName: "\uBC84\uC12F"
+    regenDays: 1
+    maxQuantity: 30
+    spawnAreas: Forest,Cave
+  areas:
+  - areaId: beach
+    areaName: "\uD574\uBCC0"
+    areaType: 0
+    difficulty: 1
+    availableResources: tree
+    availableAnimals: 
+    availableMonsters: 
+  - areaId: forest
+    areaName: "\uC232"
+    areaType: 1
+    difficulty: 2
+    availableResources: tree,herb,mushroom
+    availableAnimals: rabbit,deer,fox
+    availableMonsters: goblin_farmer
+  - areaId: mountain
+    areaName: "\uC0B0"
+    areaType: 2
+    difficulty: 3
+    availableResources: tree,stone_ore,iron_ore
+    availableAnimals: boar,wolf
+    availableMonsters: goblin_soldier,goblin_archer
+  - areaId: ocean
+    areaName: "\uBC14\uB2E4"
+    areaType: 3
+    difficulty: 1
+    availableResources: 
+    availableAnimals: 
+    availableMonsters: 
+  - areaId: cave
+    areaName: "\uB3D9\uAD74"
+    areaType: 4
+    difficulty: 4
+    availableResources: stone_ore,iron_ore,mithril_ore,mushroom
+    availableAnimals: 
+    availableMonsters: goblin_warrior,skeleton
+  - areaId: goblin_village
+    areaName: "\uACE0\uBE14\uB9B0 \uB9C8\uC744"
+    areaType: 5
+    difficulty: 5
+    availableResources: 
+    availableAnimals: 
+    availableMonsters: goblin_chief
+  shopItems:
+  - shopItemId: shop_wood
+    itemId: wood
+    buyPrice: 5
+    sellPrice: 2
+    stockAmount: -1
+    restockInterval: 1
+  - shopItemId: shop_stone
+    itemId: stone
+    buyPrice: 8
+    sellPrice: 3
+    stockAmount: -1
+    restockInterval: 1
+  - shopItemId: shop_iron_ore
+    itemId: iron_ore
+    buyPrice: 30
+    sellPrice: 15
+    stockAmount: 50
+    restockInterval: 3
+  - shopItemId: shop_carrot_seed
+    itemId: carrot_seed
+    buyPrice: 30
+    sellPrice: 0
+    stockAmount: -1
+    restockInterval: 1
+  - shopItemId: shop_tomato_seed
+    itemId: tomato_seed
+    buyPrice: 45
+    sellPrice: 0
+    stockAmount: -1
+    restockInterval: 1
+  - shopItemId: shop_wood_axe
+    itemId: wood_axe
+    buyPrice: 150
+    sellPrice: 50
+    stockAmount: 5
+    restockInterval: 7
+  - shopItemId: shop_iron_sword
+    itemId: iron_sword
+    buyPrice: 500
+    sellPrice: 150
+    stockAmount: 3
+    restockInterval: 7
+  - shopItemId: shop_healing_potion
+    itemId: healing_potion
+    buyPrice: 100
+    sellPrice: 20
+    stockAmount: 10
+    restockInterval: 3

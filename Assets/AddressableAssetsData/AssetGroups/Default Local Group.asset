@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Default Local Group
+  m_GUID: 89c7f3a726bdb474298cf56d497da453
+  m_SerializeEntries:
+  - m_GUID: 3414eacb4b7f80d488e3965c89c1ca78
+    m_Address: Assets/Prefabs/potato_05_0.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5790871d326542e47b60ed0ed6ab8ff5
+    m_Address: Items/potato
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6101c827314d07b4583f952cfd2f6b4a
+    m_Address: Assets/ScriptableObjects/GameData/GameData.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 78252f912af31ac488fc04e3bad1989e
+    m_Address: Assets/Prefabs/Wood.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: c968d76f503d2ea4c874fb6aeb99ee47, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: aab775d803f5b9c4abdf126ad9426c24, type: 2}
+    - {fileID: 11400000, guid: b62e02fc616daac41b4765a76175547d, type: 2}

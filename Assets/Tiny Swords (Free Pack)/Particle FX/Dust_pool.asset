@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: Dust_pool
+  m_EditorClassIdentifier: Unity.2D.Tilemap.Extras::UnityEngine.Tilemaps.AnimatedTile
+  m_AnimatedSprites:
+  - {fileID: -2621509655020265552, guid: 0ee2550dafe935a4bad26591be976879, type: 3}
+  - {fileID: -2114870733032434893, guid: 0ee2550dafe935a4bad26591be976879, type: 3}
+  - {fileID: 6313582548390615258, guid: 0ee2550dafe935a4bad26591be976879, type: 3}
+  - {fileID: 1149058456690338308, guid: 0ee2550dafe935a4bad26591be976879, type: 3}
+  - {fileID: 4370710136979597320, guid: 0ee2550dafe935a4bad26591be976879, type: 3}
+  - {fileID: -6013413640222774313, guid: 0ee2550dafe935a4bad26591be976879, type: 3}
+  - {fileID: -8883697218970350506, guid: 0ee2550dafe935a4bad26591be976879, type: 3}
+  - {fileID: 4252412598195817604, guid: 0ee2550dafe935a4bad26591be976879, type: 3}
+  - {fileID: 2654771369133828639, guid: 0ee2550dafe935a4bad26591be976879, type: 3}
+  - {fileID: 6650317271201818461, guid: 0ee2550dafe935a4bad26591be976879, type: 3}
+  m_MinSpeed: 20
+  m_MaxSpeed: 20
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0
+  m_TileAnimationFlags: 0

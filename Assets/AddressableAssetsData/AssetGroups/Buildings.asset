@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Buildings
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Buildings
+  m_GUID: f0da79e98516720488163d615be135e9
+  m_SerializeEntries:
+  - m_GUID: 9528e523ef2f4cf40a54f3bdba850ba7
+    m_Address: House
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eaa45036dacfa8840b171f421bd8dd73
+    m_Address: Boat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fab13c677fa93c9419a1350473315576
+    m_Address: BigHouse
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: c968d76f503d2ea4c874fb6aeb99ee47, type: 2}
+  m_SchemaSet:
+    m_Schemas: []
