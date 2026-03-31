@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b3483c6398aa8a43845cb9329b3c380, type: 3}
+  m_Name: Wheat Data
+  m_EditorClassIdentifier: Assembly-CSharp::SunnysideIsland.GameData.CropData
+  cropId: Wheat
+  cropName: "\uBC00"
+  growthDays: 10
+  yieldAmount: 1
+  seasons: spring
+  buyPrice: 15
+  sellPrice: 15
+  seedItemId: wheat seed
+  cropItemId: wheat
+  specialEffect: 
+  growthSprites:
+  - {fileID: 2278089367008173814, guid: d668cf8d8b1c69e4e90382020bdbfcfc, type: 3}
+  - {fileID: -2495102797091314606, guid: 758ce3a85bb24214192dff87906166f1, type: 3}
+  - {fileID: 6748928525920526408, guid: 99ed94a71c1ddad42b25b05f6f92b50b, type: 3}
+  - {fileID: -2082926400210208391, guid: 88ba2165a19ac4f4181bb4dc0a4ec2a5, type: 3}
+  - {fileID: -999495800006411920, guid: bbc3244f2fb24bd4d9198f0eefe22783, type: 3}
+  - {fileID: -666870068449178133, guid: 481263ff35516a8469dfc6b9926260f1, type: 3}
+  _cropScale: 2.3
