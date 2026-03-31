@@ -1,0 +1,48 @@
+<!-- views/layout.ejs -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | Community Lounge</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Glass Header -->
+  <header class="glass-header">
+    <div class="container">
+      <a href="/" class="logo">
+        <span class="logo-text">Community Lounge</span>
+      </a>
+      <nav class="nav-menu">
+        <% if (user) { %>
+          <span class="user-info">
+            <span class="neon-text pink"><%= user.nickname %></span>님
+          </span>
+          <a href="/posts/new" class="btn btn-neon-blue">글쓰기</a>
+          <a href="/auth/logout" class="btn btn-secondary">로그아웃</a>
+        <% } else { %>
+          <a href="/auth/login" class="btn btn-neon-pink">로그인</a>
+          <a href="/auth/register" class="btn btn-secondary">회원가입</a>
+        <% } %>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <%- body %>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="glass-footer">
+    <div class="container">
+      <p class="footer-text">© 2026 Community Lounge</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
