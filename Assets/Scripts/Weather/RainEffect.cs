@@ -1,4 +1,6 @@
 using UnityEngine;
+using SunnysideIsland.Events;
+using SunnysideIsland.GameData;
 
 namespace SunnysideIsland.Weather
 {
@@ -21,10 +23,48 @@ namespace SunnysideIsland.Weather
             Debug.Log("[RainEffect] Awake called");
             CreateParticleSystem();
         }
+
+        private void Start()
+        {
+            // 이벤트 구독
+            EventBus.Subscribe<WeatherChangedEvent>(OnWeatherChanged);
+            
+            // 초기 날씨 체크
+            CheckInitialWeather();
+        }
+
+        private void OnDestroy()
+        {
+            // 이벤트 구독 해제
+            EventBus.Unsubscribe<WeatherChangedEvent>(OnWeatherChanged);
+        }
         
         private void Update()
         {
             FollowCamera();
+        }
+
+        private void CheckInitialWeather()
+        {
+            var weatherSystem = FindObjectOfType<WeatherSystem>();
+            if (weatherSystem != null)
+            {
+                UpdateByWeather(weatherSystem.CurrentWeather);
+            }
+        }
+
+        private void OnWeatherChanged(WeatherChangedEvent evt)
+        {
+            UpdateByWeather(evt.CurrentWeather);
+        }
+
+        private void UpdateByWeather(WeatherType weather)
+        {
+            bool isRainy = weather == WeatherType.Rainy || weather == WeatherType.Stormy;
+            if (isRainy)
+                Play();
+            else
+                Stop();
         }
         
         private void CreateParticleSystem()
@@ -86,6 +126,8 @@ namespace SunnysideIsland.Weather
         
         private void FollowCamera()
         {
+            if (!Application.isPlaying) return; // 에디터 모드에서는 자동 이동 중지
+
             if (_targetCamera == null)
             {
                 var cam = UnityEngine.Camera.main;
@@ -99,7 +141,7 @@ namespace SunnysideIsland.Weather
             
             // 카메라 위치 따라가기 (Z축은 0으로 고정 - 2D)
             Vector3 pos = _targetCamera.position;
-            pos.y = 12f;
+            pos.y += 2f; // 카메라보다 2 위에 위치 (12에서 수정)
             pos.z = 0f; // Z축 0으로 고정 (2D)
             transform.position = pos;
         }
@@ -110,10 +152,6 @@ namespace SunnysideIsland.Weather
             {
                 _particleSystem.Play();
                 Debug.Log("[RainEffect] Play() called - Particle system playing");
-            }
-            else
-            {
-                Debug.LogWarning($"[RainEffect] Cannot play - System: {_particleSystem != null}, Playing: {_particleSystem?.isPlaying}");
             }
         }
         

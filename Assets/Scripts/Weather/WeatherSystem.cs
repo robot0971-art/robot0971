@@ -5,7 +5,7 @@ using UnityEngine.Rendering.Universal;
 using SunnysideIsland.Core;
 using SunnysideIsland.Events;
 using SunnysideIsland.GameData;
-using DI;
+using SunnysideIsland.Pool;
 
 namespace SunnysideIsland.Weather
 {
@@ -43,6 +43,27 @@ namespace SunnysideIsland.Weather
         [Tooltip("RainEffect_Manual 프리팹")]
         [SerializeField] private GameObject _rainEffectPrefab;
         
+        [Tooltip("RainEffect 풀 초기 사이즈")]
+        [SerializeField] private int _rainPoolInitialSize = 1;
+        
+        [Tooltip("RainEffect 풀 최대 사이즈")]
+        [SerializeField] private int _rainPoolMaxSize = 3;
+        
+        [Header("=== Time Phase Lighting ===")]
+        [Tooltip("새벽(4-6시) 조명 세기")]
+        [SerializeField] [Range(0.1f, 2f)] private float _dawnIntensity = 0.4f;
+        
+        [Tooltip("밤(21-4시) 조명 세기")]
+        [SerializeField] [Range(0.1f, 2f)] private float _nightIntensity = 0.15f;
+        
+        [Header("=== Time Phase References ===")]
+        [Tooltip("TimeManager 참조")]
+        [SerializeField] private TimeManager _timeManager;
+        
+        // 현재 시간대
+        private TimePhase _currentTimePhase = TimePhase.Morning;
+        private bool _isNight = false;
+        
         [Header("=== Weather Transition ===")]
         [Tooltip("Cloudy 후 Sunny로 갈 확률")]
         [SerializeField] [Range(0f, 1f)] private float _cloudyToSunnyChance = 0.4f;
@@ -53,8 +74,8 @@ namespace SunnysideIsland.Weather
         [Tooltip("Cloudy 후 Rainy로 갈 확률")]
         [SerializeField] [Range(0f, 1f)] private float _cloudyToRainyChance = 0.3f;
         
-        private TimeManager _timeManager;
-        private GameObject _rainEffectInstance;
+        private ObjectPool _rainEffectPool;
+        private GameObject _activeRainEffect;
         
         public WeatherType CurrentWeather { get; private set; }
         public WeatherType PreviousWeather { get; private set; }
@@ -69,11 +90,26 @@ namespace SunnysideIsland.Weather
         {
             FindGlobalLight();
             InitializeWeather();
+            InitializeRainPool();
         }
         
         private void Start()
         {
             EventBus.Subscribe<DayStartedEvent>(OnDayStarted);
+            EventBus.Subscribe<TimePhaseChangedEvent>(OnTimePhaseChanged);
+            
+            // TimeManager 찾기
+            if (_timeManager == null)
+            {
+                _timeManager = FindObjectOfType<TimeManager>();
+            }
+            
+            // 현재 시간대 확인
+            if (_timeManager != null)
+            {
+                _currentTimePhase = _timeManager.CurrentTimePhase;
+                _isNight = (_currentTimePhase == TimePhase.Night);
+            }
             
             // 초기 날씨 설정
             if (CurrentWeather == WeatherType.Sunny && PreviousWeather == WeatherType.Sunny)
@@ -83,6 +119,20 @@ namespace SunnysideIsland.Weather
             }
         }
         
+        /// <summary>
+        /// 시간대 변경 시 호출
+        /// </summary>
+        private void OnTimePhaseChanged(TimePhaseChangedEvent evt)
+        {
+            _currentTimePhase = evt.CurrentPhase;
+            _isNight = (_currentTimePhase == TimePhase.Night);
+            
+            // 조명 업데이트
+            UpdateLighting();
+            
+            Debug.Log($"[WeatherSystem] Time phase changed: {evt.PreviousPhase} → {evt.CurrentPhase}");
+        }
+        
         private void Update()
         {
             // 시간 체크하여 자동 날씨 변경
@@ -90,11 +140,21 @@ namespace SunnysideIsland.Weather
             {
                 ProgressWeather();
             }
+            
+            // [TEST] N 키로 날씨 강제 변경 (테스트용)
+            #if UNITY_EDITOR
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                Debug.Log("[WeatherSystem] TEST: N key pressed - forcing weather change");
+                ProgressWeather();
+            }
+            #endif
         }
         
         private void OnDestroy()
         {
             EventBus.Unsubscribe<DayStartedEvent>(OnDayStarted);
+            EventBus.Unsubscribe<TimePhaseChangedEvent>(OnTimePhaseChanged);
         }
         
         /// <summary>
@@ -131,6 +191,25 @@ namespace SunnysideIsland.Weather
             CurrentWeather = _defaultWeather;
             PreviousWeather = _defaultWeather;
             UpdateLighting();
+        }
+        
+        /// <summary>
+        /// RainEffect 풀 초기화
+        /// </summary>
+        private void InitializeRainPool()
+        {
+            if (_rainEffectPrefab != null)
+            {
+                _rainEffectPool = new ObjectPool(
+                    _rainEffectPrefab, 
+                    transform, 
+                    _rainPoolInitialSize, 
+                    _rainPoolMaxSize, 
+                    true, 
+                    "RainEffectPool"
+                );
+                Debug.Log("[WeatherSystem] RainEffect pool initialized");
+            }
         }
         
         /// <summary>
@@ -228,7 +307,7 @@ namespace SunnysideIsland.Weather
         }
         
         /// <summary>
-        /// 조명 업데이트
+        /// 조명 업데이트 - 날씨 + 시간대 반영
         /// </summary>
         private void UpdateLighting()
         {
@@ -236,29 +315,43 @@ namespace SunnysideIsland.Weather
             
             float targetIntensity = _sunnyIntensity;
             
-            switch (CurrentWeather)
+            // 밤이면 무조건 밤 조명
+            if (_isNight)
             {
-                case WeatherType.Sunny:
-                case WeatherType.Rainbow:
-                    targetIntensity = _sunnyIntensity;
-                    break;
-                    
-                case WeatherType.Cloudy:
-                    targetIntensity = _cloudyIntensity;
-                    break;
-                    
-                case WeatherType.Rainy:
-                case WeatherType.Stormy:
-                    targetIntensity = _rainyIntensity;
-                    break;
+                targetIntensity = _nightIntensity;
+            }
+            // 새벽이면 새벽 조명
+            else if (_currentTimePhase == TimePhase.Dawn)
+            {
+                targetIntensity = _dawnIntensity;
+            }
+            // 낮이면 날씨에 따라
+            else
+            {
+                switch (CurrentWeather)
+                {
+                    case WeatherType.Sunny:
+                    case WeatherType.Rainbow:
+                        targetIntensity = _sunnyIntensity;
+                        break;
+                        
+                    case WeatherType.Cloudy:
+                        targetIntensity = _cloudyIntensity;
+                        break;
+                        
+                    case WeatherType.Rainy:
+                    case WeatherType.Stormy:
+                        targetIntensity = _rainyIntensity;
+                        break;
+                }
             }
             
             _globalLight.intensity = targetIntensity;
-            Debug.Log($"[WeatherSystem] Light intensity set to {targetIntensity} for {CurrentWeather}");
+            Debug.Log($"[WeatherSystem] Light intensity set to {targetIntensity} (Weather: {CurrentWeather}, TimePhase: {_currentTimePhase})");
         }
         
         /// <summary>
-        /// 비 효과 업데이트
+        /// 비 효과 업데이트 (Pooling 방식)
         /// </summary>
         private void UpdateRainEffect()
         {
@@ -266,22 +359,38 @@ namespace SunnysideIsland.Weather
             
             if (isRainy)
             {
-                if (_rainEffectInstance == null && _rainEffectPrefab != null)
+                // 비가 오는데 활성화된 RainEffect가 없으면 Pool에서 가져오기
+                if (_activeRainEffect == null && _rainEffectPool != null)
                 {
-                    _rainEffectInstance = Instantiate(_rainEffectPrefab, transform);
-                    Debug.Log("[WeatherSystem] Rain effect instantiated");
-                }
-                
-                if (_rainEffectInstance != null)
-                {
-                    _rainEffectInstance.SetActive(true);
+                    _activeRainEffect = _rainEffectPool.Get();
+                    if (_activeRainEffect != null)
+                    {
+                        // 파티클 시스템 재생
+                        var particleSystem = _activeRainEffect.GetComponent<ParticleSystem>();
+                        if (particleSystem != null && !particleSystem.isPlaying)
+                        {
+                            particleSystem.Play();
+                        }
+                        Debug.Log("[WeatherSystem] Rain effect retrieved from pool");
+                    }
                 }
             }
             else
             {
-                if (_rainEffectInstance != null)
+                // 맑을 때는 RainEffect를 Pool에 반환
+                if (_activeRainEffect != null && _rainEffectPool != null)
                 {
-                    _rainEffectInstance.SetActive(false);
+                    // 파티클 먼저 중지
+                    var particleSystem = _activeRainEffect.GetComponent<ParticleSystem>();
+                    if (particleSystem != null && particleSystem.isPlaying)
+                    {
+                        particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                    }
+                    
+                    // Pool에 반환
+                    _rainEffectPool.Return(_activeRainEffect);
+                    _activeRainEffect = null;
+                    Debug.Log("[WeatherSystem] Rain effect returned to pool");
                 }
             }
         }

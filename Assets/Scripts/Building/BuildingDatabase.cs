@@ -889,6 +889,32 @@ namespace SunnysideIsland.Building
                 IsUnlockedDefault = true
             });
 
+            // 모닥불
+            buildings.Add(new DetailedBuildingData
+            {
+                BuildingId = "Campfire",
+                BuildingName = "모닥불",
+                Description = "밤을 밝혀주는 따뜻한 모닥불. 나무 2개로 6시간 동안 불을 붙일 수 있다.",
+                Category = BuildingCategory.Decoration,
+                Type = BuildingTypeExt.Production,
+                Size = new BuildingSize(1, 1),
+                BuildTime = 0,
+                Cost = new ConstructionCost
+                {
+                    Gold = 0,
+                    Materials = new List<string>(), // 배치 시 비용 없음 (점화 시 나무 2개)
+                    Amounts = new List<int>()
+                },
+                Effects = new List<BuildingEffect>
+                {
+                    new BuildingEffect { EffectType = "Light", Value = 1f, Description = "밤에 조명 제공" },
+                    new BuildingEffect { EffectType = "Happiness", Value = 5, Description = "행복도 +5" }
+                },
+                MaxResidents = 0,
+                DailyIncome = 0,
+                IsUnlockedDefault = true
+            });
+
             // 분수대
             buildings.Add(new DetailedBuildingData
             {

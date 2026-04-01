@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
 using TMPro;
+using SunnysideIsland;
 using SunnysideIsland.Events;
 using SunnysideIsland.Building;
 
@@ -22,6 +23,7 @@ namespace SunnysideIsland.UI.Building
         [SerializeField] private BuildingDatabase _buildingDatabase;
         
         [Header("=== Icon Prefabs (Addressables) ===")]
+        [SerializeField] private AssetReferenceGameObject _campfireIconPrefab;
         [SerializeField] private AssetReferenceGameObject _defaultHousePrefab;
         [SerializeField] private AssetReferenceGameObject _bigHousePrefab;
         [SerializeField] private AssetReferenceGameObject _escapeBoatPrefab;

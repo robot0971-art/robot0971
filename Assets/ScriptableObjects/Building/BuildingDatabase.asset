@@ -854,6 +854,30 @@ MonoBehaviour:
     UpgradeTo: 
     IsUnlockedDefault: 0
     BuildingPrefab: {fileID: 0}
+  - BuildingId: campfire
+    BuildingName: "\uBAA8\uB2ED\uBD88"
+    Description: "\uBD88\uC744 \uBD99\uC774\uBA74 \uC624\uB79C \uC2DC\uAC04 \uB3D9\uC548 \uBD88\uC774 \uD0C0\uC625\uB2C8\uB2E4."
+    Category: 4
+    Type: 4
+    Size:
+      Width: 1
+      Height: 1
+    BuildTime: 0
+    Cost:
+      Gold: 0
+      Materials: []
+      Amounts: 
+    PlacementType: 0
+    PreviewScale: 1
+    Effects: []
+    MaxResidents: 0
+    TouristCapacity: 0
+    DailyIncome: 0
+    UnlocksAtQuest: []
+    UpgradeFrom: 
+    UpgradeTo: 
+    IsUnlockedDefault: 1
+    BuildingPrefab: {fileID: 0}
   - BuildingId: Watchtower
     BuildingName: "\uAC10\uC2DC\uD0D1"
     Description: "\uC8FC\uBCC0\uC744 \uAC10\uC2DC\uD560 \uC218 \uC788\uB294 \uD0D1."

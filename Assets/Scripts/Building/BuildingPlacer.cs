@@ -19,7 +19,8 @@ namespace SunnysideIsland.Building
 
         [Header("=== Preview ===")]
         [SerializeField] private GameObject _previewPrefab;
-        [SerializeField] private float _previewScale = 1f;
+        [Tooltip("미리보기 오브젝트의 추가 스케일")]
+        [SerializeField] private Vector3 _previewScale = Vector3.one;
 
         [Header("=== Building Range ===")]
         [SerializeField] private float _buildRange = 4f;
@@ -160,8 +161,7 @@ namespace SunnysideIsland.Building
             if (_previewObject == null) return;
 
             _previewOriginalScale = _previewObject.transform.localScale;
-            float scale = _previewScale * _currentBuildingData.PreviewScale;
-            _previewObject.transform.localScale = _previewOriginalScale * scale;
+            ApplyPreviewScale();
 
             if (_previewRenderer != null)
             {
@@ -169,6 +169,24 @@ namespace SunnysideIsland.Building
             }
 
             SetPreviewColor(false);
+        }
+
+        private void ApplyPreviewScale()
+        {
+            if (_previewObject == null || _currentBuildingData == null) return;
+            
+            // 기존 스케일에 인스펙터 설정값과 데이터 설정값을 곱함
+            Vector3 targetScale = _previewOriginalScale;
+            targetScale.x *= _previewScale.x * _currentBuildingData.PreviewScale;
+            targetScale.y *= _previewScale.y * _currentBuildingData.PreviewScale;
+            targetScale.z *= _previewScale.z * _currentBuildingData.PreviewScale;
+            
+            _previewObject.transform.localScale = targetScale;
+        }
+
+        private void OnValidate()
+        {
+            ApplyPreviewScale();
         }
 
         private void Update()

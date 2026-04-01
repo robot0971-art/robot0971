@@ -9,6 +9,7 @@ namespace SunnysideIsland.Building
     {
         [Header("=== References ===")]
         [SerializeField] private BuildingPlacer _placer;
+        [SerializeField] private CampfirePlacer _campfirePlacer;
         [SerializeField] private BuildingDatabase _buildingDatabase;
         [SerializeField] private BuildingManager _buildingManager;
         [SerializeField] private InventorySystem _inventorySystem;
@@ -33,6 +34,11 @@ namespace SunnysideIsland.Building
             if (_placer != null)
             {
                 _placer.Initialize(this, _buildingManager);
+            }
+            
+            if (_campfirePlacer != null)
+            {
+                _campfirePlacer.Initialize(this);
             }
         }
 
@@ -140,7 +146,22 @@ namespace SunnysideIsland.Building
 
         private void OnPlacementStarted(BuildingPlacementStartedEvent evt)
         {
-            EnterBuildMode(evt.BuildingId);
+            // Campfire는 별도의 Placer 사용
+            if (evt.BuildingId.ToLower() == "campfire")
+            {
+                if (_campfirePlacer != null)
+                {
+                    _campfirePlacer.StartPlacement();
+                }
+                else
+                {
+                    Debug.LogError("[BuildingSystem] CampfirePlacer not assigned");
+                }
+            }
+            else
+            {
+                EnterBuildMode(evt.BuildingId);
+            }
         }
 
         private void OnConstructionCancelled(ConstructionCancelledEvent evt)
