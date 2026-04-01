@@ -13,13 +13,16 @@ namespace SunnysideIsland.Building
 
         [Header("=== Settings ===")]
         [SerializeField] private Vector3 _offset = new Vector3(0, -1f, 0);
+        [SerializeField] private float _progressBarScale = 1.0f;
         [SerializeField] private Sprite _hammerSprite;
 
         private Building _building;
+        private Vector3 _initialLocalScale;
 
         private void Awake()
         {
             _building = GetComponentInParent<Building>();
+            _initialLocalScale = transform.localScale;
 
             if (_progressPanel != null)
             {
@@ -38,6 +41,7 @@ namespace SunnysideIsland.Building
             {
                 UpdateVisibility();
                 UpdateProgress();
+                UpdateTransform();
             }
         }
 
@@ -47,10 +51,30 @@ namespace SunnysideIsland.Building
 
             UpdateVisibility();
             UpdateProgress();
+            UpdateTransform();
+        }
 
-            if (_progressPanel != null && _progressPanel.activeSelf)
+        private void UpdateTransform()
+        {
+            if (_building == null) return;
+
+            // 건물에 설정된 오프셋 적용
+            transform.localPosition = _building.ProgressBarOffset;
+
+            // 부모의 월드 스케일을 역으로 계산하여 일정한 크기 유지 + 건물에 설정된 배율 적용
+            if (transform.parent != null)
             {
-                _progressPanel.transform.position = _building.transform.position + _offset;
+                Vector3 parentScale = transform.parent.lossyScale;
+                float customScale = _building.ProgressBarScale;
+
+                if (parentScale.x != 0 && parentScale.y != 0 && parentScale.z != 0)
+                {
+                    transform.localScale = new Vector3(
+                        (_initialLocalScale.x * customScale) / parentScale.x,
+                        (_initialLocalScale.y * customScale) / parentScale.y,
+                        (_initialLocalScale.z * customScale) / parentScale.z
+                    );
+                }
             }
         }
 

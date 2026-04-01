@@ -129,20 +129,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SunnysideIsland.Building.Building
   _buildingData:
-    BuildingId: 
-    BuildingName: 
-    Description: 
-    Category: 0
-    Type: 0
+    BuildingId: Boat
+    BuildingName: "\uD0C8\uCD9C\uC6A9 \uBC30"
+    Description: "\uC12C\uC744 \uD0C8\uCD9C\uD560 \uC218 \uC788\uB294 \uBC30. \uBC14\uB2F7\uAC00\uC5D0\uB9CC
+      \uC9C0\uC744 \uC218 \uC788\uB2E4."
+    Category: 3
+    Type: 4
     Size:
-      Width: 0
-      Height: 0
-    BuildTime: 0
+      Width: 3
+      Height: 2
+    BuildTime: 10
     Cost:
       Gold: 0
-      Materials: []
-      Amounts: 
-    PlacementType: 0
+      Materials:
+      - wood
+      Amounts: 32000000
+    PlacementType: 1
     PreviewScale: 1
     Effects: []
     MaxResidents: 0
@@ -151,10 +153,12 @@ MonoBehaviour:
     UnlocksAtQuest: []
     UpgradeFrom: 
     UpgradeTo: 
-    IsUnlockedDefault: 0
+    IsUnlockedDefault: 1
     BuildingPrefab: {fileID: 1708952839880366167}
-  _spriteRenderer: {fileID: 4997431954572451803}
+  _spriteRenderer: {fileID: 0}
   _constructionProgressBarPrefab: {fileID: 100000, guid: c4bca5bf482b8e0499bb1a1a27e4f724, type: 3}
+  _progressBarOffset: {x: 0, y: -0.18, z: 0}
+  _progressBarScale: 3
 --- !u!70 &3276651412519181113
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

@@ -109,32 +109,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SunnysideIsland.Building.Building
   _buildingData:
-    BuildingId: 
-    BuildingName: 
-    Description: 
+    BuildingId: LargeHouse
+    BuildingName: "\uD070 \uC9D1"
+    Description: "\uB113\uC740 2\uCE35 \uC9D1. \uC5EC\uB7EC \uAC00\uC871\uC774 \uC0B4
+      \uC218 \uC788\uB2E4."
     Category: 0
     Type: 0
     Size:
-      Width: 0
-      Height: 0
-    BuildTime: 0
+      Width: 5
+      Height: 5
+    BuildTime: 6
     Cost:
       Gold: 0
-      Materials: []
-      Amounts: 
+      Materials:
+      - wood
+      Amounts: 1e000000
     PlacementType: 0
-    PreviewScale: 1
-    Effects: []
-    MaxResidents: 0
+    PreviewScale: 0.6
+    Effects:
+    - EffectType: Rest
+      Value: 1.2
+      Description: "\uD734\uC2DD \uD6A8\uC728 120%"
+    - EffectType: Happiness
+      Value: 20
+      Description: "\uD589\uBCF5\uB3C4 +20"
+    MaxResidents: 8
     TouristCapacity: 0
     DailyIncome: 0
     UnlocksAtQuest: []
-    UpgradeFrom: 
-    UpgradeTo: 
-    IsUnlockedDefault: 0
+    UpgradeFrom: House
+    UpgradeTo: Mansion
+    IsUnlockedDefault: 1
     BuildingPrefab: {fileID: 2570175521707891072}
-  _spriteRenderer: {fileID: 5734839685180469156}
+  _spriteRenderer: {fileID: 0}
   _constructionProgressBarPrefab: {fileID: 100000, guid: c4bca5bf482b8e0499bb1a1a27e4f724, type: 3}
+  _progressBarOffset: {x: 0, y: -1.15, z: 0}
+  _progressBarScale: 3
 --- !u!1839735485 &6780854941280404659
 Tilemap:
   m_ObjectHideFlags: 0

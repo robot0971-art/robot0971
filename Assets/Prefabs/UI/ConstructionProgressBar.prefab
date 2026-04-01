@@ -55,6 +55,7 @@ MonoBehaviour:
   _progressSlider: {fileID: 3378487707474655550}
   _hammerIcon: {fileID: 4954432579584825652}
   _offset: {x: 0, y: -1.8, z: 0}
+  _progressBarScale: 1
   _hammerSprite: {fileID: 0}
 --- !u!223 &1877833959045850301
 Canvas:
@@ -101,7 +102,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!1 &100001
 GameObject:
   m_ObjectHideFlags: 0

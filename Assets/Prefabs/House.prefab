@@ -135,6 +135,8 @@ MonoBehaviour:
     BuildingPrefab: {fileID: 1216983113221114870}
   _spriteRenderer: {fileID: 1159170491121235108}
   _constructionProgressBarPrefab: {fileID: 100000, guid: c4bca5bf482b8e0499bb1a1a27e4f724, type: 3}
+  _progressBarOffset: {x: 0, y: -1, z: 0}
+  _progressBarScale: 3
 --- !u!1839735485 &4323885158318513197
 Tilemap:
   m_ObjectHideFlags: 0

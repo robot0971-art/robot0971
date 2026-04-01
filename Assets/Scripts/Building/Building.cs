@@ -36,8 +36,12 @@ namespace SunnysideIsland.Building
 
         [Header("=== Construction UI ===")]
         [SerializeField] private GameObject _constructionProgressBarPrefab;
+        [SerializeField] private Vector3 _progressBarOffset = new Vector3(0, -1f, 0);
+        [SerializeField] private float _progressBarScale = 1.0f;
 
         public string BuildingId => _buildingData?.BuildingId ?? "unknown";
+        public Vector3 ProgressBarOffset => _progressBarOffset;
+        public float ProgressBarScale => _progressBarScale;
         public BuildingState State { get; private set; } = BuildingState.Preview;
         public int CurrentLevel { get; private set; } = 1;
         public int ConstructionProgress => _constructionProgress;
@@ -58,8 +62,8 @@ namespace SunnysideIsland.Building
         {
             if (_buildingData != null)
             {
-                // 데이터의 스케일 우선 적용
-                transform.localScale = Vector3.one * _buildingData.PreviewScale;
+                // 데이터의 스케일을 강제로 적용하는 대신 프리펩의 설정을 유지합니다.
+                // transform.localScale = Vector3.one * _buildingData.PreviewScale;
             }
         }
 
@@ -191,18 +195,6 @@ namespace SunnysideIsland.Building
             if (_constructionProgressBarPrefab != null)
             {
                 _progressBarInstance = Instantiate(_constructionProgressBarPrefab, transform);
-                _progressBarInstance.transform.localPosition = new Vector3(0, -1f, 0);
-
-                Vector3 parentScale = transform.localScale;
-                if (parentScale.x != 0 && parentScale.y != 0)
-                {
-                    float targetWorldScale = 0.02f;
-                    _progressBarInstance.transform.localScale = new Vector3(
-                        targetWorldScale / parentScale.x,
-                        targetWorldScale / parentScale.y,
-                        1f
-                    );
-                }
             }
         }
 
