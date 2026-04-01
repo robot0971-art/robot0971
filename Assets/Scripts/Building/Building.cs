@@ -33,10 +33,6 @@ namespace SunnysideIsland.Building
         [Header("=== Building Data ===")]
         [SerializeField] private DetailedBuildingData _buildingData;
         [SerializeField] private SpriteRenderer _spriteRenderer;
-        
-        [Header("=== Scale Settings ===")]
-        [Tooltip("건물 오브젝트의 스케일")]
-        [SerializeField] private Vector3 _buildingScale = Vector3.one;
 
         [Header("=== Construction UI ===")]
         [SerializeField] private GameObject _constructionProgressBarPrefab;
@@ -55,28 +51,16 @@ namespace SunnysideIsland.Building
         public void SetBuildingData(DetailedBuildingData data)
         {
             _buildingData = data;
-            ApplyScales();
+            ApplyBuildingData();
         }
 
-        private void Awake()
+        private void ApplyBuildingData()
         {
-            ApplyScales();
-        }
-
-        private void ApplyScales()
-        {
-            float previewScaleValue = _buildingData != null ? _buildingData.PreviewScale : 1f;
-            Vector3 targetScale = Vector3.one * previewScaleValue;
-            targetScale.x *= _buildingScale.x;
-            targetScale.y *= _buildingScale.y;
-            targetScale.z *= _buildingScale.z;
-            
-            transform.localScale = targetScale;
-        }
-
-        private void OnValidate()
-        {
-            ApplyScales();
+            if (_buildingData != null)
+            {
+                // 데이터의 스케일 우선 적용
+                transform.localScale = Vector3.one * _buildingData.PreviewScale;
+            }
         }
 
         public string SaveKey => $"Building_{BuildingId}_{gameObject.GetInstanceID()}";

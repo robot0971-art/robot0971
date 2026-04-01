@@ -21,13 +21,10 @@ namespace SunnysideIsland.Building
         [SerializeField] private CampfireParticleConnector _particleConnector; // 향상된 파티클 커넥터 (선택적)
         
         [Header("=== Scale Settings ===")]
-        [Tooltip("전체 모닥불 오브젝트의 스케일")]
-        [SerializeField] private Vector3 _campfireScale = Vector3.one;
-        
-        [Tooltip("베이스(바닥 타일)의 스케일")]
+        [Tooltip("베이스(바닥 타일)의 스케일 (게임 시작 시 적용)")]
         [SerializeField] private Vector3 _baseScale = Vector3.one;
         
-        [Tooltip("불꽃(Campfire_Fire)의 스케일")]
+        [Tooltip("불꽃(Campfire_Fire)의 스케일 (생성 시 적용)")]
         [SerializeField] private Vector3 _fireScale = Vector3.one;
         
         [Header("=== Fire Pooling ===")]
@@ -101,19 +98,27 @@ namespace SunnysideIsland.Building
         /// </summary>
         private void ApplyScales()
         {
-            // 전체 오브젝트 스케일
-            transform.localScale = _campfireScale;
-            
-            // 베이스 스케일
+            // 베이스 스케일 적용 (자식 오브젝트)
             if (_baseRenderer != null)
             {
                 _baseRenderer.transform.localScale = _baseScale;
             }
         }
         
-        private void OnValidate()
+        /// <summary>
+        /// 인스펙터 우클릭 메뉴를 통해 수동으로 스케일 적용
+        /// </summary>
+        [ContextMenu("Apply Base Scale Now")]
+        public void ManualApplyBaseScale()
         {
             ApplyScales();
+            Debug.Log("[Campfire] Base scale applied manually.");
+        }
+        
+        private void OnValidate()
+        {
+            // 에디터에서 다른 값을 수정할 때 실수로 본체 스케일을 건드리지 않도록
+            // 루트 transform.localScale 대입문을 제거했습니다.
             
             if (_campfireLight != null)
             {

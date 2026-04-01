@@ -63,6 +63,17 @@ namespace SunnysideIsland.Building
             {
                 _playerTransform = player.transform;
                 _playerAnimator = player.GetComponent<Animator>();
+                
+                if (_playerAnimator == null)
+                {
+                    _playerAnimator = player.GetComponentInChildren<Animator>();
+                }
+                
+                Debug.Log($"[CampfirePlacer] Initialize - Player: {player.name}, Animator: {(_playerAnimator != null ? _playerAnimator.gameObject.name : "NULL")}");
+            }
+            else
+            {
+                Debug.LogWarning("[CampfirePlacer] Player not found!");
             }
 
             SetupInputActions();
@@ -276,23 +287,30 @@ namespace SunnysideIsland.Building
             }
 
             // Hammer 애니메이션 2회
+            Debug.Log($"[CampfirePlacer] PlayerAnimator: {(_playerAnimator != null ? "Found" : "NULL")}");
             if (_playerAnimator != null)
             {
+                Debug.Log("[CampfirePlacer] Starting Hammer animation...");
                 for (int i = 0; i < 2; i++)
                 {
                     _playerAnimator.SetTrigger(AnimHammer);
+                    Debug.Log($"[CampfirePlacer] Hammer trigger set ({i + 1}/2)");
 
                     // 애니메이션 완료 대기
                     yield return new WaitForSeconds(0.5f);
 
+                    int waitFrames = 0;
                     while (_playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("hamering"))
                     {
+                        waitFrames++;
                         yield return null;
                     }
+                    Debug.Log($"[CampfirePlacer] Hammer animation ended (waited {waitFrames} frames)");
                 }
             }
             else
             {
+                Debug.Log("[CampfirePlacer] No PlayerAnimator - skipping animation");
                 // Animator 없으면 딜레이만
                 yield return new WaitForSeconds(1f);
             }

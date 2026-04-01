@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8395815618398740263}
   - component: {fileID: 5047026466558787554}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 6, y: 6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3401330110075248128}
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 5
   m_MaskInteraction: 0
   m_Sprite: {fileID: 6315770005435542194, guid: cb94885048ba13b45bdb5e36860e298a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 3117824464175348366}
   - component: {fileID: 3975157209465313372}
   - component: {fileID: 4228862477175937045}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Campfire _ Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0.021999996, y: 0.10500018, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 3.7074192}
+  m_LocalScale: {x: 5, y: 4, z: 3.7074192}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3401330110075248128}
@@ -208,7 +208,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.3
+      scalar: 0.7
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -4960,7 +4960,7 @@ GameObject:
   m_Component:
   - component: {fileID: 239390829417891607}
   - component: {fileID: 6679132828050132865}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5045,9 +5045,9 @@ GameObject:
   - component: {fileID: 3401330110075248128}
   - component: {fileID: 6497331343739260819}
   - component: {fileID: 8901922204834855547}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Campfire
-  m_TagString: Untagged
+  m_TagString: CampFire
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5062,7 +5062,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -8.14, y: 18.13, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 7, y: 7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8160985279533878446}
@@ -5085,9 +5085,8 @@ MonoBehaviour:
   _baseRenderer: {fileID: 5047026466558787554}
   _campfireParticles: {fileID: 7059935032243080003, guid: 186ebc49efd347d4e930219dd857e6cb, type: 3}
   _particleConnector: {fileID: 0}
-  _campfireScale: {x: 1, y: 1, z: 1}
   _baseScale: {x: 1, y: 1, z: 1}
-  _fireScale: {x: 1, y: 1, z: 1}
+  _fireScale: {x: 7, y: 7, z: 1}
   _firePoolName: CampfireFire
   _fireSpawnPoint: {fileID: 0}
   _campfireLight: {fileID: 6679132828050132865}
@@ -5131,7 +5130,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.011147939, y: -0.002229482}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5141,5 +5140,5 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.3444996, y: 0.2820711}
   m_EdgeRadius: 0
