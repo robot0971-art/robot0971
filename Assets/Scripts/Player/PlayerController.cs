@@ -397,25 +397,39 @@ namespace SunnysideIsland.Player
             }
 
             RaycastHit2D hit = Physics2D.Raycast(origin, _facingDirection, 1.0f, _interactableLayer);
-            if (hit.collider != null && hit.collider.TryGetComponent(out FarmPlot plot))
+            if (hit.collider != null)
             {
-                if (plot.IsEmpty)
+                // IInteractable 체크 (Campfire, NPC, 상자 등)
+                if (hit.collider.TryGetComponent(out IInteractable interactable))
                 {
-                    plot.Plant("potato", _potatoData);
-                }
-                else
-                {
-                    if (plot.IsReady)
+                    if (interactable.CanInteract())
                     {
-                        plot.Harvest();
-                        _animator.SetTrigger("Harvest");
+                        interactable.Interact();
+                        return true;
+                    }
+                }
+                
+                // FarmPlot 로직 유지
+                if (hit.collider.TryGetComponent(out FarmPlot plot))
+                {
+                    if (plot.IsEmpty)
+                    {
+                        plot.Plant("potato", _potatoData);
                     }
                     else
                     {
-                        ExecuteWatering();
+                        if (plot.IsReady)
+                        {
+                            plot.Harvest();
+                            _animator.SetTrigger("Harvest");
+                        }
+                        else
+                        {
+                            ExecuteWatering();
+                        }
                     }
+                    return true;
                 }
-                return true;
             }
             return false;
         }
