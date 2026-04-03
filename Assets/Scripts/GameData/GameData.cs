@@ -46,14 +46,15 @@ namespace SunnysideIsland.GameData
         public List<EventData> events = new List<EventData>();
         public List<AchievementData> achievements = new List<AchievementData>();
         
-        [Header("=== World ===")]
-        public List<TimeOfDayData> timeOfDayData = new List<TimeOfDayData>();
-        public List<WeatherData> weatherData = new List<WeatherData>();
-        public List<ResourceSpawnData> resourceSpawns = new List<ResourceSpawnData>();
-        public List<AreaData> areas = new List<AreaData>();
-        
-        [Header("=== Shops ===")]
-        public List<ShopItemData> shopItems = new List<ShopItemData>();
+    [Header("=== World ===")]
+    public List<TimeOfDayData> timeOfDayData = new List<TimeOfDayData>();
+    public List<WeatherData> weatherData = new List<WeatherData>();
+    public List<ResourceSpawnData> resourceSpawns = new List<ResourceSpawnData>();
+    public List<AreaData> areas = new List<AreaData>();
+    public List<SeaDiscoveryData> seaDiscoveryItems = new List<SeaDiscoveryData>();
+    
+    [Header("=== Shops ===")]
+    public List<ShopItemData> shopItems = new List<ShopItemData>();
 
         // Helper Methods
         public ItemData GetItem(string itemId)

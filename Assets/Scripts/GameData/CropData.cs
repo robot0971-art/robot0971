@@ -21,6 +21,10 @@ namespace SunnysideIsland.GameData
         [Column("YieldAmount")]
         public int yieldAmount;
 
+        [Header("수확량 (랜덤 범위)")]
+        public int minYield = 1;
+        public int maxYield = 1;
+
         [Header("경제성")]
         [Column("Seasons")]
         public string seasons;

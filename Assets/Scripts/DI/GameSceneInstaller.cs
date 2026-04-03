@@ -75,6 +75,7 @@ namespace DI
                 Container.RegisterInstance(_inventorySystem);
                 Container.RegisterInstance<IInventorySystem>(_inventorySystem);
             }
+            Container.Register<IItemConsumptionService, ItemConsumptionService>();
             if (_farmingManager != null) Container.RegisterInstance(_farmingManager);
             if (_cropSelectionSystem != null) Container.RegisterInstance<ICropSelectionSystem>(_cropSelectionSystem);
             if (_fishingSystem != null) Container.RegisterInstance(_fishingSystem);

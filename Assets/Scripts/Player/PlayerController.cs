@@ -31,6 +31,14 @@ namespace SunnysideIsland.Player
         [SerializeField] private LayerMask _treeLayer;
         [SerializeField] private LayerMask _harvestLayer;
 
+        [Header("=== Attack Settings ===")]
+        [SerializeField] private KeyCode _attackKey = KeyCode.F;
+        [SerializeField] private float _attackRange = 1.1f;
+        [SerializeField] private float _attackRadius = 0.45f;
+        [SerializeField] private float _attackCooldown = 0.45f;
+        [SerializeField] private float _attackHitDelay = 0.18f;
+        [SerializeField] private float _attackRecoverTime = 0.12f;
+
         [Header("=== Components ===")]
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private Animator _animator;
@@ -42,6 +50,8 @@ namespace SunnysideIsland.Player
         [SerializeField] private float _swimSpeed = 2.5f;
         private bool _isSwimming;
         private static readonly int AnimSwimming = Animator.StringToHash("Swimming");
+        public bool IsSwimming => _isSwimming;
+        public bool CanMove { get => _canMove; set => _canMove = value; }
 
         [Header("=== Input ===")]
         [SerializeField] private InputActionAsset _inputActions;
@@ -74,6 +84,7 @@ namespace SunnysideIsland.Player
         private bool _isDead;
         private float _rollTimer;
         private float _rollCooldownTimer;
+        private float _attackCooldownTimer;
         private bool _canMove = true;
 
         private static readonly int AnimMoveX = Animator.StringToHash("MoveX");
@@ -108,6 +119,11 @@ namespace SunnysideIsland.Player
             if (_rb == null) _rb = GetComponent<Rigidbody2D>();
             if (_animator == null) _animator = GetComponent<Animator>();
             if (_spriteRenderer == null) _spriteRenderer = GetComponent<SpriteRenderer>();
+
+            if (GetComponent<SeaDiscoveryTracker>() == null)
+            {
+                gameObject.AddComponent<SeaDiscoveryTracker>();
+            }
 
             _rb.gravityScale = 0;
             _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -208,6 +224,27 @@ namespace SunnysideIsland.Player
             }
         }
 
+        public void PauseMovement(float duration)
+        {
+            if (gameObject.activeInHierarchy)
+            {
+                StartCoroutine(PauseMovementRoutine(duration));
+            }
+        }
+
+        private System.Collections.IEnumerator PauseMovementRoutine(float duration)
+        {
+            _canMove = false;
+            _rb.linearVelocity = Vector2.zero;
+
+            // 획득 애니메이션이 있다면 여기서 트리거 (예: "PickUp")
+            // _animator.SetTrigger("PickUp");
+
+            yield return new WaitForSeconds(duration);
+
+            _canMove = true;
+        }
+
         private void FixedUpdate()
         {
             if (!_canMove) return;
@@ -236,6 +273,12 @@ namespace SunnysideIsland.Player
 
             if (Input.GetKeyDown(KeyCode.Space) && CanRoll() && !_isSwimming)
                 Roll();
+
+            if (Input.GetKeyDown(_attackKey) && CanAttack())
+            {
+                StartCoroutine(AttackRoutine());
+                return;
+            }
 
             if (Input.GetKeyDown(KeyCode.I))
             {
@@ -272,11 +315,11 @@ namespace SunnysideIsland.Player
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.E) && !_isSwimming)
+            if (Input.GetKeyDown(KeyCode.E)) // 수영 중에도 아이템을 주울 수 있도록 !_isSwimming 제거
             {
                 bool workDone = TryInteract();
 
-                if (!workDone)
+                if (!workDone && !_isSwimming) // 땅에서만 가능한 행동들 (물주기, 구멍파기)
                 {
                     workDone = ExecuteWateringWithResult();
                     if (!workDone)
@@ -289,7 +332,7 @@ namespace SunnysideIsland.Player
 
         private void Move()
         {
-            if (_isRolling) return;
+            if (_isRolling || _isAttacking) return;
 
             float targetSpeed = _moveSpeed;
             if (_isSwimming) targetSpeed = _swimSpeed;
@@ -399,6 +442,10 @@ namespace SunnysideIsland.Player
             if (hit.collider != null)
             {
                 hit.collider.TryGetComponent(out targetInteractable);
+                if (targetInteractable == null)
+                {
+                    targetInteractable = hit.collider.GetComponentInParent<IInteractable>();
+                }
             }
             else if (isNearCampfire)
             {
@@ -450,7 +497,14 @@ namespace SunnysideIsland.Player
                     var selectedCrop = _cropSelectionSystem?.SelectedCrop;
                     if (selectedCrop != null)
                     {
-                        plot.Plant(selectedCrop.seedItemId, selectedCrop);
+                        if (_cropSelectionSystem.TryConsume(_cropSelectionSystem.SelectedIndex, 1))
+                        {
+                            plot.Plant(selectedCrop.seedItemId, selectedCrop);
+                        }
+                        else
+                        {
+                            Debug.LogWarning($"[PlayerController] {_cropSelectionSystem.SelectedCrop?.cropName} 수량이 부족합니다 (x{_cropSelectionSystem.GetCount(_cropSelectionSystem.SelectedIndex)})");
+                        }
                     }
                     else
                     {
@@ -551,6 +605,61 @@ namespace SunnysideIsland.Player
                 }
             }
             if (_rollCooldownTimer > 0) _rollCooldownTimer -= Time.deltaTime;
+            if (_attackCooldownTimer > 0) _attackCooldownTimer -= Time.deltaTime;
+        }
+
+        private bool CanAttack()
+        {
+            return _attackCooldownTimer <= 0f && !_isRolling && !_isSwimming && !_isAttacking && !_isBuilding;
+        }
+
+        private System.Collections.IEnumerator AttackRoutine()
+        {
+            _isAttacking = true;
+            _attackCooldownTimer = _attackCooldown;
+            _moveDirection = Vector2.zero;
+            _rb.linearVelocity = Vector2.zero;
+            _animator.SetTrigger(AnimAttack);
+
+            yield return new WaitForSeconds(_attackHitDelay);
+            PerformAttackHit();
+
+            yield return new WaitForSeconds(_attackRecoverTime);
+            _isAttacking = false;
+        }
+
+        private void PerformAttackHit()
+        {
+            Vector2 direction = _facingDirection == Vector2.zero ? Vector2.down : _facingDirection.normalized;
+            Vector2 origin = (Vector2)transform.position + new Vector2(0f, 0.1f);
+            Vector2 hitCenter = origin + direction * _attackRange;
+            Collider2D[] hits = Physics2D.OverlapCircleAll(hitCenter, _attackRadius);
+
+            float nearestDistance = float.MaxValue;
+            Animal.PigHuntable nearestPig = null;
+
+            foreach (Collider2D hit in hits)
+            {
+                if (hit == null)
+                {
+                    continue;
+                }
+
+                Animal.PigHuntable pigHuntable = hit.GetComponentInParent<Animal.PigHuntable>();
+                if (pigHuntable == null || !pigHuntable.IsAlive)
+                {
+                    continue;
+                }
+
+                float distance = Vector2.Distance(origin, hit.ClosestPoint(origin));
+                if (distance < nearestDistance)
+                {
+                    nearestDistance = distance;
+                    nearestPig = pigHuntable;
+                }
+            }
+
+            nearestPig?.TryHit();
         }
 
         private void UpdateAnimations()
@@ -677,6 +786,11 @@ namespace SunnysideIsland.Player
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, _interactionRadius);
+
+            Vector2 direction = _facingDirection == Vector2.zero ? Vector2.down : _facingDirection.normalized;
+            Vector3 attackCenter = transform.position + new Vector3(0f, 0.1f, 0f) + (Vector3)(direction * _attackRange);
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(attackCenter, _attackRadius);
         }
     }
 }

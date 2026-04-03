@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DI;
 using UnityEngine;
 using SunnysideIsland.Events;
 using SunnysideIsland.Inventory;
@@ -8,38 +9,36 @@ namespace SunnysideIsland.Farming
     public class FarmingManager : MonoBehaviour
     {
         public static FarmingManager Instance { get; private set; }
-        
+
         [Header("=== Settings ===")]
         [SerializeField] public List<FarmPlot> _plots = new List<FarmPlot>();
-        [SerializeField] private InventorySystem _inventorySystem;
 
-        private bool _isSubscribed = false;
+        [Inject(Optional = true)] private IInventorySystem _inventorySystem;
+
+        private bool _isSubscribed;
 
         private void Awake()
         {
-            if (Instance == null)
+            if (Instance != null && Instance != this)
             {
-                Instance = this;
-                DI.DIContainer.Global.RegisterInstance(this);
-            }
-            else
-            {
-                Debug.LogWarning("[FarmingManager] 중복 인스턴스가 감지되어 삭제됩니다.");
+                Debug.LogWarning("[FarmingManager] Duplicate instance detected");
                 Destroy(gameObject);
                 return;
             }
+
+            Instance = this;
+            DIContainer.Global.RegisterInstance(this);
         }
 
         private void Start()
         {
-            if (Instance != this) return;
-            
-            // 인벤토리 시스템 찾기
-            if (_inventorySystem == null)
+            if (Instance != this)
             {
-                _inventorySystem = FindObjectOfType<InventorySystem>();
+                return;
             }
-            
+
+            DIContainer.Inject(this);
+
             if (!_isSubscribed)
             {
                 EventBus.Subscribe<DayStartedEvent>(OnDayStarted);
@@ -67,14 +66,12 @@ namespace SunnysideIsland.Farming
         {
             if (_inventorySystem != null && !string.IsNullOrEmpty(evt.CropId))
             {
-                // FarmPlot에서 이미 cropItemId로 처리됨
                 bool added = _inventorySystem.AddItem(evt.CropId, evt.Amount);
-                Debug.Log($"[FarmingManager] 수확! {evt.CropId} x{evt.Amount}를 인벤토리에 추가 (결과: {added})");
+                Debug.Log($"[FarmingManager] Harvested {evt.CropId} x{evt.Amount} to inventory (result: {added})");
+                return;
             }
-            else
-            {
-                Debug.LogWarning($"[FarmingManager] 인벤토리 없음({_inventorySystem == null}) 또는 CropId null");
-            }
+
+            Debug.LogWarning($"[FarmingManager] Failed to process crop harvest: item={evt.CropId}, amount={evt.Amount}");
         }
 
         private void FindAllPlots()
@@ -85,7 +82,7 @@ namespace SunnysideIsland.Farming
 
         private void OnDayStarted(DayStartedEvent evt)
         {
-            Debug.Log($"[FarmingManager] DayStartedEvent 수신! Day {evt.Day}, Plot 개수: {_plots.Count}");
+            Debug.Log($"[FarmingManager] DayStartedEvent received. Day {evt.Day}, Plot count: {_plots.Count}");
             foreach (var plot in _plots)
             {
                 if (plot != null)
@@ -93,20 +90,17 @@ namespace SunnysideIsland.Farming
                     plot.DayPassed();
                 }
             }
-            Debug.Log($"[FarmingManager] 모든 작물 DayPassed 호출 완료");
         }
+
         public void AdvanceDay()
         {
-            foreach (var plot in _plots) // 리스트 이름이 Plots라면 Plots로 수정
+            foreach (var plot in _plots)
             {
                 if (plot != null)
                 {
-                    // 각 밭에 날짜가 지났음을 알림 (FarmPlot에 이 기능이 있어야 함)
-                    // 보통 FarmPlot.cs 안에 DayPassed() 같은 함수가 있습니다.
                     plot.DayPassed();
                 }
             }
-            Debug.Log("모든 작물이 하루만큼 자랐습니다.");
         }
 
         public void RegisterPlot(FarmPlot plot)
@@ -129,7 +123,11 @@ namespace SunnysideIsland.Farming
 
         public FarmPlot GetPlot(int index)
         {
-            if (index < 0 || index >= _plots.Count) return null;
+            if (index < 0 || index >= _plots.Count)
+            {
+                return null;
+            }
+
             return _plots[index];
         }
     }

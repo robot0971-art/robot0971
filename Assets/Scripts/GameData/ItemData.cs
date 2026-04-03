@@ -32,6 +32,21 @@ namespace SunnysideIsland.GameData
         
         [Column("IconPath")]
         public string iconPath;
+
+        [Header("=== Consumable Effects ===")]
+        [Column("HungerRestore")]
+        public int hungerRestore;
+
+        [Column("HealthRestore")]
+        public int healthRestore;
+
+        [Column("StaminaRestore")]
+        public float staminaRestore;
+
+        [Header("=== World Object ===")]
+        [Tooltip("The prefab spawned in the world for this item.")]
+        [SerializeField] private GameObject _worldPrefab;
+        public GameObject WorldPrefab { get => _worldPrefab; set => _worldPrefab = value; }
         
         // Addressable 참조
         [SerializeField]

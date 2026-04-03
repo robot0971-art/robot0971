@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SunnysideIsland.GameData.CropData
   cropId: Carrot
   cropName: "\uB2F9\uADFC"
-  growthDays: 4
-  yieldAmount: 4
+  growthDays: 6
+  yieldAmount: 1
+  minYield: 1
+  maxYield: 4
   seasons: spring
   buyPrice: 10
   sellPrice: 15

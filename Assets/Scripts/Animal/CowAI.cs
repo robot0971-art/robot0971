@@ -12,7 +12,7 @@ namespace SunnysideIsland.Animal
             _wanderInterval = 4f;
             _moveSpeed = 1.5f;
             _idleTime = 3f;
-            _fleeRange = 4f;
+            _fleeRange = 1.25f;
             _fleeSpeed = 3f;
         }
         

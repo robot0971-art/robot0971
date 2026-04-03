@@ -15,6 +15,16 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 89c7f3a726bdb474298cf56d497da453
   m_SerializeEntries:
+  - m_GUID: 31738057fbe9b9b49ab304926e86f720
+    m_Address: Assets/Prefabs/Fish.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 336504c17b6f354459b7e594727b86f8
+    m_Address: Assets/Prefabs/Crab.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3414eacb4b7f80d488e3965c89c1ca78
     m_Address: Assets/Prefabs/potato_05_0.prefab
     m_ReadOnly: 0
@@ -32,6 +42,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 78252f912af31ac488fc04e3bad1989e
     m_Address: Assets/Prefabs/Wood.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7dbbf9e0f6f64c548a0caa9e933f4c40
+    m_Address: Assets/Prefabs/Shellfish.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

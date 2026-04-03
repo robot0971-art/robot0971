@@ -148,11 +148,21 @@ namespace SunnysideIsland.Farming
                 ? _cropData.cropItemId 
                 : _cropId + "_item";
 
+            int yieldAmount;
+            if (_cropData.maxYield > 0 && _cropData.maxYield >= _cropData.minYield)
+            {
+                yieldAmount = UnityEngine.Random.Range(_cropData.minYield, _cropData.maxYield + 1);
+            }
+            else
+            {
+                yieldAmount = _cropData.yieldAmount > 0 ? _cropData.yieldAmount : 1;
+            }
+
             EventBus.Publish(new CropHarvestedEvent
             {
                 PlotId = gameObject.GetInstanceID(),
                 CropId = itemId,
-                Amount = _cropData.yieldAmount
+                Amount = yieldAmount
             });
 
             Clear();

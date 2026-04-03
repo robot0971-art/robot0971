@@ -46,6 +46,8 @@ namespace SunnysideIsland.Animal
         protected Vector3 _originalScale;
         
         protected bool CanBreed => !_isBaby && _breedTimer <= 0f;
+        public bool IsBaby => _isBaby;
+        public bool CanProvideHarvestProducts => !_isBaby;
         
         [Header("=== Weather Settings ===")]
         [SerializeField] protected float _rainSpeedMultiplier = 0.8f;

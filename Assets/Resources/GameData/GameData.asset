@@ -21,64 +21,9 @@ MonoBehaviour:
     canSell: 1
     description: "\uAE30\uBCF8\uC801\uC778 \uBAA9\uC7AC\uC785\uB2C8\uB2E4."
     iconPath: Items/wood
+    _worldPrefab: {fileID: 0}
     _iconReference:
       m_AssetGUID: 78252f912af31ac488fc04e3bad1989e
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
-  - itemId: stone
-    itemName: "\uB3CC"
-    itemType: 2
-    maxStack: 999
-    baseValue: 3
-    canSell: 1
-    description: "\uAE30\uBCF8\uC801\uC778 \uB3CC\uC785\uB2C8\uB2E4."
-    iconPath: Items/stone
-    _iconReference:
-      m_AssetGUID: 
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
-  - itemId: iron_ore
-    itemName: "\uCCA0\uAD11\uC11D"
-    itemType: 2
-    maxStack: 999
-    baseValue: 15
-    canSell: 1
-    description: "\uCCA0\uC744 \uCD94\uCD9C\uD560 \uC218 \uC788\uB294 \uAD11\uC11D\uC785\uB2C8\uB2E4."
-    iconPath: Items/iron_ore
-    _iconReference:
-      m_AssetGUID: 
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
-  - itemId: carrot
-    itemName: "\uB2F9\uADFC"
-    itemType: 1
-    maxStack: 99
-    baseValue: 45
-    canSell: 1
-    description: "\uC2E0\uC120\uD55C \uB2F9\uADFC\uC785\uB2C8\uB2E4."
-    iconPath: Items/carrot
-    _iconReference:
-      m_AssetGUID: 
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
-  - itemId: wood_axe
-    itemName: "\uB098\uBB34 \uB3C4\uB07C"
-    itemType: 0
-    maxStack: 1
-    baseValue: 100
-    canSell: 1
-    description: "\uB098\uBB34\uB97C \uBCA8 \uC218 \uC788\uB294 \uAE30\uBCF8 \uB3C4\uAD6C\uC785\uB2C8\uB2E4."
-    iconPath: Items/wood_axe
-    _iconReference:
-      m_AssetGUID: 
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -91,8 +36,69 @@ MonoBehaviour:
     canSell: 0
     description: "\uC12C\uC744 \uD0C8\uCD9C\uD560 \uC218 \uC788\uB294 \uBC30"
     iconPath: 
+    _worldPrefab: {fileID: 0}
     _iconReference:
       m_AssetGUID: eaa45036dacfa8840b171f421bd8dd73
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - itemId: fish
+    itemName: "\uBB3C\uACE0\uAE30"
+    itemType: 4
+    maxStack: 99
+    baseValue: 20
+    canSell: 0
+    description: "\uBC14\uB2E4\uC2DD\uB7C9"
+    iconPath: items/fish
+    _worldPrefab: {fileID: 0}
+    _iconReference:
+      m_AssetGUID: 31738057fbe9b9b49ab304926e86f720
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - itemId: crab
+    itemName: "\uAC8C"
+    itemType: 4
+    maxStack: 99
+    baseValue: 20
+    canSell: 0
+    description: "\uBC14\uB2E4\uC2DD\uB7C9"
+    iconPath: items/crab
+    _worldPrefab: {fileID: 0}
+    _iconReference:
+      m_AssetGUID: 336504c17b6f354459b7e594727b86f8
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - itemId: crab
+    itemName: "\uAC8C"
+    itemType: 4
+    maxStack: 99
+    baseValue: 20
+    canSell: 0
+    description: "\uBC14\uB2E4\uC2DD\uB7C9"
+    iconPath: items/crab
+    _worldPrefab: {fileID: 0}
+    _iconReference:
+      m_AssetGUID: 336504c17b6f354459b7e594727b86f8
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - itemId: shellfish
+    itemName: "\uC870\uAC1C"
+    itemType: 4
+    maxStack: 99
+    baseValue: 20
+    canSell: 0
+    description: "\uBC14\uB2E4\uC2DD\uB7C9"
+    iconPath: items/shellfish
+    _worldPrefab: {fileID: 0}
+    _iconReference:
+      m_AssetGUID: 7dbbf9e0f6f64c548a0caa9e933f4c40
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -211,48 +217,12 @@ MonoBehaviour:
     rareFishBonus: 30
     itemId: rod_legendary
   animals:
-  - animalId: rabbit
-    animalName: "\uD1A0\uB07C"
-    hp: 20
-    attackPower: 0
-    speed: 2
-    aiType: 0
-    dropItems: meat:1,leather:1
-  - animalId: deer
-    animalName: "\uC0AC\uC2B4"
-    hp: 40
-    attackPower: 0
-    speed: 3
-    aiType: 0
-    dropItems: meat:2,leather:2
-  - animalId: fox
-    animalName: "\uC5EC\uC6B0"
-    hp: 30
-    attackPower: 5
-    speed: 2
-    aiType: 1
-    dropItems: meat:1,leather:1,tail:1
-  - animalId: boar
-    animalName: "\uBA67\uB3FC\uC9C0"
-    hp: 80
-    attackPower: 15
-    speed: 1
-    aiType: 2
-    dropItems: meat:3,leather:2,tusk:2
-  - animalId: wolf
-    animalName: "\uB291\uB300"
-    hp: 60
-    attackPower: 20
-    speed: 2
-    aiType: 2
-    dropItems: meat:2,leather:2,fang:2
-  - animalId: bear
-    animalName: "\uACF0"
-    hp: 150
-    attackPower: 30
-    speed: 0
-    aiType: 3
-    dropItems: meat:5,leather:4,paw:1
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   buildings:
   - buildingId: tent
     buildingName: "\uD150\uD2B8"
@@ -1192,6 +1162,22 @@ MonoBehaviour:
     availableResources: 
     availableAnimals: 
     availableMonsters: goblin_chief
+  seaDiscoveryItems:
+  - itemId: fish
+    weight: 100
+    minQuantity: 1
+    maxQuantity: 1
+    availableSeasons: 00000000
+  - itemId: shellfish
+    weight: 100
+    minQuantity: 1
+    maxQuantity: 1
+    availableSeasons: 00000000
+  - itemId: crab
+    weight: 100
+    minQuantity: 1
+    maxQuantity: 1
+    availableSeasons: 00000000
   shopItems:
   - shopItemId: shop_wood
     itemId: wood

@@ -110,6 +110,46 @@ namespace SunnysideIsland.Inventory
                 _gameData.items.Add(boat);
                 Debug.Log("[InventorySystem] Added missing item: boat");
             }
+
+            if (_gameData.GetItem("milk") == null)
+            {
+                var milk = new ItemData
+                {
+                    itemId = "milk",
+                    itemName = "우유",
+                    itemType = ItemType.Consumable,
+                    maxStack = 20,
+                    baseValue = 25,
+                    canSell = true,
+                    description = "소에게서 얻은 우유. 허기와 체력을 조금 회복한다.",
+                    iconPath = "",
+                    hungerRestore = 5,
+                    healthRestore = 10,
+                    staminaRestore = 0f
+                };
+                _gameData.items.Add(milk);
+                Debug.Log("[InventorySystem] Added missing item: milk");
+            }
+
+            if (_gameData.GetItem("pork") == null)
+            {
+                var pork = new ItemData
+                {
+                    itemId = "pork",
+                    itemName = "돼지고기",
+                    itemType = ItemType.Consumable,
+                    maxStack = 20,
+                    baseValue = 35,
+                    canSell = true,
+                    description = "돼지에게서 얻은 고기입니다. 배고픔을 회복할 수 있습니다.",
+                    iconPath = "",
+                    hungerRestore = 15,
+                    healthRestore = 0,
+                    staminaRestore = 0f
+                };
+                _gameData.items.Add(pork);
+                Debug.Log("[InventorySystem] Added missing item: pork");
+            }
         }
 
 

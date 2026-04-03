@@ -15,7 +15,9 @@ MonoBehaviour:
   cropId: Cabbage
   cropName: "\uC591\uBC30\uCD94"
   growthDays: 8
-  yieldAmount: 1
+  yieldAmount: 2
+  minYield: 1
+  maxYield: 3
   seasons: spring
   buyPrice: 10
   sellPrice: 15
@@ -29,4 +31,4 @@ MonoBehaviour:
   - {fileID: -2719203434195173934, guid: 87565dfcc0c9b504a91022fe60ff8a01, type: 3}
   - {fileID: 2985232015076406287, guid: 08428121575baee45b231bf57c42ddd8, type: 3}
   - {fileID: -2785533952315014158, guid: 18996d021014b0947a4077ee0f8c27df, type: 3}
-  _cropScale: 2.3
+  _cropScale: 2.6

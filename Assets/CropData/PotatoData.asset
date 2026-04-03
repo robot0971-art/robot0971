@@ -16,6 +16,8 @@ MonoBehaviour:
   cropName: "\uAC10\uC790"
   growthDays: 5
   yieldAmount: 1
+  minYield: 1
+  maxYield: 3
   seasons: Spring
   buyPrice: 10
   sellPrice: 20

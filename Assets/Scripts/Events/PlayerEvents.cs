@@ -87,4 +87,12 @@ namespace SunnysideIsland.Events
         public int ToSlot { get; set; }
         public string ItemId { get; set; }
     }
+
+    public class SeaDiscoveryEvent
+    {
+        public string ItemId { get; set; }
+        public int Quantity { get; set; }
+        public bool WasAdded { get; set; }
+        public string ItemName { get; set; }
+    }
 }

@@ -16,6 +16,8 @@ MonoBehaviour:
   cropName: "\uBC00"
   growthDays: 10
   yieldAmount: 1
+  minYield: 1
+  maxYield: 3
   seasons: spring
   buyPrice: 15
   sellPrice: 15
@@ -29,4 +31,4 @@ MonoBehaviour:
   - {fileID: -2082926400210208391, guid: 88ba2165a19ac4f4181bb4dc0a4ec2a5, type: 3}
   - {fileID: -999495800006411920, guid: bbc3244f2fb24bd4d9198f0eefe22783, type: 3}
   - {fileID: -666870068449178133, guid: 481263ff35516a8469dfc6b9926260f1, type: 3}
-  _cropScale: 2.3
+  _cropScale: 2.6

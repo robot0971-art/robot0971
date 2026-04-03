@@ -16,6 +16,7 @@ namespace SunnysideIsland.Survival
         
         bool TryConsume(float amount);
         void Consume(float amount);
+        void Restore(float amount);
         void StopConsumption();
         void Reset();
     }
@@ -83,6 +84,18 @@ namespace SunnysideIsland.Survival
         public void StopConsumption()
         {
             _isConsuming = false;
+        }
+
+        public void Restore(float amount)
+        {
+            if (amount <= 0f)
+            {
+                return;
+            }
+
+            float oldValue = _currentStamina;
+            _currentStamina = Mathf.Min(_maxStamina, _currentStamina + amount);
+            PublishChangedEvent(_currentStamina - oldValue);
         }
         
         public void Reset()

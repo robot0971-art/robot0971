@@ -1,24 +1,29 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using DI;
 using SunnysideIsland.Events;
-using SunnysideIsland.Inventory;
 using SunnysideIsland.GameData;
+using SunnysideIsland.Inventory;
 using SunnysideIsland.UI.Components;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 using GameDataClass = SunnysideIsland.GameData.GameData;
 
 namespace SunnysideIsland.UI.Inventory
 {
-
     public class InventoryPanel : UIPanel
     {
         [Header("=== Inventory Grid ===")]
         [SerializeField] private Transform _inventoryGrid;
         [SerializeField] private SlotUI _slotPrefab;
+        [SerializeField] private int _slotCount = 20;
         [SerializeField] private int _gridColumns = 8;
+        [SerializeField] private Vector2 _slotStartPosition = new Vector2(0f, 0f);
+        [SerializeField] private Vector2 _slotSpacing = new Vector2(72f, 72f);
+        [SerializeField] private Vector2 _slotSize = new Vector2(64f, 64f);
+        [SerializeField] private bool _disableLayoutGroup = true;
+        [SerializeField] private bool _useEditorPlacedSlots = true;
 
         [Header("=== Item Detail ===")]
         [SerializeField] private ItemDetailPanel _itemDetailPanel;
@@ -35,29 +40,39 @@ namespace SunnysideIsland.UI.Inventory
         [SerializeField] private GameDataClass _gameData;
         [SerializeField] private ItemSpriteManager _spriteManager;
 
+        [Inject(Optional = true)]
+        private IItemConsumptionService _itemConsumptionService;
+
         private readonly List<SlotUI> _slots = new List<SlotUI>();
         private int _selectedSlotIndex = -1;
 
         public int SelectedSlotIndex => _selectedSlotIndex;
-        
+
         protected override void Awake()
         {
             base.Awake();
-            
-            // DI 대신 직접 찾기
+
             if (_inventory == null)
                 _inventory = FindObjectOfType<InventorySystem>();
             if (_gameData == null)
                 _gameData = Resources.Load<GameDataClass>("GameData/GameData");
+            if (_itemConsumptionService == null)
+                DIContainer.TryResolve(out _itemConsumptionService);
             if (_inventoryGrid == null)
             {
                 var slotGrid = GameObject.Find("SlotGrid");
                 if (slotGrid != null)
                     _inventoryGrid = slotGrid.transform;
             }
-            
-            // 슬롯 초기화
+
+            ConfigureInventoryGrid();
             InitializeSlots();
+        }
+
+        private void OnValidate()
+        {
+            ConfigureInventoryGrid();
+            UpdateSlotLayout();
         }
 
         protected override async void OnOpened()
@@ -71,7 +86,6 @@ namespace SunnysideIsland.UI.Inventory
             _closeButton?.onClick.AddListener(Close);
             _sortButton?.onClick.AddListener(OnSortClicked);
             SubscribeEvents();
-            // Refresh는 OnOpened에서만 호출 (중복 방지)
         }
 
         private void OnDisable()
@@ -93,7 +107,7 @@ namespace SunnysideIsland.UI.Inventory
             EventBus.Subscribe<ItemPickedUpEvent>(OnItemPickedUp);
             EventBus.Subscribe<ItemMovedEvent>(OnItemMoved);
         }
-        
+
         private void UnsubscribeEvents()
         {
             EventBus.Unsubscribe<ItemPickedUpEvent>(OnItemPickedUp);
@@ -102,75 +116,112 @@ namespace SunnysideIsland.UI.Inventory
 
         private void InitializeSlots()
         {
-            // 이미 슬롯이 생성되어 있으면 재생성하지 않음
             if (_slots.Count > 0)
             {
-                Debug.Log($"[InventoryPanel] 슬롯 이미 존재함 ({_slots.Count}개), 재생성 건너뜀");
+                Debug.Log($"[InventoryPanel] Slots already initialized: {_slots.Count}");
                 return;
             }
-            
-            if (_inventory == null) return;
+
+            if (_inventory == null)
+            {
+                return;
+            }
+
             if (_slotPrefab == null)
             {
-                Debug.LogError("[InventoryPanel] Slot Prefab이 설정되지 않았습니다!");
+                Debug.LogError("[InventoryPanel] Slot prefab is not assigned.");
                 return;
             }
+
             if (_inventoryGrid == null)
             {
-                Debug.LogError("[InventoryPanel] Inventory Grid가 설정되지 않았습니다!");
+                Debug.LogError("[InventoryPanel] Inventory grid is not assigned.");
                 return;
             }
-            
-            // 기존 슬롯들 모두 삭제 (Slot 0 포함 모든 자식)
+
             foreach (var slot in _slots)
             {
-                if (slot != null)
+                if (slot == null)
                 {
-                    slot.OnClicked -= OnSlotClicked;
-                    slot.OnRightClicked -= OnSlotRightClicked;
-                    slot.OnHoverEnter -= OnSlotHoverEnter;
-                    slot.OnHoverExit -= OnSlotHoverExit;
+                    continue;
                 }
+
+                slot.OnClicked -= OnSlotClicked;
+                slot.OnRightClicked -= OnSlotRightClicked;
+                slot.OnDoubleClicked -= OnSlotDoubleClicked;
+                slot.OnHoverEnter -= OnSlotHoverEnter;
+                slot.OnHoverExit -= OnSlotHoverExit;
             }
+
             _slots.Clear();
-            
-            // SlotGrid의 모든 자식 오브젝트 삭제
+
+            var existingSlots = new List<SlotUI>();
             foreach (Transform child in _inventoryGrid)
             {
+                if (child.TryGetComponent(out SlotUI existingSlot))
+                {
+                    existingSlots.Add(existingSlot);
+                    continue;
+                }
+
                 if (Application.isPlaying)
                     Destroy(child.gameObject);
                 else
                     DestroyImmediate(child.gameObject);
             }
-            
-            // 프리펩으로부터 슬롯 생성
-            for (int i = 0; i < _inventory.Capacity; i++)
+
+            if (_useEditorPlacedSlots && existingSlots.Count > 0)
+            {
+                for (int i = 0; i < existingSlots.Count; i++)
+                {
+                    var slotInstance = existingSlots[i];
+                    slotInstance.gameObject.SetActive(true);
+                    slotInstance.SetSlotIndex(i);
+                    slotInstance.name = $"Slot_{i}";
+
+                    slotInstance.OnClicked += OnSlotClicked;
+                    slotInstance.OnRightClicked += OnSlotRightClicked;
+                    slotInstance.OnDoubleClicked += OnSlotDoubleClicked;
+                    slotInstance.OnHoverEnter += OnSlotHoverEnter;
+                    slotInstance.OnHoverExit += OnSlotHoverExit;
+
+                    _slots.Add(slotInstance);
+                }
+
+                Debug.Log($"[InventoryPanel] Using {existingSlots.Count} editor-placed slots.");
+                UpdateCapacityText();
+                return;
+            }
+
+            int visibleSlotCount = GetVisibleSlotCount();
+            for (int i = 0; i < visibleSlotCount; i++)
             {
                 var slotInstance = Instantiate(_slotPrefab, _inventoryGrid);
                 slotInstance.SetSlotIndex(i);
                 slotInstance.name = $"Slot_{i}";
-                
+
                 slotInstance.OnClicked += OnSlotClicked;
                 slotInstance.OnRightClicked += OnSlotRightClicked;
+                slotInstance.OnDoubleClicked += OnSlotDoubleClicked;
                 slotInstance.OnHoverEnter += OnSlotHoverEnter;
                 slotInstance.OnHoverExit += OnSlotHoverExit;
-                
+
                 _slots.Add(slotInstance);
             }
-            
-            Debug.Log($"[InventoryPanel] {_inventory.Capacity}개의 슬롯 생성 완료");
+
+            UpdateSlotLayout();
+            Debug.Log($"[InventoryPanel] Initialized {visibleSlotCount} slots.");
             UpdateCapacityText();
         }
 
         public async Task RefreshInventoryAsync()
         {
-            if (_inventory == null) 
+            if (_inventory == null)
             {
-                Debug.LogWarning("[InventoryPanel] _inventory is null!");
+                Debug.LogWarning("[InventoryPanel] _inventory is null.");
                 return;
             }
 
-            // 슬롯이 아직 생성되지 않았으면 먼저 생성
             if (_slots.Count == 0)
             {
                 InitializeSlots();
@@ -193,8 +244,7 @@ namespace SunnysideIsland.UI.Inventory
 
             UpdateCapacityText();
         }
-        
-        // 동기 버전 (하위 호환성 유지)
+
         public void RefreshInventory()
         {
             RefreshInventoryAsync().ConfigureAwait(false);
@@ -202,41 +252,32 @@ namespace SunnysideIsland.UI.Inventory
 
         private async Task<Sprite> GetItemIconAsync(string itemId)
         {
-            if (string.IsNullOrEmpty(itemId)) return null;
-            
+            if (string.IsNullOrEmpty(itemId))
+            {
+                return null;
+            }
+
             if (_spriteManager != null)
             {
                 var sprite = _spriteManager.GetSprite(itemId);
-                if (sprite != null) return sprite;
-            }
-            
-            // [주석] Addressables 로직 - ItemSpriteManager 우선 사용으로 대체
-            /*
-            // Fallback: GameData에서 Addressable 아이콘 로드
-            if (_gameData != null)
-            {
-                var itemData = _gameData.GetItem(itemId);
-                if (itemData != null)
+                if (sprite != null)
                 {
-                    var icon = await itemData.LoadIconAsync();
-                    if (icon != null)
-                    {
-                        Debug.Log($"[InventoryPanel] Loaded icon from Addressables: {itemId}");
-                        return icon;
-                    }
+                    return sprite;
                 }
             }
-            */
-            
-            Debug.LogWarning($"[InventoryPanel] 아이콘을 찾을 수 없음: {itemId}");
+
+            Debug.LogWarning($"[InventoryPanel] Could not find icon for item: {itemId}");
+            await Task.CompletedTask;
             return null;
         }
-        
+
         private string GetItemName(string itemId)
         {
-            if (string.IsNullOrEmpty(itemId)) return "";
-            
-            // ItemSpriteManager에서 이름 가져오기
+            if (string.IsNullOrEmpty(itemId))
+            {
+                return string.Empty;
+            }
+
             if (_spriteManager != null)
             {
                 var name = _spriteManager.GetItemName(itemId);
@@ -245,8 +286,7 @@ namespace SunnysideIsland.UI.Inventory
                     return name;
                 }
             }
-            
-            // Fallback: GameData에서 이름 가져오기
+
             if (_gameData != null)
             {
                 var itemData = _gameData.GetItem(itemId);
@@ -255,16 +295,15 @@ namespace SunnysideIsland.UI.Inventory
                     return itemData.itemName;
                 }
             }
-            
-            // 기본값: itemId 반환
+
             return itemId;
         }
-        
+
         private void UpdateCapacityText()
         {
             if (_capacityText != null && _inventory != null)
             {
-                _capacityText.text = $"{_inventory.UsedSlots} / {_inventory.Capacity}";
+                _capacityText.text = $"{_inventory.UsedSlots} / {_slots.Count}";
             }
         }
 
@@ -285,6 +324,20 @@ namespace SunnysideIsland.UI.Inventory
             if (!slot.IsEmpty)
             {
                 ShowItemContextMenu(slot);
+            }
+        }
+
+        private async void OnSlotDoubleClicked(SlotUI slot)
+        {
+            if (slot.IsEmpty || _itemConsumptionService == null)
+            {
+                return;
+            }
+
+            if (_itemConsumptionService.TryConsume(slot.ItemId))
+            {
+                ShowItemDetail(slot.ItemId);
+                await RefreshInventoryAsync();
             }
         }
 
@@ -322,12 +375,16 @@ namespace SunnysideIsland.UI.Inventory
             {
                 _slots[_selectedSlotIndex].SetSelected(false);
             }
+
             _selectedSlotIndex = -1;
         }
 
         private void ShowItemDetail(string itemId)
         {
-            if (_itemDetailPanel == null || string.IsNullOrEmpty(itemId)) return;
+            if (_itemDetailPanel == null || string.IsNullOrEmpty(itemId))
+            {
+                return;
+            }
 
             var itemData = _gameData?.GetItem(itemId);
             if (itemData != null)
@@ -343,7 +400,6 @@ namespace SunnysideIsland.UI.Inventory
 
         private void ShowItemContextMenu(SlotUI slot)
         {
-
         }
 
         private async void OnSortClicked()
@@ -360,6 +416,60 @@ namespace SunnysideIsland.UI.Inventory
         private async void OnItemMoved(ItemMovedEvent evt)
         {
             await RefreshInventoryAsync();
+        }
+
+        private void ConfigureInventoryGrid()
+        {
+            if (_inventoryGrid == null)
+            {
+                return;
+            }
+
+            var layoutGroup = _inventoryGrid.GetComponent<GridLayoutGroup>();
+            if (_disableLayoutGroup && layoutGroup != null)
+            {
+                layoutGroup.enabled = false;
+            }
+        }
+
+        private int GetVisibleSlotCount()
+        {
+            return Mathf.Max(1, _slotCount);
+        }
+
+        private void UpdateSlotLayout()
+        {
+            if (_useEditorPlacedSlots)
+            {
+                return;
+            }
+
+            if (_slots.Count == 0)
+            {
+                return;
+            }
+
+            int columns = Mathf.Max(1, _gridColumns);
+            for (int i = 0; i < _slots.Count; i++)
+            {
+                var rectTransform = _slots[i].transform as RectTransform;
+                if (rectTransform == null)
+                {
+                    continue;
+                }
+
+                int column = i % columns;
+                int row = i / columns;
+                Vector2 anchoredPosition = new Vector2(
+                    _slotStartPosition.x + (column * _slotSpacing.x),
+                    _slotStartPosition.y - (row * _slotSpacing.y));
+
+                rectTransform.anchorMin = new Vector2(0f, 1f);
+                rectTransform.anchorMax = new Vector2(0f, 1f);
+                rectTransform.pivot = new Vector2(0f, 1f);
+                rectTransform.anchoredPosition = anchoredPosition;
+                rectTransform.sizeDelta = _slotSize;
+            }
         }
     }
 }

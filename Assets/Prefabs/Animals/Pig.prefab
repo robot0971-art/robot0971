@@ -11,6 +11,10 @@ GameObject:
   - component: {fileID: 9016147839225722880}
   - component: {fileID: 3711052902331362270}
   - component: {fileID: 7056497815938496293}
+  - component: {fileID: 2244303545106696775}
+  - component: {fileID: 3262438392650952286}
+  - component: {fileID: 4621873960741014433}
+  - component: {fileID: 3827385488517397029}
   m_Layer: 0
   m_Name: Pig
   m_TagString: Untagged
@@ -114,3 +118,127 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!70 &2244303545106696775
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843012430530596555}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.009613246, y: 0.031190634}
+  m_Size: {x: 0.18077354, y: 0.19190454}
+  m_Direction: 0
+--- !u!114 &3262438392650952286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843012430530596555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9667083a9b50176469e788ba67a05820, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SunnysideIsland.Animal.PigAI
+  _moveSpeed: 0
+  _wanderRadius: 15
+  _wanderInterval: 3
+  _idleTime: 2
+  _fleeRange: 3
+  _fleeSpeed: 4
+  _playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 1048576
+  _isBaby: 0
+  _babyScale: 0.5
+  _growthDuration: 120
+  _breedInterval: 60
+  _breedChance: 0.3
+  _maxBabiesPerArea: 3
+  _babySpeedMultiplier: 0.8
+  _rainSpeedMultiplier: 0.8
+  _spriteRenderer: {fileID: 3711052902331362270}
+  _animator: {fileID: 7056497815938496293}
+--- !u!114 &4621873960741014433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843012430530596555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b24e148b312b8443afcc3a95367bbce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SunnysideIsland.Animal.PigHuntable
+  _hitsToKill: 3
+  _dropItemId: pork
+  _minDropAmount: 1
+  _maxDropAmount: 2
+  _bonusDropChance: 0.2
+  _bonusDropAmount: 1
+  _pigPoolName: Pig
+  _porkPoolName: Pork
+  _dustPoolName: Dust
+  _porkPoolInitialSize: 6
+  _porkPoolMaxSize: 20
+  _dustOffset: {x: 0.3, y: -3.5, z: 0}
+  _dropOffset: {x: 0, y: 0.1, z: 0}
+  _dropScatterRadius: 0.2
+--- !u!50 &3827385488517397029
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843012430530596555}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
