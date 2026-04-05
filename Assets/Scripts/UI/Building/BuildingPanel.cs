@@ -11,7 +11,7 @@ namespace SunnysideIsland.UI.Building
 {
     [ExecuteAlways]
     [RequireComponent(typeof(CanvasGroup))]
-    public class BuildingPanel : MonoBehaviour
+    public class BuildingPanel : UIPanel
     {
         [Header("=== UI References ===")]
         [SerializeField] private RectTransform _categoryTabContainer;
@@ -38,9 +38,6 @@ namespace SunnysideIsland.UI.Building
         private Dictionary<GameObject, DetailedBuildingData> _cardDataMap = new Dictionary<GameObject, DetailedBuildingData>();
         
         private TMP_FontAsset _koreanFont;
-        private bool _isOpen = false;
-        
-        public bool IsOpen => _isOpen;
 
 #if UNITY_EDITOR
         private void OnValidate()
@@ -236,8 +233,9 @@ namespace SunnysideIsland.UI.Building
 #endif
         }
         
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _koreanFont = Resources.Load<TMP_FontAsset>("Fonts/HSSaemaeul-1");
             
             // Ensure AssetReference fields are initialized
@@ -269,8 +267,14 @@ namespace SunnysideIsland.UI.Building
                 _closeButton.onClick.RemoveAllListeners();
                 _closeButton.onClick.AddListener(Close);
             }
-            
+
             SetupExistingCards();
+
+            if (Application.isPlaying)
+            {
+                _isOpen = true;
+                Close();
+            }
         }
         
         private void SetupExistingCards()
@@ -290,6 +294,7 @@ namespace SunnysideIsland.UI.Building
                 if (card != null)
                 {
                     card.Setup(buildingData, _defaultHousePrefab, _bigHousePrefab, _escapeBoatPrefab, _campfireIconPrefab);
+                    card.OnClicked -= OnCardClicked;
                     card.OnClicked += OnCardClicked;
                 }
                 else
@@ -315,38 +320,6 @@ namespace SunnysideIsland.UI.Building
             
             EventBus.Publish(new BuildingPlacementStartedEvent { BuildingId = data.BuildingId });
             Close();
-        }
-
-        private void Start()
-        {
-            if (Application.isPlaying)
-            {
-                Close();
-            }
-        }
-
-        public void Open()
-        {
-            _isOpen = true;
-            var cg = GetComponent<CanvasGroup>();
-            if (cg != null)
-            {
-                cg.alpha = 1f;
-                cg.interactable = true;
-                cg.blocksRaycasts = true;
-            }
-        }
-
-        public void Close()
-        {
-            _isOpen = false;
-            var cg = GetComponent<CanvasGroup>();
-            if (cg != null)
-            {
-                cg.alpha = 0f;
-                cg.interactable = false;
-                cg.blocksRaycasts = false;
-            }
         }
 
         public void SelectCategory(BuildingCategory category)
@@ -469,5 +442,6 @@ namespace SunnysideIsland.UI.Building
                 Close();
             }
         }
+
     }
 }

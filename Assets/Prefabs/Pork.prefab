@@ -83,7 +83,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 6
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -965513180393346931, guid: 6b566bd2c4313664e9da58632ef3072a, type: 3}
+  m_Sprite: {fileID: -2110104355339441885, guid: 3483178d12e5d4b47af344895754d956, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -145,7 +145,4 @@ MonoBehaviour:
   _itemId: pork
   _quantity: 1
   _poolName: Pork
-  _questionMarkPoolName: 
-  _pauseDuration: 0.8
-  _effectOffset: {x: 0, y: 1.2, z: 0}
-  _effectDisplayTime: 1
+  _pickupLayerName: Harvest

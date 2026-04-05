@@ -46,6 +46,12 @@ namespace SunnysideIsland.UI.Components
         private const float DOUBLE_CLICK_THRESHOLD = 0.3f;
 
 
+        protected virtual void Awake()
+        {
+            ResetIconState();
+        }
+
+
         public virtual void SetItem(string itemId, string itemName, int quantity, Sprite icon = null)
         {
             ItemId = itemId;
@@ -56,6 +62,7 @@ namespace SunnysideIsland.UI.Components
             {
                 _iconImage.sprite = icon;
                 _iconImage.enabled = icon != null;
+                _iconImage.preserveAspect = true;
 
                 if (_iconImage.rectTransform != null)
                 {
@@ -77,7 +84,7 @@ namespace SunnysideIsland.UI.Components
                             parentSize = Mathf.Min(parentRect.rect.width, parentRect.rect.height);
                         }
                         
-                        float size = parentSize * _iconScale;
+                        float size = parentSize * GetIconScale(itemId);
                         
                         _iconImage.rectTransform.anchoredPosition = Vector2.zero;
                         _iconImage.rectTransform.sizeDelta = new Vector2(size, size);
@@ -126,11 +133,7 @@ namespace SunnysideIsland.UI.Components
             Quantity = 0;
 
 
-            if (_iconImage != null)
-            {
-                _iconImage.sprite = null;
-                _iconImage.enabled = false;
-            }
+            ResetIconState();
 
 
             if (_quantityText != null)
@@ -185,7 +188,43 @@ namespace SunnysideIsland.UI.Components
             {
                 _iconImage.sprite = icon;
                 _iconImage.enabled = icon != null;
+                _iconImage.preserveAspect = true;
             }
+        }
+
+
+        protected void ResetIconState()
+        {
+            if (_iconImage == null)
+            {
+                return;
+            }
+
+            _iconImage.sprite = null;
+            _iconImage.enabled = false;
+            _iconImage.preserveAspect = true;
+
+            if (_iconImage.rectTransform == null)
+            {
+                return;
+            }
+
+            _iconImage.rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+            _iconImage.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+            _iconImage.rectTransform.pivot = new Vector2(0.5f, 0.5f);
+            _iconImage.rectTransform.anchoredPosition = Vector2.zero;
+            _iconImage.rectTransform.sizeDelta = Vector2.zero;
+        }
+
+
+        protected virtual float GetIconScale(string itemId)
+        {
+            if (string.Equals(itemId, "pork", StringComparison.OrdinalIgnoreCase))
+            {
+                return Mathf.Min(_iconScale, 0.52f);
+            }
+
+            return _iconScale;
         }
 
 
