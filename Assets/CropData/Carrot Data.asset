@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b3483c6398aa8a43845cb9329b3c380, type: 3}
   m_Name: Carrot Data
   m_EditorClassIdentifier: Assembly-CSharp::SunnysideIsland.GameData.CropData
-  cropId: Carrot
+  cropId: carrot
   cropName: "\uB2F9\uADFC"
   growthDays: 6
   yieldAmount: 1
   minYield: 1
-  maxYield: 4
+  maxYield: 3
   seasons: spring
   buyPrice: 10
   sellPrice: 15

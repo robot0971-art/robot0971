@@ -22,7 +22,7 @@ MonoBehaviour:
   buyPrice: 10
   sellPrice: 20
   seedItemId: potato_seed
-  cropItemId: item_potato
+  cropItemId: potato
   specialEffect: 
   growthSprites:
   - {fileID: -4541760308731362826, guid: fca1cbacbfa5ffc41892cddfa94f628f, type: 3}

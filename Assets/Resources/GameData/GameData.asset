@@ -21,6 +21,9 @@ MonoBehaviour:
     canSell: 1
     description: "\uAE30\uBCF8\uC801\uC778 \uBAA9\uC7AC\uC785\uB2C8\uB2E4."
     iconPath: Items/wood
+    hungerRestore: 0
+    healthRestore: 0
+    staminaRestore: 0
     _worldPrefab: {fileID: 0}
     _iconReference:
       m_AssetGUID: 78252f912af31ac488fc04e3bad1989e
@@ -35,7 +38,10 @@ MonoBehaviour:
     baseValue: 1000
     canSell: 0
     description: "\uC12C\uC744 \uD0C8\uCD9C\uD560 \uC218 \uC788\uB294 \uBC30"
-    iconPath: 
+    iconPath: item/boat
+    hungerRestore: 0
+    healthRestore: 0
+    staminaRestore: 0
     _worldPrefab: {fileID: 0}
     _iconReference:
       m_AssetGUID: eaa45036dacfa8840b171f421bd8dd73
@@ -43,14 +49,73 @@ MonoBehaviour:
       m_SubObjectType: 
       m_SubObjectGUID: 
       m_EditorAssetChanged: 0
+  - itemId: milk
+    itemName: "\uC6B0\uC720"
+    itemType: 1
+    maxStack: 20
+    baseValue: 25
+    canSell: 1
+    description: "\uC18C\uC5D0\uAC8C\uC11C \uC5BB\uC740 \uC6B0\uC720. \uD5C8\uAE30\uC640
+      \uCCB4\uB825\uC744 \uC870\uAE08 \uD68C\uBCF5\uD55C\uB2E4."
+    iconPath: item/milk
+    hungerRestore: 5
+    healthRestore: 10
+    staminaRestore: 10
+    _worldPrefab: {fileID: 0}
+    _iconReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - itemId: pork
+    itemName: "\uB3FC\uC9C0\uACE0\uAE30"
+    itemType: 1
+    maxStack: 20
+    baseValue: 35
+    canSell: 1
+    description: "\uB3FC\uC9C0\uC5D0\uAC8C\uC11C \uC5BB\uC740 \uACE0\uAE30\uC785\uB2C8\uB2E4.
+      \uBC30\uACE0\uD514\uC744 \uD68C\uBCF5\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+    iconPath: item/pork
+    hungerRestore: 15
+    healthRestore: 20
+    staminaRestore: 20
+    _worldPrefab: {fileID: 0}
+    _iconReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - itemId: carrot
+    itemName: "\uB2F9\uADFC"
+    itemType: 1
+    maxStack: 99
+    baseValue: 45
+    canSell: 1
+    description: "\uC2E0\uC120\uD55C \uB2F9\uADFC\uC785\uB2C8\uB2E4."
+    iconPath: Items/carrot
+    hungerRestore: 10
+    healthRestore: 10
+    staminaRestore: 0
+    _worldPrefab: {fileID: 0}
+    _iconReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
   - itemId: fish
     itemName: "\uBB3C\uACE0\uAE30"
-    itemType: 4
+    itemType: 1
     maxStack: 99
     baseValue: 20
     canSell: 0
     description: "\uBC14\uB2E4\uC2DD\uB7C9"
     iconPath: items/fish
+    hungerRestore: 15
+    healthRestore: 15
+    staminaRestore: 15
     _worldPrefab: {fileID: 0}
     _iconReference:
       m_AssetGUID: 31738057fbe9b9b49ab304926e86f720
@@ -60,27 +125,15 @@ MonoBehaviour:
       m_EditorAssetChanged: 0
   - itemId: crab
     itemName: "\uAC8C"
-    itemType: 4
+    itemType: 1
     maxStack: 99
     baseValue: 20
     canSell: 0
     description: "\uBC14\uB2E4\uC2DD\uB7C9"
     iconPath: items/crab
-    _worldPrefab: {fileID: 0}
-    _iconReference:
-      m_AssetGUID: 336504c17b6f354459b7e594727b86f8
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_SubObjectGUID: 
-      m_EditorAssetChanged: 0
-  - itemId: crab
-    itemName: "\uAC8C"
-    itemType: 4
-    maxStack: 99
-    baseValue: 20
-    canSell: 0
-    description: "\uBC14\uB2E4\uC2DD\uB7C9"
-    iconPath: items/crab
+    hungerRestore: 20
+    healthRestore: 20
+    staminaRestore: 0
     _worldPrefab: {fileID: 0}
     _iconReference:
       m_AssetGUID: 336504c17b6f354459b7e594727b86f8
@@ -90,15 +143,108 @@ MonoBehaviour:
       m_EditorAssetChanged: 0
   - itemId: shellfish
     itemName: "\uC870\uAC1C"
-    itemType: 4
+    itemType: 1
     maxStack: 99
     baseValue: 20
     canSell: 0
     description: "\uBC14\uB2E4\uC2DD\uB7C9"
     iconPath: items/shellfish
+    hungerRestore: 20
+    healthRestore: 20
+    staminaRestore: 0
     _worldPrefab: {fileID: 0}
     _iconReference:
       m_AssetGUID: 7dbbf9e0f6f64c548a0caa9e933f4c40
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - itemId: egg
+    itemName: "\uACC4\uB780"
+    itemType: 1
+    maxStack: 99
+    baseValue: 20
+    canSell: 0
+    description: "\uACC4\uB780"
+    iconPath: items/egg
+    hungerRestore: 15
+    healthRestore: 15
+    staminaRestore: 10
+    _worldPrefab: {fileID: 0}
+    _iconReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - itemId: wheat
+    itemName: "\uBC00"
+    itemType: 1
+    maxStack: 99
+    baseValue: 20
+    canSell: 0
+    description: "\uBC00"
+    iconPath: items/wheat
+    hungerRestore: 25
+    healthRestore: 25
+    staminaRestore: 10
+    _worldPrefab: {fileID: 0}
+    _iconReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - itemId: cabbage
+    itemName: "\uC591\uBC30\uCD94"
+    itemType: 1
+    maxStack: 99
+    baseValue: 20
+    canSell: 0
+    description: "\uC591\uBC30\uCD94"
+    iconPath: items/cabbage
+    hungerRestore: 25
+    healthRestore: 25
+    staminaRestore: 10
+    _worldPrefab: {fileID: 0}
+    _iconReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - itemId: pumpkin
+    itemName: "\uD638\uBC15"
+    itemType: 1
+    maxStack: 99
+    baseValue: 20
+    canSell: 0
+    description: "\uD638\uBC15"
+    iconPath: items/pumpkin
+    hungerRestore: 25
+    healthRestore: 25
+    staminaRestore: 10
+    _worldPrefab: {fileID: 0}
+    _iconReference:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - itemId: potato
+    itemName: "\uAC10\uC790"
+    itemType: 1
+    maxStack: 99
+    baseValue: 20
+    canSell: 0
+    description: "\uAC10\uC790"
+    iconPath: items/pootato
+    hungerRestore: 15
+    healthRestore: 15
+    staminaRestore: 10
+    _worldPrefab: {fileID: 0}
+    _iconReference:
+      m_AssetGUID: 
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -127,6 +273,8 @@ MonoBehaviour:
     difficulty: 0
     sellPrice: 30
     hungerRestore: 15
+    healthRestore: 0
+    staminaRestore: 0
     itemId: fish_bass
   - fishId: carp
     fishName: "\uC789\uC5B4"
@@ -136,6 +284,8 @@ MonoBehaviour:
     difficulty: 0
     sellPrice: 25
     hungerRestore: 12
+    healthRestore: 0
+    staminaRestore: 0
     itemId: fish_carp
   - fishId: catfish
     fishName: "\uBA54\uAE30"
@@ -145,6 +295,8 @@ MonoBehaviour:
     difficulty: 0
     sellPrice: 35
     hungerRestore: 18
+    healthRestore: 0
+    staminaRestore: 0
     itemId: fish_catfish
   - fishId: tuna
     fishName: "\uCC38\uCE58"
@@ -154,6 +306,8 @@ MonoBehaviour:
     difficulty: 1
     sellPrice: 80
     hungerRestore: 30
+    healthRestore: 0
+    staminaRestore: 0
     itemId: fish_tuna
   - fishId: salmon
     fishName: "\uC5F0\uC5B4"
@@ -163,6 +317,8 @@ MonoBehaviour:
     difficulty: 1
     sellPrice: 100
     hungerRestore: 35
+    healthRestore: 0
+    staminaRestore: 0
     itemId: fish_salmon
   - fishId: swordfish
     fishName: "\uD669\uC0C8\uCE58"
@@ -172,6 +328,8 @@ MonoBehaviour:
     difficulty: 2
     sellPrice: 250
     hungerRestore: 50
+    healthRestore: 0
+    staminaRestore: 0
     itemId: fish_swordfish
   - fishId: shark
     fishName: "\uC0C1\uC5B4"
@@ -181,6 +339,8 @@ MonoBehaviour:
     difficulty: 3
     sellPrice: 500
     hungerRestore: 80
+    healthRestore: 0
+    staminaRestore: 0
     itemId: fish_shark
   - fishId: golden_fish
     fishName: "\uD669\uAE08 \uBB3C\uACE0\uAE30"
@@ -190,6 +350,8 @@ MonoBehaviour:
     difficulty: 4
     sellPrice: 2000
     hungerRestore: 100
+    healthRestore: 0
+    staminaRestore: 0
     itemId: fish_golden
   fishingRods:
   - rodId: wooden_rod
@@ -466,6 +628,8 @@ MonoBehaviour:
     resultItemId: grilled_fish_item
     ingredients: fish:1
     hungerRestore: 20
+    healthRestore: 0
+    staminaRestore: 0
     additionalEffect: 
     cookTime: 30
   - recipeId: fish_roast
@@ -473,6 +637,8 @@ MonoBehaviour:
     resultItemId: fish_roast_item
     ingredients: fish:2,salt:1
     hungerRestore: 45
+    healthRestore: 0
+    staminaRestore: 0
     additionalEffect: "\uCCB4\uB825 +5"
     cookTime: 60
   - recipeId: stew
@@ -480,6 +646,8 @@ MonoBehaviour:
     resultItemId: stew_item
     ingredients: meat:2,potato:2,carrot:1
     hungerRestore: 60
+    healthRestore: 0
+    staminaRestore: 0
     additionalEffect: "\uCCB4\uB825 +10"
     cookTime: 120
   - recipeId: salad
@@ -487,6 +655,8 @@ MonoBehaviour:
     resultItemId: salad_item
     ingredients: vegetable:3
     hungerRestore: 30
+    healthRestore: 0
+    staminaRestore: 0
     additionalEffect: "\uC2A4\uD0DC\uBBF8\uB098 +20"
     cookTime: 30
   - recipeId: bread
@@ -494,6 +664,8 @@ MonoBehaviour:
     resultItemId: bread_item
     ingredients: flour:2
     hungerRestore: 40
+    healthRestore: 0
+    staminaRestore: 0
     additionalEffect: 
     cookTime: 180
   - recipeId: sandwich
@@ -501,6 +673,8 @@ MonoBehaviour:
     resultItemId: sandwich_item
     ingredients: bread:2,meat:1,vegetable:1
     hungerRestore: 50
+    healthRestore: 0
+    staminaRestore: 0
     additionalEffect: 
     cookTime: 60
   - recipeId: pie
@@ -508,6 +682,8 @@ MonoBehaviour:
     resultItemId: pie_item
     ingredients: flour:2,fruit:3
     hungerRestore: 55
+    healthRestore: 0
+    staminaRestore: 0
     additionalEffect: "\uAE30\uBD84 \uC0C1\uC2B9"
     cookTime: 240
   - recipeId: steak
@@ -515,6 +691,8 @@ MonoBehaviour:
     resultItemId: steak_item
     ingredients: premium_meat:2
     hungerRestore: 80
+    healthRestore: 0
+    staminaRestore: 0
     additionalEffect: "\uACF5\uACA9\uB825 +10% (10\uBD84)"
     cookTime: 120
   - recipeId: seafood_pasta
@@ -522,6 +700,8 @@ MonoBehaviour:
     resultItemId: seafood_pasta_item
     ingredients: fish:2,flour:2
     hungerRestore: 70
+    healthRestore: 0
+    staminaRestore: 0
     additionalEffect: "\uBAA8\uB4E0 \uB2A5\uB825\uCE58 +5"
     cookTime: 180
   - recipeId: royal_platter
@@ -529,6 +709,8 @@ MonoBehaviour:
     resultItemId: royal_platter_item
     ingredients: fish:3,meat:3,vegetable:3
     hungerRestore: 100
+    healthRestore: 0
+    staminaRestore: 0
     additionalEffect: "\uBAA8\uB4E0 \uB2A5\uB825\uCE58 +15 (30\uBD84)"
     cookTime: 300
   craftingRecipes:

@@ -40,6 +40,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 67205103b4f3a254490e29d148750670
+    m_Address: Assets/CropData/PotatoData.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 78252f912af31ac488fc04e3bad1989e
     m_Address: Assets/Prefabs/Wood.prefab
     m_ReadOnly: 0

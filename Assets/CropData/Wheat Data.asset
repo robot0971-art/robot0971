@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b3483c6398aa8a43845cb9329b3c380, type: 3}
   m_Name: Wheat Data
   m_EditorClassIdentifier: Assembly-CSharp::SunnysideIsland.GameData.CropData
-  cropId: Wheat
+  cropId: wheat
   cropName: "\uBC00"
   growthDays: 10
   yieldAmount: 1

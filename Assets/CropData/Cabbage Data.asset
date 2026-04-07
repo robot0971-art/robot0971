@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b3483c6398aa8a43845cb9329b3c380, type: 3}
   m_Name: Cabbage Data
   m_EditorClassIdentifier: Assembly-CSharp::SunnysideIsland.GameData.CropData
-  cropId: Cabbage
+  cropId: cabbage
   cropName: "\uC591\uBC30\uCD94"
   growthDays: 8
   yieldAmount: 2
