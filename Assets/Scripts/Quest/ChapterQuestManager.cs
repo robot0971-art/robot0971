@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SunnysideIsland.Core;
 using SunnysideIsland.Events;
+using Newtonsoft.Json.Linq;
 
 namespace SunnysideIsland.Quest
 {
@@ -262,7 +263,8 @@ namespace SunnysideIsland.Quest
         
         public void LoadSaveData(object state)
         {
-            if (state is ChapterQuestSaveData data)
+            var data = state as ChapterQuestSaveData ?? (state as JObject)?.ToObject<ChapterQuestSaveData>();
+            if (data != null)
             {
                 _currentChapter = data.CurrentChapter;
                 _currentDay = data.CurrentDay;

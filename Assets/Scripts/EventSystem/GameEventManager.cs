@@ -5,6 +5,7 @@ using DI;
 using SunnysideIsland.Events;
 using SunnysideIsland.Core;
 using SunnysideIsland.GameData;
+using Newtonsoft.Json.Linq;
 
 namespace SunnysideIsland.Events
 {
@@ -396,7 +397,8 @@ namespace SunnysideIsland.EventSystem
 
         public void LoadSaveData(object data)
         {
-            if (data is EventManagerSaveData saveData)
+            var saveData = data as EventManagerSaveData ?? (data as JObject)?.ToObject<EventManagerSaveData>();
+            if (saveData != null)
             {
                 if (!string.IsNullOrEmpty(saveData.ActiveRandomEvent) && 
                     Enum.TryParse<Events.RandomEventType>(saveData.ActiveRandomEvent, out var eventType))

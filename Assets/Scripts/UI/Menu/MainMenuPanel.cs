@@ -17,7 +17,7 @@ namespace SunnysideIsland.UI.Menu
         [SerializeField] private Button _quitButton;
 
         [Header("=== Sub Panels ===")]
-        [SerializeField] private GameObject _loadGamePanel;
+        [SerializeField] private UIPanel _loadGamePanel;
         [SerializeField] private SettingsPanel _settingsPanel;
 
         [Header("=== Version ===")]
@@ -72,7 +72,7 @@ namespace SunnysideIsland.UI.Menu
         {
             if (_loadGamePanel != null)
             {
-                _loadGamePanel.SetActive(true);
+                UIManager.Instance?.OpenPanel(_loadGamePanel);
             }
         }
 
@@ -110,7 +110,7 @@ namespace SunnysideIsland.UI.Menu
 
             if (_loadGamePanel != null)
             {
-                _loadGamePanel.SetActive(false);
+                _loadGamePanel.Close();
             }
         }
 
@@ -118,7 +118,7 @@ namespace SunnysideIsland.UI.Menu
         {
             if (_loadGamePanel != null)
             {
-                _loadGamePanel.SetActive(false);
+                _loadGamePanel.Close();
             }
         }
     }

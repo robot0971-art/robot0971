@@ -5,6 +5,7 @@ using DI;
 using SunnysideIsland.Core;
 using SunnysideIsland.Events;
 using SunnysideIsland.UI;
+using Newtonsoft.Json.Linq;
 
 namespace SunnysideIsland.Tutorial
 {
@@ -549,9 +550,10 @@ namespace SunnysideIsland.Tutorial
             };
         }
 
-        public void LoadSaveData(object data)
+        public void LoadSaveData(object state)
         {
-            if (data is TutorialSaveData saveData)
+            var saveData = state as TutorialSaveData ?? (state as JObject)?.ToObject<TutorialSaveData>();
+            if (saveData != null)
             {
                 _completedTutorials.Clear();
                 _tutorialProgress.Clear();

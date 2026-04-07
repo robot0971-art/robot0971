@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SunnysideIsland.Core;
 using SunnysideIsland.Events;
+using Newtonsoft.Json.Linq;
 
 namespace SunnysideIsland.Building
 {
@@ -152,7 +153,8 @@ namespace SunnysideIsland.Building
         /// </summary>
         public void LoadSaveData(object state)
         {
-            if (state is CampfireManagerSaveData data)
+            var data = state as CampfireManagerSaveData ?? (state as JObject)?.ToObject<CampfireManagerSaveData>();
+            if (data != null)
             {
                 _maxCampfires = data.MaxCampfires;
                 // Campfire는 각각의 LoadSaveData에서 로드됨

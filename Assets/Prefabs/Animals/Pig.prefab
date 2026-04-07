@@ -215,6 +215,15 @@ MonoBehaviour:
   _dustOffset: {x: 0.3, y: -3.5, z: 0}
   _dropOffset: {x: 0, y: 0.1, z: 0}
   _dropScatterRadius: 0.2
+  _flashMaterial: {fileID: -876546973899608171, guid: eefa2b7dd453360408c304482d9a08bc, type: 3}
+  _flashDuration: 0.1
+  _flashAmount: 1
+  _flashColor: {r: 1, g: 0, b: 0, a: 0.8235294}
+  _hitReactionDelay: 0.15
+  _damageApplyDelay: 0.05
+  _flashDelay: 0.1
+  _deathDelay: 0.2
+  _deathEffectDelay: 0.2
 --- !u!50 &3827385488517397029
 Rigidbody2D:
   serializedVersion: 5

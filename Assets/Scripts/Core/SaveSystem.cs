@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using SunnysideIsland.Events;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace SunnysideIsland.Core
 {
@@ -41,9 +44,16 @@ namespace SunnysideIsland.Core
         private readonly List<ISaveable> _saveables = new();
         private float _autoSaveTimer;
         private float _totalPlayTime;
-        private float _sessionStartTime;
         private bool _isTrackingTime;
         
+        // Newtonsoft settings
+        private readonly JsonSerializerSettings _jsonSettings = new()
+        {
+            TypeNameHandling = TypeNameHandling.Auto,
+            Formatting = Formatting.Indented,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        };
+
         private void Awake()
         {
             EnsureDirectoryExists();
@@ -80,6 +90,23 @@ namespace SunnysideIsland.Core
         }
         
         /// <summary>
+        /// 씬 내의 모든 저장 가능한 오브젝트 찾기
+        /// </summary>
+        private void FindAllInScene()
+        {
+            _saveables.Clear();
+            var found = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+                .OfType<ISaveable>();
+            
+            foreach (var saveable in found)
+            {
+                Register(saveable);
+            }
+            
+            Debug.Log($"[SaveSystem] Found {_saveables.Count} saveables in scene.");
+        }
+
+        /// <summary>
         /// 저장 가능한 오브젝트 등록
         /// </summary>
         public void Register(ISaveable saveable)
@@ -106,13 +133,14 @@ namespace SunnysideIsland.Core
             try
             {
                 EnsureDirectoryExists();
+                FindAllInScene();
                 
                 var saveData = new GameSaveData
                 {
                     SaveId = saveName,
                     SaveTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                     Version = Application.version,
-                    PlayTime = GetTotalPlayTime()
+                    PlayTime = _totalPlayTime
                 };
                 
                 // 각 저장 가능한 오브젝트의 데이터 수집
@@ -128,16 +156,16 @@ namespace SunnysideIsland.Core
                     }
                     catch (Exception e)
                     {
-                        Debug.LogError($"[SaveSystem] Error saving {saveable.SaveKey}: {e.Message}");
+                        Debug.LogError($"[SaveSystem] Error gathering data for {saveable.SaveKey}: {e.Message}");
                     }
                 }
                 
                 // JSON으로 직렬화
-                string json = JsonUtility.ToJson(saveData, true);
+                string json = JsonConvert.SerializeObject(saveData, _jsonSettings);
                 string savePath = GetSavePath(saveName);
                 File.WriteAllText(savePath, json);
                 
-                Debug.Log($"[SaveSystem] Game saved: {saveName}");
+                Debug.Log($"[SaveSystem] Game saved: {saveName} at {savePath}");
                 
                 EventBus.Publish(new GameSavedEvent
                 {
@@ -147,7 +175,7 @@ namespace SunnysideIsland.Core
             }
             catch (Exception e)
             {
-                Debug.LogError($"[SaveSystem] Failed to save game: {e.Message}");
+                Debug.LogError($"[SaveSystem] Failed to save game: {e.Message}\n{e.StackTrace}");
                 
                 EventBus.Publish(new GameSavedEvent
                 {
@@ -172,8 +200,10 @@ namespace SunnysideIsland.Core
                     return false;
                 }
                 
+                FindAllInScene();
+                
                 string json = File.ReadAllText(savePath);
-                var saveData = JsonUtility.FromJson<GameSaveData>(json);
+                var saveData = JsonConvert.DeserializeObject<GameSaveData>(json, _jsonSettings);
                 
                 if (saveData == null)
                 {
@@ -188,6 +218,8 @@ namespace SunnysideIsland.Core
                     {
                         if (saveData.Data.TryGetValue(saveable.SaveKey, out var data))
                         {
+                            // Newtonsoft.Json with TypeNameHandling.Auto should handle the typing.
+                            // However, if it's a JObject (e.g. type was lost or is generic), we might need to convert it.
                             saveable.LoadSaveData(data);
                         }
                     }
@@ -213,7 +245,7 @@ namespace SunnysideIsland.Core
             }
             catch (Exception e)
             {
-                Debug.LogError($"[SaveSystem] Failed to load game: {e.Message}");
+                Debug.LogError($"[SaveSystem] Failed to load game: {e.Message}\n{e.StackTrace}");
                 
                 EventBus.Publish(new GameLoadedEvent
                 {
@@ -266,7 +298,9 @@ namespace SunnysideIsland.Core
                         
                         // 저장 파일 메타데이터 읽기
                         string json = File.ReadAllText(file);
-                        var saveData = JsonUtility.FromJson<GameSaveData>(json);
+                        // We only need metadata, so we can use a simpler deserialization if needed, 
+                        // but for consistency we use the same settings.
+                        var saveData = JsonConvert.DeserializeObject<GameSaveData>(json, _jsonSettings);
                         
                         if (saveData != null)
                         {
@@ -286,7 +320,13 @@ namespace SunnysideIsland.Core
                 }
                 
                 // 저장 시간순으로 정렬 (최신순)
-                saves.Sort((a, b) => DateTime.Parse(b.SaveTime).CompareTo(DateTime.Parse(a.SaveTime)));
+                saves.Sort((a, b) => {
+                    if (DateTime.TryParse(b.SaveTime, out DateTime dtB) && DateTime.TryParse(a.SaveTime, out DateTime dtA))
+                    {
+                        return dtB.CompareTo(dtA);
+                    }
+                    return 0;
+                });
             }
             catch (Exception e)
             {
@@ -321,20 +361,11 @@ namespace SunnysideIsland.Core
         }
         
         /// <summary>
-        /// 총 플레이 시간 반환
-        /// </summary>
-        private float GetTotalPlayTime()
-        {
-            return _totalPlayTime;
-        }
-        
-        /// <summary>
         /// 플레이 시간 추적 시작
         /// </summary>
         public void StartPlayTimeTracking()
         {
             _isTrackingTime = true;
-            _sessionStartTime = Time.unscaledTime;
         }
         
         /// <summary>

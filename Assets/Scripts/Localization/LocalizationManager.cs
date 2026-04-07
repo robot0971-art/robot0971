@@ -4,6 +4,7 @@ using UnityEngine;
 using DI;
 using SunnysideIsland.Core;
 using SunnysideIsland.Events;
+using Newtonsoft.Json.Linq;
 
 namespace SunnysideIsland.Localization
 {
@@ -335,7 +336,8 @@ namespace SunnysideIsland.Localization
 
         public void LoadSaveData(object data)
         {
-            if (data is LanguageSaveData saveData)
+            var saveData = data as LanguageSaveData ?? (data as JObject)?.ToObject<LanguageSaveData>();
+            if (saveData != null)
             {
                 if (Enum.IsDefined(typeof(Language), saveData.languageIndex))
                 {

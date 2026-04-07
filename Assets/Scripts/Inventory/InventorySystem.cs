@@ -4,6 +4,7 @@ using SunnysideIsland.Core;
 using SunnysideIsland.Events;
 using SunnysideIsland.GameData;
 using UnityEngine;
+using Newtonsoft.Json.Linq;
 using GameDataClass = SunnysideIsland.GameData.GameData;
 
 namespace SunnysideIsland.Inventory
@@ -379,19 +380,19 @@ public bool AddItem(string itemId, int quantity = 1)
 
         public int CountItem(string itemId)
         {
-            if (string.IsNullOrEmpty(itemId)) return 0;
-
+            if (_slots == null) return 0;
 
             int count = 0;
-            for (int i = 0; i < _capacity; i++)
+            for (int i = 0; i < _capacity && i < _slots.Count; i++)
             {
-                if (_slots[i].ItemId == itemId)
+                if (_slots[i] != null && _slots[i].ItemId == itemId)
                 {
                     count += _slots[i].Quantity;
                 }
             }
             return count;
         }
+
 
 
         private int GetMaxStack(string itemId)
@@ -438,20 +439,32 @@ public bool AddItem(string itemId, int quantity = 1)
 
         public void LoadSaveData(object state)
         {
-            if (state is InventorySaveData saveData)
+            InventorySaveData saveData = null;
+
+            if (state is InventorySaveData data)
+            {
+                saveData = data;
+            }
+            else if (state is JObject jObject)
+            {
+                saveData = jObject.ToObject<InventorySaveData>();
+            }
+
+            if (saveData != null)
             {
                 InitializeSlots();
 
-
-                for (int i = 0; i < saveData.Slots.Count && i < _capacity; i++)
+                if (saveData.Slots != null)
                 {
-                    if (saveData.Slots[i] != null)
+                    for (int i = 0; i < saveData.Slots.Count && i < _capacity; i++)
                     {
-                        int maxStack = GetMaxStack(saveData.Slots[i].ItemId);
-                        _slots[i].Add(saveData.Slots[i].ItemId, saveData.Slots[i].Quantity, maxStack);
+                        if (saveData.Slots[i] != null)
+                        {
+                            int maxStack = GetMaxStack(saveData.Slots[i].ItemId);
+                            _slots[i].Add(saveData.Slots[i].ItemId, saveData.Slots[i].Quantity, maxStack);
+                        }
                     }
                 }
-
 
                 if (saveData.QuickSlots != null)
                 {

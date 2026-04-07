@@ -3,6 +3,7 @@ using UnityEngine;
 using SunnysideIsland.Core;
 using SunnysideIsland.Events;
 using SunnysideIsland.Inventory;
+using Newtonsoft.Json.Linq;
 
 namespace SunnysideIsland.Cooking
 {
@@ -140,7 +141,8 @@ namespace SunnysideIsland.Cooking
         
         public void LoadSaveData(object state)
         {
-            if (state is CookingSaveData data)
+            var data = state as CookingSaveData ?? (state as JObject)?.ToObject<CookingSaveData>();
+            if (data != null)
             {
                 _recipes = data.Recipes ?? new List<CookingRecipe>();
             }

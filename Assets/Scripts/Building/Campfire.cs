@@ -6,6 +6,7 @@ using SunnysideIsland.Events;
 using SunnysideIsland.GameData;
 using SunnysideIsland.Inventory;
 using SunnysideIsland.Pool;
+using Newtonsoft.Json.Linq;
 
 namespace SunnysideIsland.Building
 {
@@ -60,7 +61,7 @@ namespace SunnysideIsland.Building
         public CampfireState State { get; private set; } = CampfireState.Unlit;
         public float RemainingTimeHours { get; private set; }
         
-        public string SaveKey => $"Campfire_{gameObject.GetInstanceID()}";
+        public string SaveKey => $"Campfire_{Mathf.RoundToInt(transform.position.x)}_{Mathf.RoundToInt(transform.position.y)}";
         
         private float _flickerTimer = 0f;
         private float _baseIntensity;
@@ -383,7 +384,8 @@ namespace SunnysideIsland.Building
         /// </summary>
         public void LoadSaveData(object state)
         {
-            if (state is CampfireSaveData data)
+            var data = state as CampfireSaveData ?? (state as JObject)?.ToObject<CampfireSaveData>();
+            if (data != null)
             {
                 transform.position = data.Position;
                 RemainingTimeHours = data.RemainingTime;

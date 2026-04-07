@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using DI;
 using SunnysideIsland.Events;
 using SunnysideIsland.UI.Crafting;
+using SunnysideIsland.UI.Menu;
 
 namespace SunnysideIsland.UI
 {
@@ -59,6 +61,15 @@ namespace SunnysideIsland.UI
             
             DIContainer.Global.RegisterInstance<IUIManager>(this);
             
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            
+            InitializePanels();
+        }
+        
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            Debug.Log($"[UIManager] Scene loaded: {scene.name} - Reinitializing panels");
+            _panelDictionary.Clear();
             InitializePanels();
         }
         
@@ -88,10 +99,12 @@ namespace SunnysideIsland.UI
                 return panel as T;
             }
             
-            var found = FindObjectOfType<T>();
+            var found = FindFirstObjectByType<T>(FindObjectsInactive.Include);
             if (found != null)
             {
                 _panelDictionary[type] = found;
+                if (!_panels.Contains(found))
+                    _panels.Add(found);
                 return found;
             }
             
@@ -223,6 +236,14 @@ namespace SunnysideIsland.UI
                     var topPanel = _panelStack.Peek();
                     topPanel.OnBackButton();
                 }
+                else
+                {
+                    var saveLoadPanel = GetPanel<SunnysideIsland.UI.Menu.SaveLoadPanel>();
+                    if (saveLoadPanel != null)
+                    {
+                        OpenPanel(saveLoadPanel);
+                    }
+                }
             }
         }
         
@@ -254,6 +275,11 @@ namespace SunnysideIsland.UI
             var type = panel.GetType();
             _panelDictionary.Remove(type);
             _panels.Remove(panel);
+        }
+        
+        private void OnDestroy()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
         }
     }
 

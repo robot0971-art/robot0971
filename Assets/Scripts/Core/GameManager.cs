@@ -144,7 +144,7 @@ namespace SunnysideIsland.Core
         /// </summary>
         public void SaveGame(string saveName = null)
         {
-            if (CurrentState != GameState.Playing)
+            if (CurrentState != GameState.Playing && CurrentState != GameState.MainMenu)
             {
                 Debug.LogWarning("[GameManager] Cannot save in current state: " + CurrentState);
                 return;

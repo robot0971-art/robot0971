@@ -6,6 +6,7 @@ using SunnysideIsland.Events;
 using SunnysideIsland.Core;
 using SunnysideIsland.Pool;
 using DI;
+using Newtonsoft.Json.Linq;
 
 namespace SunnysideIsland.Environment
 {
@@ -223,7 +224,8 @@ namespace SunnysideIsland.Environment
 
         public void LoadSaveData(object state)
         {
-            if (state is TreeSaveData data)
+            var data = state as TreeSaveData ?? (state as JObject)?.ToObject<TreeSaveData>();
+            if (data != null)
             {
                 _currentHits = data.currentHits;
                 _isChopped = data.isChopped;

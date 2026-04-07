@@ -4,6 +4,7 @@ using UnityEngine;
 using SunnysideIsland.Core;
 using SunnysideIsland.Events;
 using SunnysideIsland.GameData;
+using Newtonsoft.Json.Linq;
 
 namespace SunnysideIsland.Gathering
 {
@@ -100,7 +101,7 @@ namespace SunnysideIsland.Gathering
             }
         }
         
-        public string SaveKey => $"Resource_{_resourceId}_{gameObject.GetInstanceID()}";
+        public string SaveKey => $"Resource_{_resourceId}_{Mathf.RoundToInt(transform.position.x)}_{Mathf.RoundToInt(transform.position.y)}";
         
         public object GetSaveData()
         {
@@ -115,15 +116,17 @@ namespace SunnysideIsland.Gathering
         
         public void LoadSaveData(object state)
         {
-            if (state is ResourceSaveData data)
+            var data = state as ResourceSaveData ?? (state as JObject)?.ToObject<ResourceSaveData>();
+            if (data != null)
             {
                 _isDepleted = data.IsDepleted;
                 _daysSinceDepleted = data.DaysSinceDepleted;
                 _currentHealth = data.CurrentHealth;
-                
+
                 gameObject.SetActive(!_isDepleted);
             }
         }
+
     }
     
     /// <summary>

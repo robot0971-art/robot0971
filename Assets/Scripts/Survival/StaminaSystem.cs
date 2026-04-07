@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using SunnysideIsland.Core;
 using SunnysideIsland.Events;
+using Newtonsoft.Json.Linq;
 
 namespace SunnysideIsland.Survival
 {
@@ -134,7 +135,8 @@ namespace SunnysideIsland.Survival
         
         public void LoadSaveData(object state)
         {
-            if (state is StaminaSaveData data)
+            var data = state as StaminaSaveData ?? (state as JObject)?.ToObject<StaminaSaveData>();
+            if (data != null)
             {
                 _currentStamina = data.CurrentStamina;
                 PublishChangedEvent(0);

@@ -3,6 +3,7 @@ using UnityEngine;
 using SunnysideIsland.Core;
 using SunnysideIsland.Events;
 using SunnysideIsland.GameData;
+using Newtonsoft.Json.Linq;
 
 namespace SunnysideIsland.Building
 {
@@ -67,7 +68,7 @@ namespace SunnysideIsland.Building
             }
         }
 
-        public string SaveKey => $"Building_{BuildingId}_{gameObject.GetInstanceID()}";
+        public string SaveKey => $"Building_{BuildingId}_{Mathf.RoundToInt(transform.position.x)}_{Mathf.RoundToInt(transform.position.y)}";
 
         public void Place(Vector3Int gridPosition)
         {
@@ -221,7 +222,8 @@ namespace SunnysideIsland.Building
 
         public void LoadSaveData(object state)
         {
-            if (state is BuildingSaveData data)
+            var data = state as BuildingSaveData ?? (state as JObject)?.ToObject<BuildingSaveData>();
+            if (data != null)
             {
                 State = data.State;
                 CurrentLevel = data.CurrentLevel;

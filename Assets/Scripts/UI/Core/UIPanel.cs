@@ -32,6 +32,11 @@ namespace SunnysideIsland.UI
             _isOpen = true;
             gameObject.SetActive(true);
             
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.RegisterPanel(this);
+            }
+            
             if (_canvasGroup != null)
             {
                 _canvasGroup.alpha = 1f;
@@ -85,7 +90,14 @@ namespace SunnysideIsland.UI
         {
             if (_closeOnEscape)
             {
-                Close();
+                if (UIManager.Instance != null)
+                {
+                    UIManager.Instance.CloseTopPanel();
+                }
+                else
+                {
+                    Close();
+                }
             }
         }
         

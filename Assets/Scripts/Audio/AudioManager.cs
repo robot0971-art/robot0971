@@ -5,6 +5,7 @@ using UnityEngine;
 using DI;
 using SunnysideIsland.Core;
 using SunnysideIsland.Events;
+using Newtonsoft.Json.Linq;
 
 namespace SunnysideIsland.Audio
 {
@@ -532,7 +533,8 @@ namespace SunnysideIsland.Audio
 
         public void LoadSaveData(object data)
         {
-            if (data is AudioSaveData saveData)
+            var saveData = data as AudioSaveData ?? (data as JObject)?.ToObject<AudioSaveData>();
+            if (saveData != null)
             {
                 _masterVolume = saveData.masterVolume;
                 _bgmVolume = saveData.bgmVolume;

@@ -3,6 +3,7 @@ using DI;
 using SunnysideIsland.Core;
 using SunnysideIsland.Events;
 using UnityEngine;
+using Newtonsoft.Json.Linq;
 
 namespace SunnysideIsland.Survival
 {
@@ -180,7 +181,8 @@ namespace SunnysideIsland.Survival
 
         public void LoadSaveData(object state)
         {
-            if (state is HungerSaveData data)
+            var data = state as HungerSaveData ?? (state as JObject)?.ToObject<HungerSaveData>();
+            if (data != null)
             {
                 _currentHunger = data.CurrentHunger;
                 _lastDay = data.LastDay;

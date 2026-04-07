@@ -1,19 +1,22 @@
 using System;
 using UnityEngine;
 using SunnysideIsland.Events;
+using Newtonsoft.Json.Linq;
 
 namespace SunnysideIsland.Core
 {
     /// <summary>
     /// 게임 내 시간을 관리하는 매니저
     /// </summary>
-    public class TimeManager : MonoBehaviour
+    public class TimeManager : MonoBehaviour, ISaveable
     {
         [Header("=== Time Settings ===")]
         [SerializeField] private float _secondsPerGameMinute = 1f;
         [SerializeField] private int _startDay = 1;
         [SerializeField] private int _startHour = 6;
         [SerializeField] private int _startMinute = 0;
+
+        public string SaveKey => "TimeManager";
         
         [Header("=== Season Settings ===")]
         [SerializeField] private int _daysPerSeason = 7;
@@ -302,7 +305,7 @@ namespace SunnysideIsland.Core
         /// <summary>
         /// 저장 데이터 반환
         /// </summary>
-        public TimeSaveData GetSaveData()
+        public object GetSaveData()
         {
             return new TimeSaveData
             {
@@ -315,11 +318,19 @@ namespace SunnysideIsland.Core
         /// <summary>
         /// 저장 데이터 로드
         /// </summary>
-        public void LoadSaveData(TimeSaveData data)
+        public void LoadSaveData(object data)
         {
-            if (data != null)
+            if (data is TimeSaveData saveData)
             {
-                Initialize(data.Day, data.Hour, data.Minute);
+                Initialize(saveData.Day, saveData.Hour, saveData.Minute);
+            }
+            else if (data is JObject jObject)
+            {
+                var saveDataFromJson = jObject.ToObject<TimeSaveData>();
+                if (saveDataFromJson != null)
+                {
+                    Initialize(saveDataFromJson.Day, saveDataFromJson.Hour, saveDataFromJson.Minute);
+                }
             }
         }
         

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SunnysideIsland.Core;
 using SunnysideIsland.Events;
+using Newtonsoft.Json.Linq;
 
 namespace SunnysideIsland.Quest
 {
@@ -194,7 +195,8 @@ namespace SunnysideIsland.Quest
         
         public void LoadSaveData(object state)
         {
-            if (state is QuestSaveData data)
+            var data = state as QuestSaveData ?? (state as JObject)?.ToObject<QuestSaveData>();
+            if (data != null)
             {
                 _activeQuests = data.ActiveQuests ?? new List<Quest>();
                 _completedQuests = data.CompletedQuests ?? new List<string>();

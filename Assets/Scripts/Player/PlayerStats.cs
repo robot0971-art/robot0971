@@ -5,6 +5,7 @@ using DI;
 using SunnysideIsland.Events;
 using SunnysideIsland.Core;
 using SunnysideIsland.GameData;
+using Newtonsoft.Json.Linq;
 
 namespace SunnysideIsland.Player
 {
@@ -203,7 +204,18 @@ namespace SunnysideIsland.Player
 
         public void LoadSaveData(object data)
         {
-            if (data is PlayerStatsSaveData saveData)
+            PlayerStatsSaveData saveData = null;
+
+            if (data is PlayerStatsSaveData psData)
+            {
+                saveData = psData;
+            }
+            else if (data is JObject jObject)
+            {
+                saveData = jObject.ToObject<PlayerStatsSaveData>();
+            }
+
+            if (saveData != null)
             {
                 _level = saveData.Level;
                 _experience = saveData.Experience;

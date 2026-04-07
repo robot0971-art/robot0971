@@ -4,6 +4,7 @@ using UnityEngine;
 using DI;
 using SunnysideIsland.Core;
 using SunnysideIsland.Events;
+using Newtonsoft.Json.Linq;
 
 namespace SunnysideIsland.Achievement
 {
@@ -423,7 +424,8 @@ namespace SunnysideIsland.Achievement
 
         public void LoadSaveData(object data)
         {
-            if (data is AchievementSaveData saveData)
+            var saveData = data as AchievementSaveData ?? (data as JObject)?.ToObject<AchievementSaveData>();
+            if (saveData != null)
             {
                 InitializeProgress();
 

@@ -6,6 +6,7 @@ using SunnysideIsland.Core;
 using SunnysideIsland.Events;
 using SunnysideIsland.GameData;
 using SunnysideIsland.Pool;
+using Newtonsoft.Json.Linq;
 
 namespace SunnysideIsland.Weather
 {
@@ -447,7 +448,18 @@ namespace SunnysideIsland.Weather
         
         public void LoadSaveData(object state)
         {
-            if (state is WeatherSaveData data)
+            WeatherSaveData data = null;
+
+            if (state is WeatherSaveData weatherData)
+            {
+                data = weatherData;
+            }
+            else if (state is JObject jObject)
+            {
+                data = jObject.ToObject<WeatherSaveData>();
+            }
+
+            if (data != null)
             {
                 CurrentWeather = data.CurrentWeather;
                 PreviousWeather = data.PreviousWeather;

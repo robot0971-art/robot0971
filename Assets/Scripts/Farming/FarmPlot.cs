@@ -3,6 +3,7 @@ using UnityEngine;
 using SunnysideIsland.Core;
 using SunnysideIsland.Events;
 using SunnysideIsland.GameData;
+using Newtonsoft.Json.Linq;
 
 namespace SunnysideIsland.Farming
 {
@@ -34,7 +35,7 @@ namespace SunnysideIsland.Farming
         public bool IsReady => _state == PlotState.Ready;
         public bool IsEmpty => _state == PlotState.Empty;
 
-        public string SaveKey => $"FarmPlot_{gameObject.GetInstanceID()}";
+        public string SaveKey => $"FarmPlot_{Mathf.RoundToInt(transform.position.x)}_{Mathf.RoundToInt(transform.position.y)}";
 
         private void Start()
         {
@@ -249,7 +250,8 @@ namespace SunnysideIsland.Farming
 
         public void LoadSaveData(object state)
         {
-            if (state is FarmPlotSaveData data)
+            var data = state as FarmPlotSaveData ?? (state as JObject)?.ToObject<FarmPlotSaveData>();
+            if (data != null)
             {
                 _state = data.State; _cropId = data.CropId; _growthProgress = data.GrowthProgress; _isWatered = data.IsWatered; _daysPlanted = data.DaysPlanted;
                 UpdateVisuals();

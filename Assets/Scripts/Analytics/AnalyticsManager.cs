@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DI;
 using SunnysideIsland.Core;
+using Newtonsoft.Json.Linq;
 
 namespace SunnysideIsland.Analytics
 {
@@ -258,7 +259,8 @@ namespace SunnysideIsland.Analytics
         
         public void LoadSaveData(object state)
         {
-            if (state is AnalyticsSaveData data)
+            var data = state as AnalyticsSaveData ?? (state as JObject)?.ToObject<AnalyticsSaveData>();
+            if (data != null)
             {
                 _sessionCount = data.SessionCount;
                 
