@@ -56,6 +56,8 @@ namespace SunnysideIsland.Animal
         [Header("=== Components ===")]
         [SerializeField] protected SpriteRenderer _spriteRenderer;
         [SerializeField] protected Animator _animator;
+        private readonly System.Collections.Generic.HashSet<int> _animatorParameterHashes = new System.Collections.Generic.HashSet<int>();
+        private static readonly int AnimState = Animator.StringToHash("State");
         
         protected Vector3 _spawnPosition;
         protected Vector3 _wanderTarget;
@@ -66,7 +68,6 @@ namespace SunnysideIsland.Animal
         
         protected virtual void Awake()
         {
-            Debug.Log($"[AnimalBaseAI] Awake called on {gameObject.name}");
             _spawnPosition = transform.position;
             _originalScale = transform.localScale;
             // _originalMoveSpeed는 Start에서 설정 (하위 클래스 Awake보다 나중에)
@@ -75,6 +76,7 @@ namespace SunnysideIsland.Animal
                 _spriteRenderer = GetComponent<SpriteRenderer>();
             if (_animator == null)
                 _animator = GetComponent<Animator>();
+            CacheAnimatorParameters();
             if (_playerLayer == 0)
                 _playerLayer = LayerMask.GetMask("Player");
             
@@ -94,13 +96,11 @@ namespace SunnysideIsland.Animal
                 _growthTimer = _growthDuration;
                 transform.localScale = _originalScale * _babyScale;
                 _moveSpeed = _originalMoveSpeed * _babySpeedMultiplier;
-                Debug.Log($"[AnimalBaseAI] {gameObject.name} initialized as baby");
             }
         }
         
         protected virtual void Start()
         {
-            Debug.Log($"[AnimalBaseAI] Start called on {gameObject.name}");
             _spawnPosition = transform.position;
             _idleTimer = _idleTime;
             
@@ -118,7 +118,6 @@ namespace SunnysideIsland.Animal
             // 현재 날씨 확인
             CheckCurrentWeather();
                 
-            Debug.Log($"[AnimalBaseAI] {gameObject.name} - Player found: {_playerTransform != null}");
         }
         
         protected virtual void OnDestroy()
@@ -150,13 +149,11 @@ namespace SunnysideIsland.Animal
             {
                 // 비 시작 - 속도 감소
                 _moveSpeed = _originalMoveSpeed * _rainSpeedMultiplier;
-                Debug.Log($"[AnimalBaseAI] {gameObject.name} - Raining, speed reduced to {_moveSpeed}");
             }
             else if (!_isRaining && wasRaining)
             {
                 // 비 종료 - 속도 복원
                 _moveSpeed = _originalMoveSpeed;
-                Debug.Log($"[AnimalBaseAI] {gameObject.name} - Rain stopped, speed restored to {_moveSpeed}");
             }
         }
         
@@ -165,7 +162,6 @@ namespace SunnysideIsland.Animal
             // Grass 밖에 있으면 즉시 Grass로 돌아가기
             if (!IsOnGround(transform.position))
             {
-                Debug.Log($"[AnimalBaseAI] {gameObject.name} not on ground, returning...");
                 ReturnToGround();
                 return;
             }
@@ -213,7 +209,6 @@ namespace SunnysideIsland.Animal
             _isBaby = false;
             transform.localScale = _originalScale;
             _moveSpeed = _originalMoveSpeed;
-            Debug.Log($"[AnimalBaseAI] {gameObject.name} has grown up!");
         }
         
         protected virtual void UpdateState()
@@ -463,7 +458,6 @@ namespace SunnysideIsland.Animal
                 babyAI.InitializeBaby();
             }
             
-            Debug.Log($"[AnimalBaseAI] {gameObject.name} spawned a baby at {spawnPos}");
         }
         
         protected virtual Vector3 FindValidBabySpawnPosition()
@@ -485,9 +479,24 @@ namespace SunnysideIsland.Animal
         
         protected virtual void UpdateAnimatorState(int state)
         {
-            if (_animator != null)
+            if (_animator != null && _animatorParameterHashes.Contains(AnimState))
             {
-                _animator.SetInteger("State", state);
+                _animator.SetInteger(AnimState, state);
+            }
+        }
+
+        private void CacheAnimatorParameters()
+        {
+            _animatorParameterHashes.Clear();
+
+            if (_animator == null)
+            {
+                return;
+            }
+
+            foreach (var parameter in _animator.parameters)
+            {
+                _animatorParameterHashes.Add(parameter.nameHash);
             }
         }
         

@@ -5,6 +5,7 @@ using SunnysideIsland.Events;
 using SunnysideIsland.Core;
 using SunnysideIsland.Crafting;
 using DI;
+using SunnysideIsland.UI;
 
 namespace SunnysideIsland.Core
 {
@@ -16,6 +17,7 @@ namespace SunnysideIsland.Core
         [Header("=== Settings ===")]
         [SerializeField] private string _gameSceneName = "MainGame";
         [SerializeField] private string _mainMenuSceneName = "MainGame";
+        [SerializeField] private string _endSceneName = "End Scene";
         
         [Header("=== References ===")]
         [SerializeField] private TimeManager _timeManager;
@@ -51,7 +53,10 @@ namespace SunnysideIsland.Core
         private void Initialize()
         {
             // DI Container 초기화
-            DIContainer.InitializeGlobal();
+            if (DIContainer.Global == null)
+            {
+                DIContainer.InitializeGlobal();
+            }
             
             // 전역 서비스 등록
             RegisterGlobalServices();
@@ -59,7 +64,6 @@ namespace SunnysideIsland.Core
             // 이벤트 구독
             EventBus.Subscribe<ItemCraftedEvent>(OnItemCrafted);
             
-            Debug.Log("[GameManager] Initialized");
         }
         
         /// <summary>
@@ -90,7 +94,7 @@ namespace SunnysideIsland.Core
         public void StartNewGame()
         {
             CurrentSaveName = $"save_{DateTime.Now:yyyyMMdd_HHmmss}";
-            CurrentState = GameState.Playing;
+            CurrentState = GameState.Loading;
             
             // 시간 초기화
             if (_timeManager != null)
@@ -99,15 +103,13 @@ namespace SunnysideIsland.Core
             }
             
             // 게임 씬 로드
-            LoadGameScene();
-            
-            EventBus.Publish(new GameStartedEvent
+            LoadGameScene(() =>
             {
-                IsNewGame = true,
-                SaveName = CurrentSaveName
+                if (Instance != null)
+                {
+                    Instance.StartCoroutine(Instance.FinishGameStart(CurrentSaveName, true));
+                }
             });
-            
-            Debug.Log($"[GameManager] New game started: {CurrentSaveName}");
         }
         
         /// <summary>
@@ -121,14 +123,14 @@ namespace SunnysideIsland.Core
                 return;
             }
 
-            Debug.Log($"[GameManager] LoadGame Requested: {saveName}");
             Instance.CurrentSaveName = saveName;
             Instance.CurrentState = GameState.Loading;
+            Time.timeScale = 1f;
+            UIManager.Instance?.CloseAllPanels();
             
             // 씬 로드
             Instance.LoadGameScene(() =>
             {
-                Debug.Log($"[GameManager] Scene Loaded. Starting LoadGameProcess on Current Instance.");
                 // 씬 로드 후에는 Instance가 바뀌었을 수 있으므로 다시 Instance를 통해 호출
                 if (Instance != null)
                 {
@@ -153,12 +155,10 @@ namespace SunnysideIsland.Core
             
             if (_saveSystem != null)
             {
-                Debug.Log($"[GameManager] Calling SaveSystem.LoadGame({saveName})");
                 bool success = _saveSystem.LoadGame(saveName);
                 if (success)
                 {
-                    CurrentState = GameState.Playing;
-                    Debug.Log($"[GameManager] Game loaded successfully: {saveName}");
+                    StartCoroutine(FinishGameStart(saveName, false));
                 }
                 else
                 {
@@ -207,7 +207,6 @@ namespace SunnysideIsland.Core
                     _timeManager.Pause();
                 }
                 
-                Debug.Log("[GameManager] Game paused");
             }
         }
         
@@ -226,7 +225,6 @@ namespace SunnysideIsland.Core
                     _timeManager.Resume();
                 }
                 
-                Debug.Log("[GameManager] Game resumed");
             }
         }
         
@@ -245,7 +243,6 @@ namespace SunnysideIsland.Core
             EventBus.Publish(new ReturnToMainMenuEvent());
             
             SceneManager.LoadScene(_mainMenuSceneName);
-            Debug.Log("[GameManager] Returned to main menu");
         }
         
         /// <summary>
@@ -253,7 +250,6 @@ namespace SunnysideIsland.Core
         /// </summary>
         public void QuitGame()
         {
-            Debug.Log("[GameManager] Quitting game");
             
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
@@ -291,6 +287,18 @@ namespace SunnysideIsland.Core
                 onComplete?.Invoke();
             }
         }
+
+        private System.Collections.IEnumerator FinishGameStart(string saveName, bool isNewGame)
+        {
+            CurrentState = GameState.Playing;
+            yield return null;
+
+            EventBus.Publish(new GameStartedEvent
+            {
+                IsNewGame = isNewGame,
+                SaveName = saveName
+            });
+        }
         
         /// <summary>
         /// 씬 의존성 주입
@@ -304,7 +312,6 @@ namespace SunnysideIsland.Core
                 DIContainer.Inject(mb);
             }
             
-            Debug.Log("[GameManager] Scene dependencies injected");
         }
         
         /// <summary>
@@ -312,7 +319,6 @@ namespace SunnysideIsland.Core
         /// </summary>
         public void OnPlayerDied(string deathReason)
         {
-            Debug.Log($"[GameManager] Player died: {deathReason}");
             
             CurrentState = GameState.Dead;
             
@@ -347,7 +353,6 @@ namespace SunnysideIsland.Core
                 RespawnPosition = GetRespawnPosition()
             });
             
-            Debug.Log("[GameManager] Player respawned");
         }
         
         /// <summary>
@@ -364,7 +369,6 @@ namespace SunnysideIsland.Core
         public void GameOver()
         {
             CurrentState = GameState.GameOver;
-            Debug.Log("[GameManager] Game Over");
             
             EventBus.Publish(new GameOverEvent
             {
@@ -377,15 +381,39 @@ namespace SunnysideIsland.Core
         /// </summary>
         public void OnBoatBuilt()
         {
+            Debug.Log("[GameManager] OnBoatBuilt()");
+            if (CurrentState == GameState.Victory)
+            {
+                return;
+            }
+
             CurrentState = GameState.Victory;
-            Debug.Log("[GameManager] Victory! Boat built!");
-            
+
             EventBus.Publish(new GameClearEvent());
-            
-            // 2초 후 메인 메뉴로 돌아가기
-            Invoke(nameof(ReturnToMainMenu), 2f);
+            LoadEndScene();
         }
-        
+
+        private void LoadEndScene()
+        {
+            Debug.Log($"[GameManager] LoadEndScene() -> {_endSceneName}");
+            Time.timeScale = 1f;
+            UIManager.Instance?.CloseAllPanels();
+
+            if (string.IsNullOrWhiteSpace(_endSceneName))
+            {
+                Debug.LogError("[GameManager] End scene name is not configured.");
+                return;
+            }
+
+            if (!Application.CanStreamedLevelBeLoaded(_endSceneName))
+            {
+                Debug.LogError($"[GameManager] End scene cannot be loaded: {_endSceneName}");
+                return;
+            }
+
+            SceneManager.LoadScene(_endSceneName);
+        }
+
         private void OnItemCrafted(ItemCraftedEvent evt)
         {
             if (evt.ResultItemId == "boat")
@@ -400,7 +428,6 @@ namespace SunnysideIsland.Core
         [ContextMenu("Debug State")]
         private void DebugState()
         {
-            Debug.Log($"[GameManager] State: {CurrentState}, Save: {CurrentSaveName}");
         }
         
         public class GameClearEvent

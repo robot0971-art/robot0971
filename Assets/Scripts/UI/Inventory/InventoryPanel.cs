@@ -84,14 +84,14 @@ namespace SunnysideIsland.UI.Inventory
 
         private void OnEnable()
         {
-            _closeButton?.onClick.AddListener(Close);
+            _closeButton?.onClick.AddListener(CloseViaUIManager);
             _sortButton?.onClick.AddListener(OnSortClicked);
             SubscribeEvents();
         }
 
         private void OnDisable()
         {
-            _closeButton?.onClick.RemoveListener(Close);
+            _closeButton?.onClick.RemoveListener(CloseViaUIManager);
             _sortButton?.onClick.RemoveListener(OnSortClicked);
             UnsubscribeEvents();
         }
@@ -402,6 +402,18 @@ namespace SunnysideIsland.UI.Inventory
         private async void OnSortClicked()
         {
             await RefreshInventoryAsync();
+        }
+
+        private void CloseViaUIManager()
+        {
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.ClosePanel(this);
+            }
+            else
+            {
+                Close();
+            }
         }
 
         private async void OnItemPickedUp(ItemPickedUpEvent evt)

@@ -101,6 +101,12 @@ namespace SunnysideIsland.UI.HUD
 
         private void Update()
         {
+            if (UIManager.Instance != null
+                && UIManager.Instance.GetPanel<SunnysideIsland.UI.Menu.BoatConfirmPanel>()?.IsOpen == true)
+            {
+                return;
+            }
+
             if (_gameClear)
             {
                 return;
@@ -177,65 +183,13 @@ namespace SunnysideIsland.UI.HUD
         {
             _gameClear = true;
 
-            if (_gameClearPanel == null)
+            if (_gameClearPanel != null)
             {
-                GameObject canvasGO = new GameObject("GameClearCanvas");
-                Canvas canvas = canvasGO.AddComponent<Canvas>();
-                canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-                canvas.sortingOrder = 100;
-                canvasGO.AddComponent<CanvasScaler>();
-                canvasGO.AddComponent<GraphicRaycaster>();
-
-                GameObject panelGO = new GameObject("Panel");
-                panelGO.transform.SetParent(canvasGO.transform, false);
-                Image panelImage = panelGO.AddComponent<Image>();
-                panelImage.color = new Color(0f, 0f, 0f, 0.8f);
-                RectTransform panelRect = panelGO.GetComponent<RectTransform>();
-                panelRect.anchorMin = Vector2.zero;
-                panelRect.anchorMax = Vector2.one;
-                panelRect.sizeDelta = Vector2.zero;
-
-                GameObject textGO = new GameObject("Text");
-                textGO.transform.SetParent(panelGO.transform, false);
-                TextMeshProUGUI text = textGO.AddComponent<TextMeshProUGUI>();
-                text.text = "Boat Complete\nYou Escaped!";
-                text.fontSize = 48;
-                text.alignment = TextAlignmentOptions.Center;
-                text.color = Color.white;
-                RectTransform textRect = textGO.GetComponent<RectTransform>();
-                textRect.anchorMin = new Vector2(0.1f, 0.3f);
-                textRect.anchorMax = new Vector2(0.9f, 0.7f);
-                textRect.sizeDelta = Vector2.zero;
-
-                GameObject buttonGO = new GameObject("Button");
-                buttonGO.transform.SetParent(panelGO.transform, false);
-                Button button = buttonGO.AddComponent<Button>();
-                Image buttonImage = buttonGO.AddComponent<Image>();
-                buttonImage.color = new Color(0.2f, 0.6f, 1f, 1f);
-                RectTransform buttonRect = buttonGO.GetComponent<RectTransform>();
-                buttonRect.anchorMin = new Vector2(0.4f, 0.15f);
-                buttonRect.anchorMax = new Vector2(0.6f, 0.25f);
-                buttonRect.sizeDelta = Vector2.zero;
-
-                GameObject buttonTextGO = new GameObject("ButtonText");
-                buttonTextGO.transform.SetParent(buttonGO.transform, false);
-                TextMeshProUGUI buttonText = buttonTextGO.AddComponent<TextMeshProUGUI>();
-                buttonText.text = "Main Menu";
-                buttonText.fontSize = 24;
-                buttonText.alignment = TextAlignmentOptions.Center;
-                buttonText.color = Color.white;
-                RectTransform btTextRect = buttonTextGO.GetComponent<RectTransform>();
-                btTextRect.anchorMin = Vector2.zero;
-                btTextRect.anchorMax = Vector2.one;
-                btTextRect.sizeDelta = Vector2.zero;
-
-                button.onClick.AddListener(() => GameManager.Instance.ReturnToMainMenu());
-
-                _gameClearPanel = canvasGO;
+                _gameClearPanel.SetActive(true);
             }
             else
             {
-                _gameClearPanel.SetActive(true);
+                Debug.LogWarning("[HUDPanel] Game clear panel is not assigned.");
             }
         }
 

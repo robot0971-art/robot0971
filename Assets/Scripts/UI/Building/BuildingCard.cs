@@ -11,6 +11,9 @@ namespace SunnysideIsland.UI.Building
     [ExecuteAlways]
     public class BuildingCard : MonoBehaviour
     {
+        private static readonly System.Collections.Generic.Dictionary<string, GameObject> _preloadedIconPrefabs = new System.Collections.Generic.Dictionary<string, GameObject>();
+        private static readonly System.Collections.Generic.HashSet<string> _preloadRequests = new System.Collections.Generic.HashSet<string>();
+
         [Header("=== References ===")]
         [SerializeField] private Transform _iconContainer;
         [SerializeField] private TextMeshProUGUI _buildingNameText;
@@ -33,6 +36,46 @@ namespace SunnysideIsland.UI.Building
         
         private AsyncOperationHandle<GameObject> _iconHandle;
         private GameObject _currentIconInstance;
+
+        public static void PreloadIcon(AssetReferenceGameObject assetRef)
+        {
+            if (assetRef == null || !Application.isPlaying)
+            {
+                return;
+            }
+
+            string cacheKey = assetRef.RuntimeKey != null ? assetRef.RuntimeKey.ToString() : string.Empty;
+            if (string.IsNullOrEmpty(cacheKey) || _preloadedIconPrefabs.ContainsKey(cacheKey) || _preloadRequests.Contains(cacheKey))
+            {
+                return;
+            }
+
+            _preloadRequests.Add(cacheKey);
+
+            var locationsHandle = Addressables.LoadResourceLocationsAsync(assetRef.RuntimeKey, typeof(GameObject));
+            locationsHandle.Completed += locations =>
+            {
+                if (locations.Status != AsyncOperationStatus.Succeeded || locations.Result == null || locations.Result.Count == 0)
+                {
+                    _preloadRequests.Remove(cacheKey);
+                    Addressables.Release(locations);
+                    return;
+                }
+
+                Addressables.Release(locations);
+
+                var handle = Addressables.LoadAssetAsync<GameObject>(assetRef);
+                handle.Completed += result =>
+                {
+                    _preloadRequests.Remove(cacheKey);
+
+                    if (result.Status == AsyncOperationStatus.Succeeded && result.Result != null)
+                    {
+                        _preloadedIconPrefabs[cacheKey] = result.Result;
+                    }
+                };
+            };
+        }
 
         private void Awake()
         {
@@ -174,6 +217,18 @@ namespace SunnysideIsland.UI.Building
         private void LoadAndInstantiateIcon(AssetReferenceGameObject assetRef)
         {
             CleanupIcon();
+
+            string cacheKey = assetRef != null && assetRef.RuntimeKey != null ? assetRef.RuntimeKey.ToString() : string.Empty;
+            if (!string.IsNullOrEmpty(cacheKey) && _preloadedIconPrefabs.TryGetValue(cacheKey, out var cachedPrefab) && cachedPrefab != null)
+            {
+                _currentIconInstance = Instantiate(cachedPrefab, _iconContainer);
+                if (_currentIconInstance != null)
+                {
+                    _currentIconInstance.hideFlags = HideFlags.HideAndDontSave;
+                    SetupIconInstance();
+                }
+                return;
+            }
 
 #if UNITY_EDITOR
             if (!Application.isPlaying)

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using SunnysideIsland.Events;
+using SunnysideIsland.Building;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -76,7 +77,149 @@ namespace SunnysideIsland.Core
                 _totalPlayTime += Time.unscaledDeltaTime;
             }
         }
-        
+
+        private void LoadLegacyCampfireData(GameSaveData saveData)
+        {
+            if (saveData?.Data == null || HasCampfireManagerList(saveData))
+            {
+                return;
+            }
+
+            var legacyCampfires = new List<CampfireSaveData>();
+            foreach (var entry in saveData.Data)
+            {
+                if (!entry.Key.StartsWith("Campfire_"))
+                {
+                    continue;
+                }
+
+                var campfireData = entry.Value as CampfireSaveData
+                    ?? (entry.Value as JObject)?.ToObject<CampfireSaveData>();
+
+                if (campfireData != null)
+                {
+                    legacyCampfires.Add(campfireData);
+                }
+            }
+
+            if (legacyCampfires.Count == 0)
+            {
+                return;
+            }
+
+            var campfireManager = FindFirstObjectByType<CampfireManager>();
+            if (campfireManager == null)
+            {
+                Debug.LogWarning("[SaveSystem] Legacy campfire data exists, but CampfireManager was not found.");
+                return;
+            }
+
+            campfireManager.LoadLegacyCampfires(legacyCampfires);
+        }
+
+        private static bool HasCampfireManagerList(GameSaveData saveData)
+        {
+            if (saveData?.Data == null || !saveData.Data.TryGetValue("CampfireManager", out var managerData))
+            {
+                return false;
+            }
+
+            if (managerData is CampfireManagerSaveData typedData)
+            {
+                return typedData.Campfires != null;
+            }
+
+            if (managerData is JObject jsonData)
+            {
+                return jsonData["Campfires"] != null;
+            }
+
+            return false;
+        }
+
+        private void EnsureCampfiresExistForLoad(GameSaveData saveData)
+        {
+            if (saveData?.Data == null)
+            {
+                return;
+            }
+
+            var savedCampfires = new List<KeyValuePair<string, object>>();
+            foreach (var entry in saveData.Data)
+            {
+                if (entry.Key.StartsWith("Campfire_"))
+                {
+                    savedCampfires.Add(entry);
+                }
+            }
+
+            if (savedCampfires.Count == 0)
+            {
+                return;
+            }
+
+            var existingCampfires = FindObjectsByType<Campfire>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            var existingKeys = new HashSet<string>();
+            foreach (var campfire in existingCampfires)
+            {
+                if (campfire != null)
+                {
+                    existingKeys.Add(campfire.SaveKey);
+                }
+            }
+
+            GameObject campfirePrefab = ResolveCampfirePrefab();
+            if (campfirePrefab == null)
+            {
+                Debug.LogError("[SaveSystem] Campfire prefab could not be resolved during load.");
+                return;
+            }
+
+            foreach (var entry in savedCampfires)
+            {
+                if (existingKeys.Contains(entry.Key))
+                {
+                    continue;
+                }
+
+                var campfireData = entry.Value as CampfireSaveData
+                    ?? (entry.Value as JObject)?.ToObject<CampfireSaveData>();
+
+                if (campfireData == null)
+                {
+                    continue;
+                }
+
+                GameObject campfireObject = Instantiate(
+                    campfirePrefab,
+                    campfireData.Position,
+                    Quaternion.identity);
+
+                if (!campfireObject.TryGetComponent(out Campfire campfire))
+                {
+                    Debug.LogError("[SaveSystem] Restored campfire prefab is missing the Campfire component.");
+                    Destroy(campfireObject);
+                    continue;
+                }
+
+                existingKeys.Add(campfire.SaveKey);
+            }
+        }
+
+        private static GameObject ResolveCampfirePrefab()
+        {
+            var buildingDatabase = Resources.Load<BuildingDatabase>("BuildingDatabase");
+            if (buildingDatabase == null)
+            {
+                return null;
+            }
+
+            DetailedBuildingData buildingData = buildingDatabase.GetBuilding("campfire")
+                ?? buildingDatabase.GetBuilding("Campfire");
+
+            return buildingData?.BuildingPrefab;
+        }
+
         /// <summary>
         /// 저장 디렉토리 확인/생성
         /// </summary>
@@ -85,7 +228,6 @@ namespace SunnysideIsland.Core
             if (!Directory.Exists(SaveDirectory))
             {
                 Directory.CreateDirectory(SaveDirectory);
-                Debug.Log($"[SaveSystem] Created save directory: {SaveDirectory}");
             }
         }
         
@@ -101,10 +243,8 @@ namespace SunnysideIsland.Core
             foreach (var saveable in found)
             {
                 Register(saveable);
-                Debug.Log($"[SaveSystem] Found saveable: {saveable.SaveKey} ({saveable.GetType().Name}) on GameObject: {((MonoBehaviour)saveable).name}");
             }
             
-            Debug.Log($"[SaveSystem] Found {_saveables.Count} saveables in scene.");
         }
 
         /// <summary>
@@ -166,7 +306,6 @@ namespace SunnysideIsland.Core
                 string savePath = GetSavePath(saveName);
                 File.WriteAllText(savePath, json);
                 
-                Debug.Log($"[SaveSystem] Game saved: {saveName} at {savePath}");
                 
                 EventBus.Publish(new GameSavedEvent
                 {
@@ -193,8 +332,6 @@ namespace SunnysideIsland.Core
         {
             try
             {
-                Debug.Log($"[SaveSystem] === LOAD GAME START === SaveName: {saveName}");
-                Debug.Log($"[SaveSystem] Current Frame: {Time.frameCount}");
                 
                 string savePath = GetSavePath(saveName);
                 
@@ -205,11 +342,6 @@ namespace SunnysideIsland.Core
                 }
                 
                 FindAllInScene();
-                Debug.Log($"[SaveSystem] FindAllInScene() found {_saveables.Count} saveables");
-                foreach (var s in _saveables)
-                {
-                    Debug.Log($"[SaveSystem]   - Saveable: {s.SaveKey} ({s.GetType().Name})");
-                }
                 
                 string json = File.ReadAllText(savePath);
                 var saveData = JsonConvert.DeserializeObject<GameSaveData>(json, _jsonSettings);
@@ -222,8 +354,6 @@ namespace SunnysideIsland.Core
 
                 if (saveData.Data != null)
                 {
-                    Debug.Log($"[SaveSystem] Successfully loaded file. Found {saveData.Data.Count} entries in save data.");
-                    Debug.Log($"[SaveSystem] Keys in save file: {string.Join(", ", saveData.Data.Keys)}");
                 }
                 else
                 {
@@ -231,13 +361,15 @@ namespace SunnysideIsland.Core
                 }
                 
                 // 각 저장 가능한 오브젝트에 데이터 로드
+                EnsureCampfiresExistForLoad(saveData);
+                FindAllInScene();
+
                 foreach (var saveable in _saveables)
                 {
                     try
                     {
                         if (saveData.Data.TryGetValue(saveable.SaveKey, out var data))
                         {
-                            Debug.Log($"[SaveSystem] Found data for: {saveable.SaveKey}. Applying...");
                             saveable.LoadSaveData(data);
                         }
                         else
@@ -252,10 +384,10 @@ namespace SunnysideIsland.Core
                 }
                 
                 // 플레이 시간 복원
+                LoadLegacyCampfireData(saveData);
                 _totalPlayTime = saveData.PlayTime;
                 StartPlayTimeTracking();
                 
-                Debug.Log($"[SaveSystem] Game loaded: {saveName}");
                 
                 EventBus.Publish(new GameLoadedEvent
                 {
@@ -290,7 +422,6 @@ namespace SunnysideIsland.Core
                 if (File.Exists(savePath))
                 {
                     File.Delete(savePath);
-                    Debug.Log($"[SaveSystem] Save deleted: {saveName}");
                 }
             }
             catch (Exception e)

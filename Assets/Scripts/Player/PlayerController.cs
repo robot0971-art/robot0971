@@ -27,6 +27,7 @@ namespace SunnysideIsland.Player
 
         [Header("=== Interaction Settings ===")]
         [SerializeField] private float _interactionRadius = 0.15f;
+        [SerializeField] private float _buildStandOffDistance = 0.08f;
         [SerializeField] private LayerMask _interactableLayer;
         [SerializeField] private LayerMask _farmingLayer;
         [SerializeField] private LayerMask _treeLayer;
@@ -109,6 +110,7 @@ namespace SunnysideIsland.Player
         private int _hammerCount;
         private System.Action _onBuildComplete;
         private Coroutine _buildCoroutine;
+        private readonly System.Collections.Generic.HashSet<int> _animatorParameterHashes = new System.Collections.Generic.HashSet<int>();
 
         [SerializeField] private GameObject _plotPrefab;
 
@@ -120,6 +122,7 @@ namespace SunnysideIsland.Player
             if (_rb == null) _rb = GetComponent<Rigidbody2D>();
             if (_animator == null) _animator = GetComponent<Animator>();
             if (_spriteRenderer == null) _spriteRenderer = GetComponent<SpriteRenderer>();
+            CacheAnimatorParameters();
 
             if (GetComponent<SeaDiscoveryTracker>() == null)
             {
@@ -163,6 +166,20 @@ namespace SunnysideIsland.Player
 
         private void Update()
         {
+            if (GameManager.Instance != null && GameManager.Instance.CurrentState == GameState.Loading)
+            {
+                return;
+            }
+
+            if (SunnysideIsland.UI.UIManager.Instance != null
+                && SunnysideIsland.UI.UIManager.Instance.GetPanel<SunnysideIsland.UI.Menu.BoatConfirmPanel>()?.IsOpen == true)
+            {
+                CheckCancelAutoMove();
+                HandleTimers();
+                UpdateAnimations();
+                return;
+            }
+
             CheckCancelAutoMove();
 
             if (!_canMove) return;
@@ -665,20 +682,56 @@ namespace SunnysideIsland.Player
 
         private void UpdateAnimations()
         {
+            if (_animator == null)
+            {
+                return;
+            }
+
             Vector2 animVelocity = _isRolling ? _rb.linearVelocity.normalized : _moveDirection;
 
-            _animator.SetFloat(AnimMoveX, animVelocity.x);
-            _animator.SetFloat(AnimMoveY, animVelocity.y);
-            _animator.SetFloat(AnimFacingX, _facingDirection.x);
-            _animator.SetFloat(AnimFacingY, _facingDirection.y);
+            SetAnimatorFloatIfExists(AnimMoveX, animVelocity.x);
+            SetAnimatorFloatIfExists(AnimMoveY, animVelocity.y);
+            SetAnimatorFloatIfExists(AnimFacingX, _facingDirection.x);
+            SetAnimatorFloatIfExists(AnimFacingY, _facingDirection.y);
 
             if (_moveDirection.x != 0)
                 _spriteRenderer.flipX = _moveDirection.x < 0;
 
             bool isMoving = !_isSwimming && animVelocity.sqrMagnitude > 0.01f;
-            _animator.SetBool(AnimIsMoving, isMoving);
-            _animator.SetBool(AnimIsSprinting, _isSprinting && !_isSwimming);
-            _animator.SetBool(AnimIsDead, _isDead);
+            SetAnimatorBoolIfExists(AnimIsMoving, isMoving);
+            SetAnimatorBoolIfExists(AnimIsSprinting, _isSprinting && !_isSwimming);
+            SetAnimatorBoolIfExists(AnimIsDead, _isDead);
+        }
+
+        private void CacheAnimatorParameters()
+        {
+            _animatorParameterHashes.Clear();
+
+            if (_animator == null)
+            {
+                return;
+            }
+
+            foreach (var parameter in _animator.parameters)
+            {
+                _animatorParameterHashes.Add(parameter.nameHash);
+            }
+        }
+
+        private void SetAnimatorFloatIfExists(int parameterHash, float value)
+        {
+            if (_animator != null && _animatorParameterHashes.Contains(parameterHash))
+            {
+                _animator.SetFloat(parameterHash, value);
+            }
+        }
+
+        private void SetAnimatorBoolIfExists(int parameterHash, bool value)
+        {
+            if (_animator != null && _animatorParameterHashes.Contains(parameterHash))
+            {
+                _animator.SetBool(parameterHash, value);
+            }
         }
 
         public object GetSaveData()
@@ -720,8 +773,8 @@ namespace SunnysideIsland.Player
             float rayDistX = (dirToCenter.x != 0) ? (width * 0.5f) / Mathf.Abs(dirToCenter.x) : float.MaxValue;
             float rayDistY = (dirToCenter.y != 0) ? (height * 0.5f) / Mathf.Abs(dirToCenter.y) : float.MaxValue;
             float boxRadius = Mathf.Min(rayDistX, rayDistY);
-
-            float safeRadius = boxRadius + 0.3f;
+            float standOffDistance = Mathf.Max(0.02f, _buildStandOffDistance);
+            float safeRadius = Mathf.Max(standOffDistance, boxRadius + standOffDistance);
             _buildTargetPosition = buildingCenter - dirToCenter * safeRadius;
 
             _facingDirection = dirToCenter;

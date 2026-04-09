@@ -18,6 +18,7 @@ namespace SunnysideIsland.UI.Menu
         [SerializeField] private TextMeshProUGUI _titleText;
         [SerializeField] private Button _saveButton;
         [SerializeField] private Button _quitButton;
+        [SerializeField] private Button _closeButton;
         
         [Header("=== Settings ===")]
         [SerializeField] private bool _isSaveMode = false;
@@ -27,8 +28,10 @@ namespace SunnysideIsland.UI.Menu
 
         private bool _isRefreshing = false;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             if (_saveSystem == null)
                 _saveSystem = DIContainer.Resolve<SaveSystem>();
             if (_gameManager == null)
@@ -46,6 +49,11 @@ namespace SunnysideIsland.UI.Menu
             {
                 _quitButton.onClick.AddListener(OnQuitClicked);
             }
+            
+            if (_closeButton != null)
+            {
+                _closeButton.onClick.AddListener(CloseViaUIManager);
+            }
         }
 
         private void OnDisable()
@@ -58,6 +66,11 @@ namespace SunnysideIsland.UI.Menu
             if (_quitButton != null)
             {
                 _quitButton.onClick.RemoveListener(OnQuitClicked);
+            }
+            
+            if (_closeButton != null)
+            {
+                _closeButton.onClick.RemoveListener(CloseViaUIManager);
             }
         }
 
@@ -162,7 +175,7 @@ namespace SunnysideIsland.UI.Menu
             {
                 Debug.Log($"[SaveLoadPanel] Calling GameManager.LoadGame({saveName})");
                 _gameManager?.LoadGame(saveName);
-                Close();
+                CloseViaUIManager();
             }
         }
 
@@ -198,6 +211,18 @@ namespace SunnysideIsland.UI.Menu
 #else
             Application.Quit();
 #endif
+        }
+
+        private void CloseViaUIManager()
+        {
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.ClosePanel(this);
+            }
+            else
+            {
+                Close();
+            }
         }
     }
 }

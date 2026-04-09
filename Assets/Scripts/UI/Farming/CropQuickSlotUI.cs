@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using DI;
 using SunnysideIsland.Farming;
 using SunnysideIsland.GameData;
+using SunnysideIsland.UI;
+using SunnysideIsland.UI.Menu;
 
 namespace SunnysideIsland.UI.Farming
 {
@@ -23,6 +25,7 @@ namespace SunnysideIsland.UI.Farming
         }
 
         [Header("=== UI Elements ===")]
+        [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private GameObject[] _slotObjects;
         [SerializeField] private RectTransform _selectionFrame;
 
@@ -33,9 +36,20 @@ namespace SunnysideIsland.UI.Farming
         private Image[] _cropIcons;
         private Text[] _slotNumbers;
         private Text[] _cropNames;
+        private bool _isSuppressed;
 
         private void Awake()
         {
+            if (_canvasGroup == null)
+            {
+                _canvasGroup = GetComponent<CanvasGroup>();
+            }
+
+            if (_canvasGroup == null)
+            {
+                _canvasGroup = gameObject.AddComponent<CanvasGroup>();
+            }
+
             FindSlotElements();
             if (Application.isPlaying) DIContainer.Inject(this);
         }
@@ -94,6 +108,18 @@ namespace SunnysideIsland.UI.Farming
                 _selectionSystem.OnSelectedIndexChanged += (i) => { UpdateSelectionFrame(i); UpdateAllSlots(); };
                 UpdateSelectionFrame(_selectionSystem.SelectedIndex);
             }
+        }
+
+        private void OnEnable()
+        {
+            EventBus.Subscribe<UIPanelOpenedEvent>(OnPanelOpened);
+            EventBus.Subscribe<UIPanelClosedEvent>(OnPanelClosed);
+        }
+
+        private void OnDisable()
+        {
+            EventBus.Unsubscribe<UIPanelOpenedEvent>(OnPanelOpened);
+            EventBus.Unsubscribe<UIPanelClosedEvent>(OnPanelClosed);
         }
 
         private void UpdateSelectionFrame(int index)
@@ -162,6 +188,50 @@ namespace SunnysideIsland.UI.Farming
                         _cropIcons[index].sprite = data.growthSprites[data.growthSprites.Length - 1];
                     }
                 }
+            }
+        }
+
+        private void OnPanelOpened(UIPanelOpenedEvent evt)
+        {
+            if (evt != null && evt.PanelType == nameof(BoatConfirmPanel))
+            {
+                SetSuppressed(true);
+            }
+        }
+
+        private void OnPanelClosed(UIPanelClosedEvent evt)
+        {
+            if (evt != null && evt.PanelType == nameof(BoatConfirmPanel))
+            {
+                SetSuppressed(false);
+            }
+        }
+
+        private void SetSuppressed(bool suppressed)
+        {
+            _isSuppressed = suppressed;
+
+            if (_canvasGroup != null)
+            {
+                _canvasGroup.alpha = suppressed ? 0f : 1f;
+                _canvasGroup.interactable = !suppressed;
+                _canvasGroup.blocksRaycasts = !suppressed;
+            }
+
+            if (_slotObjects != null)
+            {
+                foreach (var slotObject in _slotObjects)
+                {
+                    if (slotObject != null)
+                    {
+                        slotObject.SetActive(!suppressed);
+                    }
+                }
+            }
+
+            if (_selectionFrame != null)
+            {
+                _selectionFrame.gameObject.SetActive(!suppressed);
             }
         }
 

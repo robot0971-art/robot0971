@@ -185,7 +185,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3401330110075248128}
   - component: {fileID: 6497331343739260819}
-  - component: {fileID: 1111111111111111111}
   - component: {fileID: 8901922204834855547}
   m_Layer: 11
   m_Name: Campfire
@@ -235,22 +234,6 @@ MonoBehaviour:
   _flickerAmount: 0.2
   _woodCost: 2
   _burnDurationHours: 6
---- !u!114 &1111111111111111111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8925536611520010537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 355b8d541e7395b4db45b3352d8cf369, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SunnysideIsland.Building.CampfireFirePoolInitializer
-  _campfireFirePrefab: {fileID: 286521895900460667, guid: 4df33bfce5ace374d9ac007d1f48eebb, type: 3}
-  _poolName: CampfireFire
-  _initialSize: 5
-  _maxSize: 20
 --- !u!61 &8901922204834855547
 BoxCollider2D:
   m_ObjectHideFlags: 0

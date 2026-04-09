@@ -53,6 +53,11 @@ namespace SunnysideIsland.Building
         private Vector3Int _gridPosition;
         private GameObject _progressBarInstance;
 
+        private void Awake()
+        {
+            EnsureBoatInteraction();
+        }
+
         public void SetBuildingData(DetailedBuildingData data)
         {
             _buildingData = data;
@@ -169,6 +174,19 @@ namespace SunnysideIsland.Building
         public void Demolish()
         {
             Destroy(gameObject);
+        }
+
+        private void EnsureBoatInteraction()
+        {
+            if (!string.Equals(BuildingId, "Boat", StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
+            if (GetComponent<BoatEscapeInteractable>() == null)
+            {
+                gameObject.AddComponent<BoatEscapeInteractable>();
+            }
         }
 
         private void SetTransparency(float alpha)

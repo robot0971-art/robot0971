@@ -11,12 +11,6 @@ public class InventorySetupEditor : EditorWindow
     [MenuItem("Tools/Setup Inventory")]
     public static void ShowWindow()
     {
-        SetupInventory();
-    }
-
-    [MenuItem("Tools/Setup Inventory")]
-    public static void SetupInventory()
-    {
         var scene = EditorSceneManager.GetActiveScene();
         
         // 1. Find or create objects

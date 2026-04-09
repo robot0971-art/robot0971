@@ -11,8 +11,8 @@ using Newtonsoft.Json.Linq;
 namespace SunnysideIsland.Weather
 {
     /// <summary>
-    /// 날씨 시스템
-    /// 맑음 → 흐림 → 랜덤(맑음/흐림/비) 순환
+    /// ?�씨 ?�스??
+    /// 맑음 ???�림 ???�덤(맑음/?�림/�? ?�환
     /// </summary>
     public class WeatherSystem : MonoBehaviour, ISaveable
     {
@@ -20,59 +20,59 @@ namespace SunnysideIsland.Weather
         [SerializeField] private WeatherType _defaultWeather = WeatherType.Sunny;
         
         [Header("=== Lighting ===")]
-        [Tooltip("Global Light 2D (URP) - Inspector에서 연결 또는 자동 검색")]
+        [Tooltip("Global Light 2D (URP) - assign in Inspector")]
         [SerializeField] private Light2D _globalLight;
         
         [Header("=== Lighting Intensity ===")]
-        [Tooltip("맑음 상태의 조명 세기")]
+        [Tooltip("맑음 ?�태??조명 ?�기")]
         [SerializeField] [Range(0.1f, 2f)] private float _sunnyIntensity = 1.0f;
         
-        [Tooltip("흐림 상태의 조명 세기")]
+        [Tooltip("?�림 ?�태??조명 ?�기")]
         [SerializeField] [Range(0.1f, 2f)] private float _cloudyIntensity = 0.6f;
         
-        [Tooltip("비 상태의 조명 세기")]
+        [Tooltip("�??�태??조명 ?�기")]
         [SerializeField] [Range(0.1f, 2f)] private float _rainyIntensity = 0.4f;
         
         [Header("=== Weather Duration (seconds) ===")]
-        [Tooltip("최소 날씨 지속 시간 (초)")]
-        [SerializeField] private float _minWeatherDuration = 1800f; // 30분
+        [Tooltip("최소 ?�씨 지???�간 (�?")]
+        [SerializeField] private float _minWeatherDuration = 1800f; // 30�?
         
-        [Tooltip("최대 날씨 지속 시간 (초)")]
-        [SerializeField] private float _maxWeatherDuration = 7200f; // 2시간
+        [Tooltip("최�? ?�씨 지???�간 (�?")]
+        [SerializeField] private float _maxWeatherDuration = 7200f; // 2?�간
         
         [Header("=== Rain Effect ===")]
-        [Tooltip("RainEffect_Manual 프리팹")]
+        [Tooltip("Rain effect prefab")]
         [SerializeField] private GameObject _rainEffectPrefab;
         
-        [Tooltip("RainEffect 풀 초기 사이즈")]
+        [Tooltip("Rain pool initial size")]
         [SerializeField] private int _rainPoolInitialSize = 1;
         
-        [Tooltip("RainEffect 풀 최대 사이즈")]
+        [Tooltip("Rain pool max size")]
         [SerializeField] private int _rainPoolMaxSize = 3;
         
         [Header("=== Time Phase Lighting ===")]
-        [Tooltip("새벽(4-6시) 조명 세기")]
+        [Tooltip("?�벽(4-6?? 조명 ?�기")]
         [SerializeField] [Range(0.1f, 2f)] private float _dawnIntensity = 0.4f;
         
-        [Tooltip("밤(21-4시) 조명 세기")]
+        [Tooltip("�?21-4?? 조명 ?�기")]
         [SerializeField] [Range(0.1f, 2f)] private float _nightIntensity = 0.15f;
         
         [Header("=== Time Phase References ===")]
         [Tooltip("TimeManager 참조")]
         [SerializeField] private TimeManager _timeManager;
         
-        // 현재 시간대
+        // ?�재 ?�간?�
         private TimePhase _currentTimePhase = TimePhase.Morning;
         private bool _isNight = false;
         
         [Header("=== Weather Transition ===")]
-        [Tooltip("Cloudy 후 Sunny로 갈 확률")]
+        [Tooltip("Cloudy ??Sunny�?�??�률")]
         [SerializeField] [Range(0f, 1f)] private float _cloudyToSunnyChance = 0.4f;
         
-        [Tooltip("Cloudy 후 Cloudy 유지 확률")]
+        [Tooltip("Cloudy ??Cloudy ?��? ?�률")]
         [SerializeField] [Range(0f, 1f)] private float _cloudyToCloudyChance = 0.3f;
         
-        [Tooltip("Cloudy 후 Rainy로 갈 확률")]
+        [Tooltip("Cloudy ??Rainy�?�??�률")]
         [SerializeField] [Range(0f, 1f)] private float _cloudyToRainyChance = 0.3f;
         
         private ObjectPool _rainEffectPool;
@@ -83,7 +83,7 @@ namespace SunnysideIsland.Weather
         
         public string SaveKey => "WeatherSystem";
         
-        // 날씨 변경 타이머
+        // ?�씨 변�??�?�머
         private float _nextWeatherChangeTime;
         private bool _isWeatherChangePending = false;
         
@@ -105,14 +105,14 @@ namespace SunnysideIsland.Weather
                 _timeManager = FindObjectOfType<TimeManager>();
             }
             
-            // 현재 시간대 확인
+            // ?�재 ?�간?� ?�인
             if (_timeManager != null)
             {
                 _currentTimePhase = _timeManager.CurrentTimePhase;
                 _isNight = (_currentTimePhase == TimePhase.Night);
             }
             
-            // 초기 날씨 설정
+            // 초기 ?�씨 ?�정
             if (CurrentWeather == WeatherType.Sunny && PreviousWeather == WeatherType.Sunny)
             {
                 ChangeWeather(_defaultWeather);
@@ -121,35 +121,27 @@ namespace SunnysideIsland.Weather
         }
         
         /// <summary>
-        /// 시간대 변경 시 호출
+        /// ?�간?� 변�????�출
         /// </summary>
         private void OnTimePhaseChanged(TimePhaseChangedEvent evt)
         {
             _currentTimePhase = evt.CurrentPhase;
             _isNight = (_currentTimePhase == TimePhase.Night);
             
-            // 조명 업데이트
+            // 조명 ?�데?�트
             UpdateLighting();
             
-            Debug.Log($"[WeatherSystem] Time phase changed: {evt.PreviousPhase} → {evt.CurrentPhase}");
         }
         
         private void Update()
         {
-            // 시간 체크하여 자동 날씨 변경
+            // ?�간 체크?�여 ?�동 ?�씨 변�?
             if (_isWeatherChangePending && Time.time >= _nextWeatherChangeTime)
             {
                 ProgressWeather();
             }
             
-            // [TEST] N 키로 날씨 강제 변경 (테스트용)
-            #if UNITY_EDITOR
-            if (Input.GetKeyDown(KeyCode.N))
-            {
-                Debug.Log("[WeatherSystem] TEST: N key pressed - forcing weather change");
-                ProgressWeather();
-            }
-            #endif
+            // [TEST] N ?�로 ?�씨 강제 변�?(?�스?�용)
         }
         
         private void OnDestroy()
@@ -165,14 +157,13 @@ namespace SunnysideIsland.Weather
         {
             if (_globalLight == null)
             {
-                // 씬에서 Light2D 찾기 (Global 타입)
+                // ?�에??Light2D 찾기 (Global ?�??
                 var lights = FindObjectsOfType<Light2D>();
                 foreach (var light in lights)
                 {
                     if (light.lightType == Light2D.LightType.Global)
                     {
                         _globalLight = light;
-                        Debug.Log($"[WeatherSystem] Global Light 2D found: {light.name}");
                         break;
                     }
                 }
@@ -185,7 +176,7 @@ namespace SunnysideIsland.Weather
         }
         
         /// <summary>
-        /// 초기 날씨 설정
+        /// 초기 ?�씨 ?�정
         /// </summary>
         private void InitializeWeather()
         {
@@ -195,7 +186,7 @@ namespace SunnysideIsland.Weather
         }
         
         /// <summary>
-        /// RainEffect 풀 초기화
+        /// RainEffect ?� 초기??
         /// </summary>
         private void InitializeRainPool()
         {
@@ -209,12 +200,11 @@ namespace SunnysideIsland.Weather
                     true, 
                     "RainEffectPool"
                 );
-                Debug.Log("[WeatherSystem] RainEffect pool initialized");
             }
         }
         
         /// <summary>
-        /// 다음 날씨 변경 예약
+        /// ?�음 ?�씨 변�??�약
         /// </summary>
         private void ScheduleNextWeatherChange()
         {
@@ -222,11 +212,10 @@ namespace SunnysideIsland.Weather
             _nextWeatherChangeTime = Time.time + duration;
             _isWeatherChangePending = true;
             
-            Debug.Log($"[WeatherSystem] Next weather change in {duration / 60f:F1} minutes");
         }
         
         /// <summary>
-        /// 날씨 진행 (Sunny → Cloudy → Random)
+        /// ?�씨 진행 (Sunny ??Cloudy ??Random)
         /// </summary>
         private void ProgressWeather()
         {
@@ -235,19 +224,19 @@ namespace SunnysideIsland.Weather
             switch (CurrentWeather)
             {
                 case WeatherType.Sunny:
-                    // 맑음 → 흐림
+                    // 맑음 ???�림
                     ChangeWeather(WeatherType.Cloudy);
                     break;
                     
                 case WeatherType.Cloudy:
-                    // 흐림 → 랜덤
+                    // ?�림 ???�덤
                     WeatherType nextWeather = GetRandomWeatherFromCloudy();
                     ChangeWeather(nextWeather);
                     break;
                     
                 case WeatherType.Rainy:
                 case WeatherType.Stormy:
-                    // 비 → 흐림 또는 맑음
+                    // �????�림 ?�는 맑음
                     ChangeWeather(UnityEngine.Random.value < 0.5f ? WeatherType.Cloudy : WeatherType.Sunny);
                     break;
                     
@@ -260,7 +249,7 @@ namespace SunnysideIsland.Weather
         }
         
         /// <summary>
-        /// Cloudy 상태에서 다음 날씨 랜덤 선택
+        /// Cloudy ?�태?�서 ?�음 ?�씨 ?�덤 ?�택
         /// </summary>
         private WeatherType GetRandomWeatherFromCloudy()
         {
@@ -283,7 +272,7 @@ namespace SunnysideIsland.Weather
         }
         
         /// <summary>
-        /// 날씨 변경
+        /// ?�씨 변�?
         /// </summary>
         public void ChangeWeather(WeatherType weather)
         {
@@ -292,10 +281,10 @@ namespace SunnysideIsland.Weather
             PreviousWeather = CurrentWeather;
             CurrentWeather = weather;
             
-            // 조명 업데이트
+            // 조명 ?�데?�트
             UpdateLighting();
             
-            // 비 효과 업데이트
+            // �??�과 ?�데?�트
             UpdateRainEffect();
             
             EventBus.Publish(new WeatherChangedEvent
@@ -304,11 +293,10 @@ namespace SunnysideIsland.Weather
                 CurrentWeather = CurrentWeather
             });
             
-            Debug.Log($"[WeatherSystem] Weather changed: {PreviousWeather} → {CurrentWeather}");
         }
         
         /// <summary>
-        /// 조명 업데이트 - 날씨 + 시간대 반영
+        /// 조명 ?�데?�트 - ?�씨 + ?�간?� 반영
         /// </summary>
         private void UpdateLighting()
         {
@@ -316,17 +304,17 @@ namespace SunnysideIsland.Weather
             
             float targetIntensity = _sunnyIntensity;
             
-            // 밤이면 무조건 밤 조명
+            // 밤이�?무조�?�?조명
             if (_isNight)
             {
                 targetIntensity = _nightIntensity;
             }
-            // 새벽이면 새벽 조명
+            // ?�벽?�면 ?�벽 조명
             else if (_currentTimePhase == TimePhase.Dawn)
             {
                 targetIntensity = _dawnIntensity;
             }
-            // 낮이면 날씨에 따라
+            // ??���??�씨???�라
             else
             {
                 switch (CurrentWeather)
@@ -348,11 +336,10 @@ namespace SunnysideIsland.Weather
             }
             
             _globalLight.intensity = targetIntensity;
-            Debug.Log($"[WeatherSystem] Light intensity set to {targetIntensity} (Weather: {CurrentWeather}, TimePhase: {_currentTimePhase})");
         }
         
         /// <summary>
-        /// 비 효과 업데이트 (Pooling 방식)
+        /// �??�과 ?�데?�트 (Pooling 방식)
         /// </summary>
         private void UpdateRainEffect()
         {
@@ -360,50 +347,48 @@ namespace SunnysideIsland.Weather
             
             if (isRainy)
             {
-                // 비가 오는데 활성화된 RainEffect가 없으면 Pool에서 가져오기
+                // 비�? ?�는???�성?�된 RainEffect가 ?�으�?Pool?�서 가?�오�?
                 if (_activeRainEffect == null && _rainEffectPool != null)
                 {
                     _activeRainEffect = _rainEffectPool.Get();
                     if (_activeRainEffect != null)
                     {
-                        // 파티클 시스템 재생
+                        // ?�티???�스???�생
                         var particleSystem = _activeRainEffect.GetComponent<ParticleSystem>();
                         if (particleSystem != null && !particleSystem.isPlaying)
                         {
                             particleSystem.Play();
                         }
-                        Debug.Log("[WeatherSystem] Rain effect retrieved from pool");
                     }
                 }
             }
             else
             {
-                // 맑을 때는 RainEffect를 Pool에 반환
+                // 맑을 ?�는 RainEffect�?Pool??반환
                 if (_activeRainEffect != null && _rainEffectPool != null)
                 {
-                    // 파티클 먼저 중지
+                    // ?�티??먼�? 중�?
                     var particleSystem = _activeRainEffect.GetComponent<ParticleSystem>();
                     if (particleSystem != null && particleSystem.isPlaying)
                     {
                         particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
                     }
                     
-                    // Pool에 반환
+                    // Pool??반환
                     _rainEffectPool.Return(_activeRainEffect);
                     _activeRainEffect = null;
-                    Debug.Log("[WeatherSystem] Rain effect returned to pool");
                 }
             }
         }
         
         private void OnDayStarted(DayStartedEvent evt)
         {
-            // 하루가 시작되면 날씨 변경 가능성 체크
-            // (이미 Update에서 처리되므로 추가 작업 불필요)
+            // ?�루가 ?�작?�면 ?�씨 변�?가?�성 체크
+            // (?��? Update?�서 처리?��?�?추�? ?�업 불필??
         }
         
         /// <summary>
-        /// 수동으로 날씨 변경 (테스트용)
+        /// ?�동?�로 ?�씨 변�?(?�스?�용)
         /// </summary>
         [ContextMenu("Force Change to Sunny")]
         private void ForceChangeToSunny()
@@ -442,7 +427,7 @@ namespace SunnysideIsland.Weather
             {
                 CurrentWeather = CurrentWeather,
                 PreviousWeather = PreviousWeather,
-                NextWeatherChangeTime = _nextWeatherChangeTime - Time.time // 남은 시간 저장
+                NextWeatherChangeTime = _nextWeatherChangeTime - Time.time // ?��? ?�간 ?�??
             };
         }
         
@@ -481,7 +466,7 @@ namespace SunnysideIsland.Weather
     }
     
     /// <summary>
-    /// 날씨 변경 이벤트
+    /// ?�씨 변�??�벤??
     /// </summary>
     public class WeatherChangedEvent
     {

@@ -2,6 +2,7 @@ using UnityEngine;
 using SunnysideIsland.Events;
 using SunnysideIsland.Inventory;
 using SunnysideIsland.UI.Building;
+using SunnysideIsland.UI;
 
 namespace SunnysideIsland.Building
 {
@@ -54,13 +55,19 @@ namespace SunnysideIsland.Building
         {
             if (_buildingPanel == null) return;
 
+            if (UIManager.Instance == null)
+            {
+                _buildingPanel.Toggle();
+                return;
+            }
+
             if (_buildingPanel.IsOpen)
             {
-                _buildingPanel.Close();
+                UIManager.Instance.ClosePanel(_buildingPanel);
             }
             else
             {
-                _buildingPanel.Open();
+                UIManager.Instance.OpenPanel(_buildingPanel);
             }
         }
 
@@ -192,7 +199,16 @@ namespace SunnysideIsland.Building
 
         private void OnPlacementCancelled(BuildingPlacementCancelledEvent evt)
         {
-            _buildingPanel?.Open();
+            if (_buildingPanel == null) return;
+
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.OpenPanel(_buildingPanel);
+            }
+            else
+            {
+                _buildingPanel.Open();
+            }
         }
 
         public void OnBuildingPlaced(string buildingId, Vector3Int gridPosition)

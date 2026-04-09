@@ -23,7 +23,6 @@ namespace SunnysideIsland.Animal
                 _eggPrefab = Resources.Load<GameObject>("Prefabs/Egg");
                 if (_eggPrefab == null)
                     _eggPrefab = Resources.Load<GameObject>("Egg");
-                Debug.Log($"[EggPoolInitializer] Loaded egg prefab from Resources: {_eggPrefab}");
             }
             
             if (_eggPrefab == null)
@@ -40,7 +39,6 @@ namespace SunnysideIsland.Animal
                 {
                     // 새 풀 생성
                     Pool.PoolManager.Instance.CreatePool(_poolName, _eggPrefab, _initialSize, _maxSize);
-                    Debug.Log($"[EggPoolInitializer] Egg pool created with initial size: {_initialSize}");
                 }
             }
             else

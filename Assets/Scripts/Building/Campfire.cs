@@ -68,6 +68,7 @@ namespace SunnysideIsland.Building
         private bool _isRegistered = false;
 
         [DI.Inject] private SunnysideIsland.Inventory.IInventorySystem _inventory;
+        [DI.Inject] private IPoolManager _poolManager;
         
         private void Awake()
         {
@@ -297,14 +298,14 @@ namespace SunnysideIsland.Building
         /// </summary>
         private void SpawnFireFromPool()
         {
-            if (PoolManager.Instance == null)
+            if (_poolManager == null)
             {
-                Debug.LogError("[Campfire] PoolManager not found");
+                Debug.LogError("[Campfire] PoolManager not injected");
                 return;
             }
             
             Vector3 spawnPos = _fireSpawnPoint != null ? _fireSpawnPoint.position : transform.position + Vector3.up * 0.2f;
-            _currentFireObject = PoolManager.Instance.Spawn(_firePoolName, spawnPos, Quaternion.identity);
+            _currentFireObject = _poolManager.Spawn(_firePoolName, spawnPos, Quaternion.identity);
             
             if (_currentFireObject != null)
             {
@@ -330,7 +331,7 @@ namespace SunnysideIsland.Building
         /// </summary>
         private void ReturnFireToPool()
         {
-            if (_currentFireObject != null && PoolManager.Instance != null)
+            if (_currentFireObject != null && _poolManager != null)
             {
                 // 파티클 정지
                 var particles = _currentFireObject.GetComponent<CampfireParticles>();
@@ -339,7 +340,7 @@ namespace SunnysideIsland.Building
                     particles.StopFire();
                 }
                 
-                PoolManager.Instance.Despawn(_firePoolName, _currentFireObject);
+                _poolManager.Despawn(_firePoolName, _currentFireObject);
                 _currentFireObject = null;
                 Debug.Log("[Campfire] Fire returned to pool");
             }
@@ -390,6 +391,11 @@ namespace SunnysideIsland.Building
                 transform.position = data.Position;
                 RemainingTimeHours = data.RemainingTime;
                 SetState(data.State);
+                
+                if (State == CampfireState.Lit)
+                {
+                    SpawnFireFromPool();
+                }
             }
         }
         

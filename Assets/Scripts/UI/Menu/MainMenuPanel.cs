@@ -28,8 +28,10 @@ namespace SunnysideIsland.UI.Menu
         [Inject]
         private SaveSystem _saveSystem;
 
-        public void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             _newGameButton?.onClick.AddListener(OnNewGameClicked);
             _loadGameButton?.onClick.AddListener(OnLoadGameClicked);
             _settingsButton?.onClick.AddListener(OnSettingsClicked);

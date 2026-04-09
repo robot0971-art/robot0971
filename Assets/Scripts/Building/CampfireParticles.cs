@@ -144,7 +144,6 @@ namespace SunnysideIsland.Building
             _particleSystem.Play();
             _isPlaying = true;
             
-            Debug.Log("[CampfireParticles] Fire started");
         }
         
         /// <summary>
@@ -157,7 +156,6 @@ namespace SunnysideIsland.Building
             _particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             _isPlaying = false;
             
-            Debug.Log("[CampfireParticles] Fire stopped");
         }
         
         /// <summary>

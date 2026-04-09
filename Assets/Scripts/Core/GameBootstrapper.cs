@@ -108,7 +108,6 @@ namespace SunnysideIsland.Core
             // 부트스트래퍼 자체 등록
             DIContainer.Global.RegisterInstance<IGameBootstrapper>(this);
 
-            Debug.Log("[GameBootstrapper] DI Container initialized");
         }
 
         /// <summary>
@@ -143,7 +142,6 @@ namespace SunnysideIsland.Core
                 CreateDefaultSteps();
             }
 
-            Debug.Log($"[GameBootstrapper] Loaded {_steps.Count} initialization steps");
         }
 
         /// <summary>
@@ -199,7 +197,6 @@ namespace SunnysideIsland.Core
                 await ExecuteStepAsync(step);
 
                 step.SetComplete();
-                Debug.Log($"[GameBootstrapper] Step completed: {step.StepName}");
             }
 
             Progress = 1f;
@@ -286,7 +283,6 @@ namespace SunnysideIsland.Core
                 TotalTime = Time.realtimeSinceStartup - _loadingStartTime
             });
 
-            Debug.Log("[GameBootstrapper] Initialization complete");
 
             // 로딩 화면 페이드 아웃
             if (_loadingScreen != null)

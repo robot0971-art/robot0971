@@ -10,7 +10,7 @@ namespace DI
     {
         protected override void InstallGlobalBindings()
         {
-            BindType<UpdateManager>();
+            BindInstance(UpdateManager.Instance);
         }
     }
 }

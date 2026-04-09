@@ -8,6 +8,7 @@ using SunnysideIsland.Core;
 using SunnysideIsland.Inventory;
 using SunnysideIsland.Player;
 using SunnysideIsland.Survival;
+using SunnysideIsland.UI;
 
 namespace SunnysideIsland.Cheats
 {
@@ -60,6 +61,12 @@ namespace SunnysideIsland.Cheats
         
         private void Update()
         {
+            if (UIManager.Instance != null
+                && UIManager.Instance.GetPanel<SunnysideIsland.UI.Menu.BoatConfirmPanel>()?.IsOpen == true)
+            {
+                return;
+            }
+
             if (Input.GetKeyDown(_toggleKey))
             {
                 ToggleConsole();

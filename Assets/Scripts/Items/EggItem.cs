@@ -4,6 +4,7 @@ using SunnysideIsland.Animal;
 using SunnysideIsland.Pool;
 using SunnysideIsland.Inventory;
 using SunnysideIsland.Core;
+using SunnysideIsland.UI;
 
 namespace SunnysideIsland.Items
 {
@@ -154,6 +155,12 @@ namespace SunnysideIsland.Items
         
         private void Update()
         {
+            if (UIManager.Instance != null
+                && UIManager.Instance.GetPanel<SunnysideIsland.UI.Menu.BoatConfirmPanel>()?.IsOpen == true)
+            {
+                return;
+            }
+
             if (!_canPickup) return;
             
             // 플레이어 찾기

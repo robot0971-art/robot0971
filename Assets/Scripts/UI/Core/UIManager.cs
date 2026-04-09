@@ -7,6 +7,7 @@ using DI;
 using SunnysideIsland.Events;
 using SunnysideIsland.UI.Crafting;
 using SunnysideIsland.UI.Menu;
+using UnityEventSystem = UnityEngine.EventSystems.EventSystem;
 
 namespace SunnysideIsland.UI
 {
@@ -69,8 +70,20 @@ namespace SunnysideIsland.UI
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             Debug.Log($"[UIManager] Scene loaded: {scene.name} - Reinitializing panels");
+
+            if (_closeAllOnSceneChange)
+            {
+                _panelStack.Clear();
+                _panels.RemoveAll(panel => panel == null);
+            }
+
             _panelDictionary.Clear();
             InitializePanels();
+
+            if (UnityEventSystem.current != null)
+            {
+                UnityEventSystem.current.SetSelectedGameObject(null);
+            }
         }
         
         private void InitializePanels()
@@ -138,6 +151,8 @@ namespace SunnysideIsland.UI
                 
                 _panelStack.Push(panel);
             }
+
+            panel.transform.SetAsLastSibling();
             
             panel.Open();
             
@@ -229,6 +244,12 @@ namespace SunnysideIsland.UI
         
         private void Update()
         {
+            if (SunnysideIsland.Core.GameManager.Instance != null
+                && SunnysideIsland.Core.GameManager.Instance.CurrentState == SunnysideIsland.Core.GameState.Loading)
+            {
+                return;
+            }
+
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 if (_usePanelStack && _panelStack.Count > 0)

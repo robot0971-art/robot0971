@@ -70,7 +70,6 @@ namespace SunnysideIsland.Pool
             
             if (_pools.ContainsKey(poolName))
             {
-                Debug.LogWarning($"[PoolManager] Pool '{poolName}' already exists");
                 return _pools[poolName];
             }
             

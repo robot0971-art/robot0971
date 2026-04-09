@@ -9,7 +9,6 @@ using SunnysideIsland.Building;
 
 namespace SunnysideIsland.UI.Building
 {
-    [ExecuteAlways]
     [RequireComponent(typeof(CanvasGroup))]
     public class BuildingPanel : UIPanel
     {
@@ -40,15 +39,6 @@ namespace SunnysideIsland.UI.Building
         private TMP_FontAsset _koreanFont;
 
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
-            if (!Application.isPlaying)
-            {
-                UnityEditor.EditorApplication.delayCall -= RefreshEditorUI;
-                UnityEditor.EditorApplication.delayCall += RefreshEditorUI;
-            }
-        }
-        
         private void OnEnable()
         {
             UnityEditor.EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
@@ -72,21 +62,6 @@ namespace SunnysideIsland.UI.Building
                         UnityEditor.Selection.activeGameObject = null;
                     }
                 }
-            }
-        }
-        
-        private void RefreshEditorUI()
-        {
-            if (this == null || gameObject == null) return;
-            
-            if (_categoryTabContainer != null && _categoryTabContainer.childCount == 0)
-            {
-                CreateTabs();
-            }
-            
-            if (_buildingGrid != null && _buildingGrid.childCount == 0)
-            {
-                CreateCards();
             }
         }
         
@@ -219,7 +194,6 @@ namespace SunnysideIsland.UI.Building
         private void OnDestroy()
         {
 #if UNITY_EDITOR
-            UnityEditor.EditorApplication.delayCall -= RefreshEditorUI;
             UnityEditor.EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
             
             if (UnityEditor.Selection.activeGameObject != null)
@@ -265,8 +239,10 @@ namespace SunnysideIsland.UI.Building
             if (_closeButton != null)
             {
                 _closeButton.onClick.RemoveAllListeners();
-                _closeButton.onClick.AddListener(Close);
+                _closeButton.onClick.AddListener(CloseViaUIManager);
             }
+
+            PreloadCardIcons();
 
             SetupExistingCards();
 
@@ -319,7 +295,7 @@ namespace SunnysideIsland.UI.Building
             if (data == null) return;
             
             EventBus.Publish(new BuildingPlacementStartedEvent { BuildingId = data.BuildingId });
-            Close();
+            CloseViaUIManager();
         }
 
         public void SelectCategory(BuildingCategory category)
@@ -439,6 +415,26 @@ namespace SunnysideIsland.UI.Building
             if (Application.isPlaying)
             {
                 EventBus.Publish(new BuildingPlacementStartedEvent { BuildingId = card.Data.BuildingId });
+                CloseViaUIManager();
+            }
+        }
+
+        private void PreloadCardIcons()
+        {
+            BuildingCard.PreloadIcon(_defaultHousePrefab);
+            BuildingCard.PreloadIcon(_bigHousePrefab);
+            BuildingCard.PreloadIcon(_escapeBoatPrefab);
+            BuildingCard.PreloadIcon(_campfireIconPrefab);
+        }
+
+        private void CloseViaUIManager()
+        {
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.ClosePanel(this);
+            }
+            else
+            {
                 Close();
             }
         }

@@ -3,6 +3,7 @@ using DI;
 using UnityEngine;
 using SunnysideIsland.Events;
 using SunnysideIsland.GameData;
+using SunnysideIsland.UI;
 using GameDataClass = SunnysideIsland.GameData.GameData;
 
 namespace SunnysideIsland.Farming
@@ -69,6 +70,12 @@ namespace SunnysideIsland.Farming
 
         private void Update()
         {
+            if (UIManager.Instance != null
+                && UIManager.Instance.GetPanel<SunnysideIsland.UI.Menu.BoatConfirmPanel>()?.IsOpen == true)
+            {
+                return;
+            }
+
             for (int i = 0; i < 5; i++)
             {
                 if (Input.GetKeyDown(KeyCode.Alpha1 + i))

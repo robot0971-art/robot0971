@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 namespace SunnysideIsland.Core
 {
     /// <summary>
-    /// 게임 내 시간을 관리하는 매니저
+    /// 게임 ???�간??관리하??매니?�
     /// </summary>
     public class TimeManager : MonoBehaviour, ISaveable
     {
@@ -24,35 +24,35 @@ namespace SunnysideIsland.Core
         [Header("=== Debug ===")]
         [SerializeField] private bool _showDebugInfo = false;
         
-        // 현재 시간 상태
+        // ?�재 ?�간 ?�태
         public int CurrentDay { get; private set; }
         public int CurrentHour { get; private set; }
         public int CurrentMinute { get; private set; }
         public Season CurrentSeason { get; private set; }
         public TimePhase CurrentTimePhase { get; private set; }
         
-        // 시간 진행 상태
+        // ?�간 진행 ?�태
         public bool IsPaused { get; private set; }
         public float TimeScale { get; private set; } = 1f;
         
-        // 내부 타이머
+        // ?��? ?�?�머
         private float _elapsedTime;
         private int _previousHour;
         private int _previousDay;
         private TimePhase _previousTimePhase;
         
-        // 상수
+        // ?�수
         public const int MINUTES_PER_HOUR = 60;
         public const int HOURS_PER_DAY = 24;
         public const int SEASONS_PER_YEAR = 4;
         
         /// <summary>
-        /// 현재 시간을 분 단위로 반환 (0 ~ 1439)
+        /// ?�재 ?�간??�??�위�?반환 (0 ~ 1439)
         /// </summary>
         public int TotalMinutes => CurrentHour * MINUTES_PER_HOUR + CurrentMinute;
         
         /// <summary>
-        /// 하루 중 진행된 비율 (0.0 ~ 1.0)
+        /// ?�루 �?진행??비율 (0.0 ~ 1.0)
         /// </summary>
         public float TimeOfDay => (float)TotalMinutes / (HOURS_PER_DAY * MINUTES_PER_HOUR);
         
@@ -63,10 +63,9 @@ namespace SunnysideIsland.Core
         
         private void Update()
         {
-            // 디버그: N키로 다음 날로 이동 (일시정지 상태에서도 작동)
+            // ?�버�? N?�로 ?�음 ?�로 ?�동 (?�시?��? ?�태?�서???�동)
             if (Input.GetKeyDown(KeyCode.N))
             {
-                Debug.Log($"[TimeManager] N키 누름 - Day {CurrentDay} → Day {CurrentDay + 1}");
                 AddDays(1);
                 return;
             }
@@ -77,7 +76,7 @@ namespace SunnysideIsland.Core
         }
         
         /// <summary>
-        /// 시간 초기화
+        /// ?�간 초기??
         /// </summary>
         public void Initialize(int day, int hour, int minute)
         {
@@ -95,7 +94,7 @@ namespace SunnysideIsland.Core
         }
         
         /// <summary>
-        /// 시간 업데이트
+        /// ?�간 ?�데?�트
         /// </summary>
         private void UpdateTime()
         {
@@ -111,7 +110,7 @@ namespace SunnysideIsland.Core
         }
         
         /// <summary>
-        /// 분 추가
+        /// �?추�?
         /// </summary>
         public void AddMinutes(int minutes)
         {
@@ -132,7 +131,7 @@ namespace SunnysideIsland.Core
         }
         
         /// <summary>
-        /// 시간 추가
+        /// ?�간 추�?
         /// </summary>
         public void AddHours(int hours)
         {
@@ -140,7 +139,7 @@ namespace SunnysideIsland.Core
         }
         
         /// <summary>
-        /// 일 추가
+        /// ??추�?
         /// </summary>
         public void AddDays(int days)
         {
@@ -150,7 +149,7 @@ namespace SunnysideIsland.Core
         }
         
         /// <summary>
-        /// 특정 시간으로 설정
+        /// ?�정 ?�간?�로 ?�정
         /// </summary>
         public void SetTime(int day, int hour, int minute)
         {
@@ -169,11 +168,11 @@ namespace SunnysideIsland.Core
         }
         
         /// <summary>
-        /// 시간 변경 시 호출
+        /// ?�간 변�????�출
         /// </summary>
         private void OnTimeChanged()
         {
-            // 시간 이벤트 발행
+            // ?�간 ?�벤??발행
             EventBus.Publish(new TimeChangedEvent
             {
                 Day = CurrentDay,
@@ -182,7 +181,7 @@ namespace SunnysideIsland.Core
                 TimeOfDay = TimeOfDay
             });
             
-            // 시간대 변경 체크
+            // ?�간?� 변�?체크
             UpdateTimePhase();
             if (_previousTimePhase != CurrentTimePhase)
             {
@@ -194,7 +193,7 @@ namespace SunnysideIsland.Core
                 _previousTimePhase = CurrentTimePhase;
             }
             
-            // 정각마다 이벤트 발행
+            // ?�각마다 ?�벤??발행
             if (CurrentHour != _previousHour)
             {
                 _previousHour = CurrentHour;
@@ -202,27 +201,26 @@ namespace SunnysideIsland.Core
             
             if (_showDebugInfo)
             {
-                Debug.Log($"[TimeManager] Day {CurrentDay}, {CurrentHour:D2}:{CurrentMinute:D2}");
             }
         }
         
         /// <summary>
-        /// 일 변경 시 호출
+        /// ??변�????�출
         /// </summary>
         private void OnDayChanged()
         {
             if (_previousDay != CurrentDay)
             {
-                // 이전 날 종료 이벤트
+                // ?�전 ??종료 ?�벤??
                 EventBus.Publish(new DayEndedEvent
                 {
                     Day = _previousDay
                 });
                 
-                // 계절 업데이트
+                // 계절 ?�데?�트
                 UpdateSeason();
                 
-                // 새로운 날 시작 이벤트
+                // ?�로?????�작 ?�벤??
                 EventBus.Publish(new DayStartedEvent
                 {
                     Day = CurrentDay,
@@ -234,7 +232,7 @@ namespace SunnysideIsland.Core
         }
         
         /// <summary>
-        /// 계절 업데이트
+        /// 계절 ?�데?�트
         /// </summary>
         private void UpdateSeason()
         {
@@ -243,7 +241,7 @@ namespace SunnysideIsland.Core
         }
         
         /// <summary>
-        /// 시간대 업데이트
+        /// ?�간?� ?�데?�트
         /// </summary>
         private void UpdateTimePhase()
         {
@@ -266,7 +264,7 @@ namespace SunnysideIsland.Core
         }
         
         /// <summary>
-        /// 시간 정지
+        /// ?�간 ?��?
         /// </summary>
         public void Pause()
         {
@@ -275,7 +273,7 @@ namespace SunnysideIsland.Core
         }
         
         /// <summary>
-        /// 시간 재개
+        /// ?�간 ?�개
         /// </summary>
         public void Resume()
         {
@@ -284,7 +282,7 @@ namespace SunnysideIsland.Core
         }
         
         /// <summary>
-        /// 시간 배율 설정
+        /// ?�간 배율 ?�정
         /// </summary>
         public void SetTimeScale(float scale)
         {
@@ -292,7 +290,7 @@ namespace SunnysideIsland.Core
         }
         
         /// <summary>
-        /// 저장용 시간 데이터
+        /// ?�?�용 ?�간 ?�이??
         /// </summary>
         [Serializable]
         public class TimeSaveData
@@ -303,7 +301,7 @@ namespace SunnysideIsland.Core
         }
         
         /// <summary>
-        /// 저장 데이터 반환
+        /// ?�???�이??반환
         /// </summary>
         public object GetSaveData()
         {
@@ -316,7 +314,7 @@ namespace SunnysideIsland.Core
         }
         
         /// <summary>
-        /// 저장 데이터 로드
+        /// ?�???�이??로드
         /// </summary>
         public void LoadSaveData(object data)
         {
@@ -335,7 +333,7 @@ namespace SunnysideIsland.Core
         }
         
         /// <summary>
-        /// 현재 시간 문자열 반환 (HH:MM)
+        /// ?�재 ?�간 문자??반환 (HH:MM)
         /// </summary>
         public string GetTimeString()
         {
@@ -343,7 +341,7 @@ namespace SunnysideIsland.Core
         }
         
         /// <summary>
-        /// 현재 날짜 문자열 반환 (Day X, Season)
+        /// ?�재 ?�짜 문자??반환 (Day X, Season)
         /// </summary>
         public string GetDateString()
         {

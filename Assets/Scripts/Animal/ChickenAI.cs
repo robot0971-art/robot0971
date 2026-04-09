@@ -50,14 +50,12 @@ namespace SunnysideIsland.Animal
             if (_moveSpeed <= 0f)
             {
                 _moveSpeed = 3f;
-                Debug.Log("[" + name + "] _moveSpeed initialized to " + _moveSpeed);
             }
 
 
             if (_spawnPosition == Vector3.zero)
             {
                 _spawnPosition = transform.position;
-                Debug.Log("[" + name + "] _spawnPosition initialized to " + _spawnPosition);
             }
 
             // 닭의 움직임 설정 적용
@@ -313,22 +311,18 @@ namespace SunnysideIsland.Animal
             // Grass 위에서만 알 낳기
             if (!IsOnGrass(transform.position)) 
             {
-                Debug.Log($"[ChickenAI] {name} not on grass, skipping egg lay");
                 _eggLayTimer = _eggLayInterval;  // 다음 시도를 위해 타이머 리셋
                 return;
             }
 
             _eggLayTimer = _eggLayInterval;
 
-            Debug.Log($"[ChickenAI] {name} trying to lay egg... Chance: {_eggLayChance * 100}%");
             if (Random.value <= _eggLayChance)
             {
-                Debug.Log($"[ChickenAI] {name} egg roll success!");
                 SpawnEggAtCurrentPosition();
             }
             else
             {
-                Debug.Log($"[ChickenAI] {name} egg roll failed");
             }
         }
 
@@ -338,7 +332,6 @@ namespace SunnysideIsland.Animal
             if (eggPrefab != null)
             {
                 var egg = Instantiate(eggPrefab, transform.position, Quaternion.identity);
-                Debug.Log($"[ChickenAI] {name} spawned egg at {transform.position}");
             }
             else
             {
