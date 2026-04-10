@@ -55,6 +55,19 @@ namespace DI
             Global = null;
         }
 
+        public static void ClearSceneContainers()
+        {
+            // Global을 제외한 모든 씬 컨테이너 제거
+            for (int i = ContainerStack.Count - 1; i >= 0; i--)
+            {
+                if (ContainerStack[i] != Global)
+                {
+                    ContainerStack[i].Dispose();
+                    ContainerStack.RemoveAt(i);
+                }
+            }
+        }
+
         public void Register<TInterface, TImplementation>(string key = "") where TImplementation : TInterface
         {
             var typeKey = GetKey(typeof(TInterface), key);

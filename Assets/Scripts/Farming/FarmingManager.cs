@@ -38,6 +38,10 @@ namespace SunnysideIsland.Farming
             }
 
             Instance = this;
+            if (DIContainer.Global == null)
+            {
+                DIContainer.InitializeGlobal();
+            }
             DIContainer.Global.RegisterInstance(this);
         }
 
@@ -70,6 +74,11 @@ namespace SunnysideIsland.Farming
                 EventBus.Unsubscribe<DayStartedEvent>(OnDayStarted);
                 EventBus.Unsubscribe<CropHarvestedEvent>(OnCropHarvested);
                 _isSubscribed = false;
+            }
+
+            if (Instance == this)
+            {
+                Instance = null;
             }
         }
 
@@ -196,11 +205,7 @@ namespace SunnysideIsland.Farming
 
             foreach (var data in dataList)
             {
-                GameObject plotObj = null;
-                if (_poolManager != null)
-                    plotObj = _poolManager.Spawn(poolName);
-                else if (_plotPrefab != null)
-                    plotObj = Instantiate(_plotPrefab);
+                GameObject plotObj = TrySpawnPlotObject(poolName);
 
                 if (plotObj != null)
                 {
@@ -213,6 +218,30 @@ namespace SunnysideIsland.Farming
                     }
                 }
             }
+        }
+
+        private GameObject TrySpawnPlotObject(string poolName)
+        {
+            if (_poolManager != null)
+            {
+                var pool = _poolManager.GetPool(poolName);
+                if (pool != null)
+                {
+                    GameObject pooledPlot = _poolManager.Spawn(poolName);
+                    if (pooledPlot != null)
+                    {
+                        return pooledPlot;
+                    }
+                }
+            }
+
+            if (_plotPrefab != null)
+            {
+                return Instantiate(_plotPrefab);
+            }
+
+            Debug.LogWarning("[FarmingManager] FarmPlot prefab is missing, cannot restore plots.");
+            return null;
         }
     }
 }

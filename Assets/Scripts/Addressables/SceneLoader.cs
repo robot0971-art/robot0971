@@ -69,7 +69,6 @@ namespace SunnysideIsland.AddressableManagement
                 await handle.Task;
                 
                 // 3.5. EventBus 초기화 (씬 전환 시 이전 씬의 이벤트 구독 제거)
-                EventBus.Clear();
                 
                 // 4. 씬 초기화 완료 대기
                 await Task.Delay(100); // 한 프레임 대기

@@ -98,7 +98,7 @@ namespace SunnysideIsland.Player
         private static readonly int AnimFacingY = Animator.StringToHash("FacingY");
         private static readonly int AnimAttack = Animator.StringToHash("Attack");
         private static readonly int AnimHurt = Animator.StringToHash("Hurt");
-        private static readonly int AnimDie = Animator.StringToHash("Die");
+        private static readonly int AnimDeath = Animator.StringToHash("Death");
         private static readonly int AnimIsDead = Animator.StringToHash("IsDead");
         private static readonly int AnimWater = Animator.StringToHash("Water");
         private static readonly int AnimHammer = Animator.StringToHash("Hammer");
@@ -148,6 +148,7 @@ namespace SunnysideIsland.Player
         {
             _moveAction?.Disable();
             EventBus.Unsubscribe<BuildingPlaceRequestedEvent>(OnBuildingPlaceRequested);
+            EventBus.Unsubscribe<PlayerDiedEvent>(OnPlayerDied);
         }
 
         private void Start()
@@ -162,11 +163,24 @@ namespace SunnysideIsland.Player
             }
 
             EventBus.Subscribe<BuildingPlaceRequestedEvent>(OnBuildingPlaceRequested);
+            EventBus.Subscribe<PlayerDiedEvent>(OnPlayerDied);
         }
 
         private void Update()
         {
+            if (_isDead)
+            {
+                HandleTimers();
+                UpdateAnimations();
+                return;
+            }
+
             if (GameManager.Instance != null && GameManager.Instance.CurrentState == GameState.Loading)
+            {
+                return;
+            }
+
+            if (GameManager.Instance != null && GameManager.Instance.CurrentState == GameState.GameOver)
             {
                 return;
             }
@@ -265,12 +279,17 @@ namespace SunnysideIsland.Player
 
         private void FixedUpdate()
         {
-            if (!_canMove) return;
+            if (_isDead || !_canMove) return;
             Move();
         }
 
         private void HandleInput()
         {
+            if (GameManager.Instance != null && GameManager.Instance.CurrentState == GameState.GameOver)
+            {
+                return;
+            }
+
             Vector2 inputVector = Vector2.zero;
 
             if (_moveAction != null)
@@ -351,6 +370,7 @@ namespace SunnysideIsland.Player
         private void Move()
         {
             if (_isRolling || _isAttacking) return;
+            if (_isDead) return;
 
             float targetSpeed = _moveSpeed;
             if (_isSwimming) targetSpeed = _swimSpeed;
@@ -628,7 +648,7 @@ namespace SunnysideIsland.Player
 
         private bool CanAttack()
         {
-            return _attackCooldownTimer <= 0f && !_isRolling && !_isSwimming && !_isAttacking && !_isBuilding;
+            return _attackCooldownTimer <= 0f && !_isRolling && !_isSwimming && !_isAttacking && !_isBuilding && !_isDead;
         }
 
         private System.Collections.IEnumerator AttackRoutine()
@@ -703,6 +723,29 @@ namespace SunnysideIsland.Player
             SetAnimatorBoolIfExists(AnimIsDead, _isDead);
         }
 
+        private void OnPlayerDied(PlayerDiedEvent evt)
+        {
+            if (_isDead)
+            {
+                return;
+            }
+
+            _isDead = true;
+            _canMove = false;
+            _isSprinting = false;
+            _isRolling = false;
+            _isAttacking = false;
+            _isHurt = false;
+            _moveDirection = Vector2.zero;
+            _rb.linearVelocity = Vector2.zero;
+
+            CancelBuilding();
+            StopAllCoroutines();
+            _animator.ResetTrigger(AnimHammer);
+            SetAnimatorTriggerIfExists(AnimDeath);
+            SetAnimatorBoolIfExists(AnimIsDead, true);
+        }
+
         private void CacheAnimatorParameters()
         {
             _animatorParameterHashes.Clear();
@@ -731,6 +774,14 @@ namespace SunnysideIsland.Player
             if (_animator != null && _animatorParameterHashes.Contains(parameterHash))
             {
                 _animator.SetBool(parameterHash, value);
+            }
+        }
+
+        private void SetAnimatorTriggerIfExists(int parameterHash)
+        {
+            if (_animator != null && _animatorParameterHashes.Contains(parameterHash))
+            {
+                _animator.SetTrigger(parameterHash);
             }
         }
 

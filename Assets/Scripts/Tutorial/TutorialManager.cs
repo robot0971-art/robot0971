@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using DI;
 using SunnysideIsland.Core;
 using SunnysideIsland.Events;
@@ -63,6 +64,16 @@ namespace SunnysideIsland.Tutorial
 
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            
+            // 씬 로드 시 EventBus 재구독
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+        
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            // EventBus Clear 후 재구독
+            UnsubscribeFromEvents();
+            SubscribeToEvents();
         }
 
         private void Start()

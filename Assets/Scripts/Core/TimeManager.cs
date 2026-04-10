@@ -63,10 +63,18 @@ namespace SunnysideIsland.Core
         
         private void Update()
         {
+            if (GameManager.Instance != null && GameManager.Instance.CurrentState == GameState.GameOver)
+            {
+                return;
+            }
             // ?�버�? N?�로 ?�음 ?�로 ?�동 (?�시?��? ?�태?�서???�동)
             if (Input.GetKeyDown(KeyCode.N))
             {
                 AddDays(1);
+                EventBus.Publish(new DebugDaySkippedEvent
+                {
+                    Day = CurrentDay
+                });
                 return;
             }
             
@@ -321,6 +329,7 @@ namespace SunnysideIsland.Core
             if (data is TimeSaveData saveData)
             {
                 Initialize(saveData.Day, saveData.Hour, saveData.Minute);
+                BroadcastCurrentTimeState();
             }
             else if (data is JObject jObject)
             {
@@ -328,8 +337,26 @@ namespace SunnysideIsland.Core
                 if (saveDataFromJson != null)
                 {
                     Initialize(saveDataFromJson.Day, saveDataFromJson.Hour, saveDataFromJson.Minute);
+                    BroadcastCurrentTimeState();
                 }
             }
+        }
+
+        private void BroadcastCurrentTimeState()
+        {
+            EventBus.Publish(new TimeChangedEvent
+            {
+                Day = CurrentDay,
+                Hour = CurrentHour,
+                Minute = CurrentMinute,
+                TimeOfDay = TimeOfDay
+            });
+
+            EventBus.Publish(new TimePhaseChangedEvent
+            {
+                PreviousPhase = CurrentTimePhase,
+                CurrentPhase = CurrentTimePhase
+            });
         }
         
         /// <summary>

@@ -64,6 +64,22 @@ namespace DI
         
         protected override void InstallSceneBindings()
         {
+            if (_poolManager == null)
+            {
+                _poolManager = FindFirstObjectByType<PoolManager>(FindObjectsInactive.Include);
+            }
+
+            if (_questSystem == null)
+            {
+                _questSystem = FindFirstObjectByType<QuestSystem>(FindObjectsInactive.Include);
+            }
+
+            if (_questSystem == null)
+            {
+                var questSystemObject = new GameObject("[QuestSystem]");
+                _questSystem = questSystemObject.AddComponent<QuestSystem>();
+            }
+            
             if (_timeManager != null) Container.RegisterInstance(_timeManager);
             if (_saveSystem != null) Container.RegisterInstance(_saveSystem);
             if (_gameManager != null) Container.RegisterInstance(_gameManager);
@@ -92,7 +108,10 @@ namespace DI
             if (_buildingSystem != null) Container.RegisterInstance(_buildingSystem);
             if (_buildingDatabase != null) Container.RegisterInstance(_buildingDatabase);
             
-            if (_questSystem != null) Container.RegisterInstance(_questSystem);
+            if (_questSystem != null)
+            {
+                Container.RegisterInstance(_questSystem);
+            }
             if (_craftingSystem != null) Container.RegisterInstance(_craftingSystem);
             if (_cookingSystem != null) Container.RegisterInstance(_cookingSystem);
 

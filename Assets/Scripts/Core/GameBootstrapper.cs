@@ -18,7 +18,7 @@ namespace SunnysideIsland.Core
         private static bool _isInitialized;
 
         [Header("=== Settings ===")]
-        [SerializeField] private string _initialSceneName = "MainGame";
+        [SerializeField] private string _initialSceneName = "Start Scene";
         [SerializeField] private float _minimumLoadingTime = 1f;
         [SerializeField] private bool _showLoadingScreen = true;
 
@@ -333,9 +333,11 @@ namespace SunnysideIsland.Core
             var currentScene = SceneManager.GetActiveScene();
             if (currentScene.name == _initialSceneName)
             {
+                Debug.Log($"[GameBootstrapper] Already in initial scene: {_initialSceneName}");
                 return;
             }
 
+            Debug.Log($"[GameBootstrapper] Loading initial scene: {_initialSceneName}");
             SceneManager.LoadScene(_initialSceneName);
         }
 

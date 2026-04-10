@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using SunnysideIsland.Events;
 using SunnysideIsland.Core;
 using SunnysideIsland.Crafting;
+using SunnysideIsland.UI.Quest;
 using DI;
 using SunnysideIsland.UI;
 
@@ -14,9 +15,15 @@ namespace SunnysideIsland.Core
     /// </summary>
     public class GameManager : MonoBehaviour
     {
+        private static bool _pendingNewGameLaunch;
+        private static bool _pendingLoadGameLaunch;
+        private static string _pendingLoadSaveName;
+
+        public const string DefaultGameSceneName = "MainGame";
+
         [Header("=== Settings ===")]
         [SerializeField] private string _gameSceneName = "MainGame";
-        [SerializeField] private string _mainMenuSceneName = "MainGame";
+        [SerializeField] private string _mainMenuSceneName = "Start Scene";
         [SerializeField] private string _endSceneName = "End Scene";
         
         [Header("=== References ===")]
@@ -29,6 +36,7 @@ namespace SunnysideIsland.Core
         
         // 현재 활성화된 세이브 이름
         public string CurrentSaveName { get; private set; }
+        public string LastPlayableSaveName { get; private set; }
         
         private void Awake()
         {
@@ -40,6 +48,7 @@ namespace SunnysideIsland.Core
             
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         
         private void Start()
@@ -63,6 +72,7 @@ namespace SunnysideIsland.Core
             
             // 이벤트 구독
             EventBus.Subscribe<ItemCraftedEvent>(OnItemCrafted);
+            EventBus.Subscribe<PlayerDiedEvent>(OnPlayerDiedEvent);
             
         }
         
@@ -71,21 +81,7 @@ namespace SunnysideIsland.Core
         /// </summary>
         private void RegisterGlobalServices()
         {
-            // TimeManager 등록
-            if (_timeManager != null)
-            {
-                DIContainer.Global.RegisterInstance(_timeManager);
-                _saveSystem.Register(_timeManager as ISaveable);
-            }
-            
-            // SaveSystem 등록
-            if (_saveSystem != null)
-            {
-                DIContainer.Global.RegisterInstance(_saveSystem);
-            }
-            
-            // GameManager 등록
-            DIContainer.Global.RegisterInstance(this);
+            RefreshSceneReferences();
         }
         
         /// <summary>
@@ -94,6 +90,7 @@ namespace SunnysideIsland.Core
         public void StartNewGame()
         {
             CurrentSaveName = $"save_{DateTime.Now:yyyyMMdd_HHmmss}";
+            LastPlayableSaveName = null;
             CurrentState = GameState.Loading;
             
             // 시간 초기화
@@ -111,6 +108,62 @@ namespace SunnysideIsland.Core
                 }
             });
         }
+
+        public static void PrepareNewGameLaunch()
+        {
+            _pendingNewGameLaunch = true;
+        }
+
+        public static void PrepareLoadGame(string saveName)
+        {
+            _pendingLoadSaveName = saveName;
+            _pendingLoadGameLaunch = true;
+        }
+
+        private void BeginNewGameFromSceneLoad()
+        {
+            RefreshSceneReferences();
+            InjectSceneDependencies();
+            CurrentSaveName = $"save_{DateTime.Now:yyyyMMdd_HHmmss}";
+            LastPlayableSaveName = null;
+            CurrentState = GameState.Loading;
+
+            if (_timeManager != null)
+            {
+                _timeManager.Initialize(1, 6, 0);
+            }
+
+            StartCoroutine(FinishGameStart(CurrentSaveName, true));
+        }
+
+        private void BeginLoadGameFromSceneLoad(string saveName)
+        {
+            RefreshSceneReferences();
+            InjectSceneDependencies();
+            if (string.IsNullOrWhiteSpace(saveName))
+            {
+                Debug.LogError("[GameManager] Pending load save name is empty.");
+                CurrentState = GameState.MainMenu;
+                return;
+            }
+
+            CurrentSaveName = saveName;
+            if (!string.Equals(saveName, "death_autosave", StringComparison.OrdinalIgnoreCase))
+            {
+                LastPlayableSaveName = saveName;
+            }
+
+            CurrentState = GameState.Loading;
+            Time.timeScale = 1f;
+            StartCoroutine(LoadGameProcess(saveName));
+        }
+
+        private void OnDestroy()
+        {
+            EventBus.Unsubscribe<ItemCraftedEvent>(OnItemCrafted);
+            EventBus.Unsubscribe<PlayerDiedEvent>(OnPlayerDiedEvent);
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
         
         /// <summary>
         /// 저장된 게임 불러오기
@@ -124,6 +177,10 @@ namespace SunnysideIsland.Core
             }
 
             Instance.CurrentSaveName = saveName;
+            if (!string.Equals(saveName, "death_autosave", StringComparison.OrdinalIgnoreCase))
+            {
+                Instance.LastPlayableSaveName = saveName;
+            }
             Instance.CurrentState = GameState.Loading;
             Time.timeScale = 1f;
             UIManager.Instance?.CloseAllPanels();
@@ -134,8 +191,6 @@ namespace SunnysideIsland.Core
                 // 씬 로드 후에는 Instance가 바뀌었을 수 있으므로 다시 Instance를 통해 호출
                 if (Instance != null)
                 {
-                    // DI 재등록 (ClearAll에 의해 지워졌을 수 있음)
-                    DIContainer.Global.RegisterInstance(Instance);
                     Instance.StartCoroutine(Instance.LoadGameProcess(saveName));
                 }
             });
@@ -146,12 +201,7 @@ namespace SunnysideIsland.Core
             // 한 프레임 대기하여 모든 오브젝트의 Awake/Start가 실행될 시간을 줍니다.
             yield return null;
             
-            // 참조 유실 방지: null이라면 DI 또는 직접 찾기 시도
-            if (_saveSystem == null)
-            {
-                _saveSystem = DIContainer.Resolve<SaveSystem>();
-                if (_saveSystem == null) _saveSystem = FindObjectOfType<SaveSystem>();
-            }
+            RefreshSceneReferences();
             
             if (_saveSystem != null)
             {
@@ -189,6 +239,10 @@ namespace SunnysideIsland.Core
             {
                 _saveSystem.SaveGame(nameToSave);
                 CurrentSaveName = nameToSave;
+                if (!string.Equals(nameToSave, "death_autosave", StringComparison.OrdinalIgnoreCase))
+                {
+                    LastPlayableSaveName = nameToSave;
+                }
             }
         }
         
@@ -235,11 +289,12 @@ namespace SunnysideIsland.Core
         {
             CurrentState = GameState.MainMenu;
             CurrentSaveName = null;
+            LastPlayableSaveName = null;
             Time.timeScale = 1f;
             
-            // 씬 컨테이너 정리
-            DIContainer.ClearAll();
-            
+            UIManager.Instance?.CloseAllPanels();
+            DIContainer.ClearSceneContainers();
+
             EventBus.Publish(new ReturnToMainMenuEvent());
             
             SceneManager.LoadScene(_mainMenuSceneName);
@@ -263,34 +318,78 @@ namespace SunnysideIsland.Core
         /// </summary>
         private void LoadGameScene(Action onComplete = null)
         {
-            string currentScene = SceneManager.GetActiveScene().name;
-            bool isSameScene = currentScene == _gameSceneName;
-            
             var asyncLoad = SceneManager.LoadSceneAsync(_gameSceneName);
             
             if (asyncLoad != null && onComplete != null)
             {
                 asyncLoad.completed += (_) =>
                 {
-                    if (!isSameScene)
-                    {
-                        EventBus.Clear();
-                    }
-                    
+                    RefreshSceneReferences();
                     InjectSceneDependencies();
                     onComplete?.Invoke();
                 };
             }
             else if (onComplete != null)
             {
+                RefreshSceneReferences();
                 InjectSceneDependencies();
                 onComplete?.Invoke();
             }
         }
 
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            // EventBus가 Clear된 후 재구독
+            ResubscribeEvents();
+            
+            if (!string.Equals(scene.name, _gameSceneName, StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
+            RefreshSceneReferences();
+
+            if (_pendingNewGameLaunch)
+            {
+                _pendingNewGameLaunch = false;
+                BeginNewGameFromSceneLoad();
+                return;
+            }
+
+            if (_pendingLoadGameLaunch)
+            {
+                _pendingLoadGameLaunch = false;
+                BeginLoadGameFromSceneLoad(_pendingLoadSaveName);
+            }
+        }
+        
+        private void ResubscribeEvents()
+        {
+            // 기존 구독 해제 후 재구독 (중복 방지)
+            EventBus.Unsubscribe<ItemCraftedEvent>(OnItemCrafted);
+            EventBus.Unsubscribe<PlayerDiedEvent>(OnPlayerDiedEvent);
+            
+            // 이벤트 재구독
+            EventBus.Subscribe<ItemCraftedEvent>(OnItemCrafted);
+            EventBus.Subscribe<PlayerDiedEvent>(OnPlayerDiedEvent);
+            
+            Debug.Log("[GameManager] EventBus events resubscribed after scene load");
+        }
+
+        private void RefreshSceneReferences()
+        {
+            _timeManager = FindFirstObjectByType<TimeManager>(FindObjectsInactive.Include);
+
+            _saveSystem = FindFirstObjectByType<SaveSystem>(FindObjectsInactive.Include);
+        }
+
         private System.Collections.IEnumerator FinishGameStart(string saveName, bool isNewGame)
         {
             CurrentState = GameState.Playing;
+            if (!string.Equals(saveName, "death_autosave", StringComparison.OrdinalIgnoreCase))
+            {
+                LastPlayableSaveName = saveName;
+            }
             yield return null;
 
             EventBus.Publish(new GameStartedEvent
@@ -298,6 +397,40 @@ namespace SunnysideIsland.Core
                 IsNewGame = isNewGame,
                 SaveName = saveName
             });
+
+            yield return null;
+            if (isNewGame)
+            {
+                StartCoroutine(OpenQuestPanelAfterStartRoutine());
+            }
+            else
+            {
+                UIManager.Instance?.CloseAllPanels();
+            }
+        }
+
+        private System.Collections.IEnumerator OpenQuestPanelAfterStartRoutine()
+        {
+            if (UIManager.Instance == null)
+            {
+                yield break;
+            }
+
+            Debug.Log("[GameManager] Opening QuestPanel after new game start");
+            UIManager.Instance.CloseAllPanels();
+            yield return null;
+            yield return null;
+
+            var questPanel = UIManager.Instance.GetPanel<QuestPanel>();
+            if (questPanel != null)
+            {
+                Debug.Log($"[GameManager] QuestPanel found: {questPanel.name}, IsOpen={questPanel.IsOpen}");
+                UIManager.Instance.OpenPanel(questPanel);
+            }
+            else
+            {
+                Debug.LogWarning("[GameManager] QuestPanel not found on game start.");
+            }
         }
         
         /// <summary>
@@ -319,26 +452,15 @@ namespace SunnysideIsland.Core
         /// </summary>
         public void OnPlayerDied(string deathReason)
         {
-            
-            CurrentState = GameState.Dead;
-            
             SaveGame("death_autosave");
-            
-            EventBus.Publish(new PlayerDiedEvent
-            {
-                DeathReason = deathReason
-            });
-            
-            int currentDay = _timeManager?.CurrentDay ?? 1;
-            
-            if (currentDay <= 3)
-            {
-                Invoke(nameof(ShowRespawnUI), 2f);
-            }
-            else
-            {
-                Invoke(nameof(GameOver), 3f);
-            }
+            CurrentState = GameState.Dead;
+
+            Invoke(nameof(GameOver), 2f);
+        }
+
+        private void OnPlayerDiedEvent(PlayerDiedEvent evt)
+        {
+            OnPlayerDied(evt?.DeathReason);
         }
         
         /// <summary>
@@ -368,6 +490,8 @@ namespace SunnysideIsland.Core
         /// </summary>
         public void GameOver()
         {
+            Time.timeScale = 1f;
+            UIManager.Instance?.CloseAllPanels();
             CurrentState = GameState.GameOver;
             
             EventBus.Publish(new GameOverEvent

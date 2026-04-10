@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using SunnysideIsland.Core;
 using DI;
@@ -23,8 +25,8 @@ namespace SunnysideIsland.UI.Menu
         [Header("=== Settings ===")]
         [SerializeField] private bool _isSaveMode = false;
 
-        [Inject] private SaveSystem _saveSystem;
-        [Inject] private GameManager _gameManager;
+        private SaveSystem _saveSystem;
+        private GameManager _gameManager;
 
         private bool _isRefreshing = false;
 
@@ -32,10 +34,7 @@ namespace SunnysideIsland.UI.Menu
         {
             base.Awake();
 
-            if (_saveSystem == null)
-                _saveSystem = DIContainer.Resolve<SaveSystem>();
-            if (_gameManager == null)
-                _gameManager = DIContainer.Resolve<GameManager>() ?? GameManager.Instance;
+            RefreshDependencies();
         }
 
         private void OnEnable()
@@ -77,6 +76,7 @@ namespace SunnysideIsland.UI.Menu
         protected override void OnOpened()
         {
             base.OnOpened();
+            RefreshDependencies();
             Debug.Log($"[SaveLoadPanel] OnOpened called | Frame: {Time.frameCount}");
             RefreshList();
         }
@@ -96,68 +96,71 @@ namespace SunnysideIsland.UI.Menu
                 Debug.LogWarning($"[SaveLoadPanel] RefreshList already in progress, skipping | Frame: {Time.frameCount}");
                 return;
             }
-            
+
             _isRefreshing = true;
-            
-            Debug.Log($"[SaveLoadPanel] RefreshList Called | Frame: {Time.frameCount} | Mode: {(_isSaveMode ? "Save" : "Load")}");
-            Debug.Log($"[SaveLoadPanel] Call Stack:\n{System.Environment.StackTrace}");
-            
-            if (_slotContainer == null)
-            {
-                _isRefreshing = false;
-                return;
-            }
 
-            // 기존 슬롯 즉시 제거
-            int destroyedCount = 0;
-            List<GameObject> childrenToDestroy = new List<GameObject>();
-            foreach (Transform child in _slotContainer)
+            try
             {
-                childrenToDestroy.Add(child.gameObject);
-            }
-            
-            foreach (var child in childrenToDestroy)
-            {
-                DestroyImmediate(child);
-                destroyedCount++;
-            }
-            
-            Debug.Log($"[SaveLoadPanel] Destroyed {destroyedCount} existing slots");
+                Debug.Log($"[SaveLoadPanel] RefreshList Called | Frame: {Time.frameCount} | Mode: {(_isSaveMode ? "Save" : "Load")}");
 
-            if (_saveSystem == null)
-            {
-                _isRefreshing = false;
-                return;
-            }
-
-            // 저장 데이터 메타데이터 가져오기
-            var saves = _saveSystem.GetSaveList();
-            
-            Debug.Log($"[SaveLoadPanel] Found {saves.Count} save files");
-            
-            if (_titleText != null)
-            {
-                _titleText.text = _isSaveMode ? "Save Game" : "Load Game";
-            }
-
-            // 슬롯 생성 및 데이터 설정
-            int createdCount = 0;
-            foreach (var metadata in saves)
-            {
-                if (_slotPrefab != null)
+                if (_slotContainer == null)
                 {
-                    var go = Instantiate(_slotPrefab, _slotContainer);
-                    var slot = go.GetComponent<SaveSlotUI>();
-                    if (slot != null)
+                    return;
+                }
+
+                int destroyedCount = 0;
+                List<GameObject> childrenToDestroy = new List<GameObject>();
+                foreach (Transform child in _slotContainer)
+                {
+                    childrenToDestroy.Add(child.gameObject);
+                }
+
+                foreach (var child in childrenToDestroy)
+                {
+                    if (child != null)
                     {
-                        slot.Setup(metadata, this);
-                        createdCount++;
+                        Destroy(child);
+                        destroyedCount++;
                     }
                 }
+
+                Debug.Log($"[SaveLoadPanel] Destroyed {destroyedCount} existing slots");
+
+                if (_saveSystem == null)
+                {
+                    return;
+                }
+
+                var saves = _saveSystem.GetSaveList();
+
+                Debug.Log($"[SaveLoadPanel] Found {saves.Count} save files");
+
+                if (_titleText != null)
+                {
+                    _titleText.text = _isSaveMode ? "Save Game" : "Load Game";
+                }
+
+                int createdCount = 0;
+                foreach (var metadata in saves)
+                {
+                    if (_slotPrefab != null)
+                    {
+                        var go = Instantiate(_slotPrefab, _slotContainer);
+                        var slot = go.GetComponent<SaveSlotUI>();
+                        if (slot != null)
+                        {
+                            slot.Setup(metadata, this);
+                            createdCount++;
+                        }
+                    }
+                }
+
+                Debug.Log($"[SaveLoadPanel] Created {createdCount} new slots");
             }
-            
-            Debug.Log($"[SaveLoadPanel] Created {createdCount} new slots");
-            _isRefreshing = false;
+            finally
+            {
+                _isRefreshing = false;
+            }
         }
 
         /// <summary>
@@ -165,6 +168,7 @@ namespace SunnysideIsland.UI.Menu
         /// </summary>
         public void OnSlotSelected(string saveName)
         {
+            RefreshDependencies();
             Debug.Log($"[SaveLoadPanel] Slot Selected: {saveName} | Mode: {(_isSaveMode ? "Save" : "Load")} | GM: {(_gameManager != null)}");
             if (_isSaveMode)
             {
@@ -174,8 +178,24 @@ namespace SunnysideIsland.UI.Menu
             else
             {
                 Debug.Log($"[SaveLoadPanel] Calling GameManager.LoadGame({saveName})");
-                _gameManager?.LoadGame(saveName);
-                CloseViaUIManager();
+                var activeSceneName = SceneManager.GetActiveScene().name;
+                if (string.Equals(activeSceneName, "Start Scene", StringComparison.OrdinalIgnoreCase))
+                {
+                    CloseViaUIManager();
+                    GameManager.PrepareLoadGame(saveName);
+                    SceneManager.LoadScene(GameManager.DefaultGameSceneName);
+                }
+                else if (_gameManager != null)
+                {
+                    _gameManager.LoadGame(saveName);
+                    CloseViaUIManager();
+                }
+                else
+                {
+                    CloseViaUIManager();
+                    GameManager.PrepareLoadGame(saveName);
+                    SceneManager.LoadScene(GameManager.DefaultGameSceneName);
+                }
             }
         }
 
@@ -184,6 +204,7 @@ namespace SunnysideIsland.UI.Menu
         /// </summary>
         public void OnDeleteSelected(string saveName)
         {
+            RefreshDependencies();
             _saveSystem?.DeleteSave(saveName);
             RefreshList();
         }
@@ -193,6 +214,7 @@ namespace SunnysideIsland.UI.Menu
         /// </summary>
         public void CreateNewSave()
         {
+            RefreshDependencies();
             string newSaveName = $"Save_{System.DateTime.Now:yyyyMMdd_HHmmss}";
             _gameManager?.SaveGame(newSaveName);
             RefreshList();
@@ -223,6 +245,12 @@ namespace SunnysideIsland.UI.Menu
             {
                 Close();
             }
+        }
+
+        private void RefreshDependencies()
+        {
+            _saveSystem = FindFirstObjectByType<SaveSystem>(FindObjectsInactive.Include);
+            _gameManager = GameManager.Instance ?? FindFirstObjectByType<GameManager>(FindObjectsInactive.Include);
         }
     }
 }

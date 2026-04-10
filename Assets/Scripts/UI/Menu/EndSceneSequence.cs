@@ -1,7 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using SunnysideIsland.Core;
 
 namespace SunnysideIsland.UI.Menu
 {
@@ -9,19 +9,24 @@ namespace SunnysideIsland.UI.Menu
     {
         [Header("=== Ending Message ===")]
         [SerializeField] private CanvasGroup _endingMessageGroup;
+        [SerializeField] private TextMeshProUGUI _endingMessageText;
         [SerializeField] private float _messageHoldTime = 1.5f;
         [SerializeField] private float _messageFadeTime = 1.2f;
+        [SerializeField] private string _defaultEndingMessage = "탈출 성공!!!";
 
         [Header("=== Credits ===")]
         [SerializeField] private GameObject _creditsRoot;
         [SerializeField] private RectTransform _creditsText;
         [SerializeField] private float _creditsScrollSpeed = 35f;
         [SerializeField] private float _creditsEndY = 700f;
+        [SerializeField] private float _returnPromptDelay = 1f;
 
-        [Header("=== Optional ===")]
-        [SerializeField] private Button _mainMenuButton;
+        [Header("=== Return Prompt ===")]
+        [SerializeField] private TextMeshProUGUI _returnPromptText;
+        [SerializeField] private string _defaultReturnPrompt = "아무 키나 입력";
 
         private Vector2 _creditsStartPosition;
+        private bool _allowReturnOnClick;
 
         private void Awake()
         {
@@ -40,15 +45,37 @@ namespace SunnysideIsland.UI.Menu
                 _creditsRoot.SetActive(false);
             }
 
-            if (_mainMenuButton != null)
+            if (_endingMessageText != null && string.IsNullOrWhiteSpace(_endingMessageText.text))
             {
-                _mainMenuButton.gameObject.SetActive(false);
+                _endingMessageText.text = _defaultEndingMessage;
+            }
+
+            if (_returnPromptText != null)
+            {
+                _returnPromptText.gameObject.SetActive(false);
+                if (string.IsNullOrWhiteSpace(_returnPromptText.text))
+                {
+                    _returnPromptText.text = _defaultReturnPrompt;
+                }
             }
         }
 
         private void Start()
         {
             StartCoroutine(PlaySequence());
+        }
+
+        private void Update()
+        {
+            if (!_allowReturnOnClick)
+            {
+                return;
+            }
+
+            if (Input.GetMouseButtonDown(0) || Input.anyKeyDown)
+            {
+                GameManager.Instance?.ReturnToMainMenu();
+            }
         }
 
         private IEnumerator PlaySequence()
@@ -68,11 +95,6 @@ namespace SunnysideIsland.UI.Menu
             }
 
             yield return ScrollCredits();
-
-            if (_mainMenuButton != null)
-            {
-                _mainMenuButton.gameObject.SetActive(true);
-            }
         }
 
         private IEnumerator FadeMessageOut()
@@ -109,6 +131,18 @@ namespace SunnysideIsland.UI.Menu
                 _creditsText.anchoredPosition += Vector2.up * (_creditsScrollSpeed * Time.unscaledDeltaTime);
                 yield return null;
             }
+
+            if (_returnPromptText != null)
+            {
+                _returnPromptText.gameObject.SetActive(true);
+            }
+
+            if (_returnPromptDelay > 0f)
+            {
+                yield return new WaitForSecondsRealtime(_returnPromptDelay);
+            }
+
+            _allowReturnOnClick = true;
         }
     }
 }

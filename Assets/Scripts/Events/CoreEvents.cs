@@ -51,6 +51,14 @@ namespace SunnysideIsland.Events
     }
 
     /// <summary>
+    /// Debug key-triggered day skip event.
+    /// </summary>
+    public class DebugDaySkippedEvent
+    {
+        public int Day { get; set; }
+    }
+
+    /// <summary>
     /// 게임 초기화가 완료되었을 때 발생하는 이벤트
     /// </summary>
     public class InitializationCompleteEvent

@@ -98,6 +98,8 @@ namespace SunnysideIsland.Weather
         {
             EventBus.Subscribe<DayStartedEvent>(OnDayStarted);
             EventBus.Subscribe<TimePhaseChangedEvent>(OnTimePhaseChanged);
+            EventBus.Subscribe<GameLoadedEvent>(OnGameLoaded);
+            EventBus.Subscribe<DebugDaySkippedEvent>(OnDebugDaySkipped);
             
             // TimeManager 찾기
             if (_timeManager == null)
@@ -121,7 +123,7 @@ namespace SunnysideIsland.Weather
         }
         
         /// <summary>
-        /// ?�간?� 변�????�출
+        /// 
         /// </summary>
         private void OnTimePhaseChanged(TimePhaseChangedEvent evt)
         {
@@ -131,6 +133,17 @@ namespace SunnysideIsland.Weather
             // 조명 ?�데?�트
             UpdateLighting();
             
+        }
+
+        private void OnGameLoaded(GameLoadedEvent evt)
+        {
+            RefreshTimeStateFromManager();
+            UpdateLighting();
+        }
+
+        private void OnDebugDaySkipped(DebugDaySkippedEvent evt)
+        {
+            ProgressWeather();
         }
         
         private void Update()
@@ -148,6 +161,8 @@ namespace SunnysideIsland.Weather
         {
             EventBus.Unsubscribe<DayStartedEvent>(OnDayStarted);
             EventBus.Unsubscribe<TimePhaseChangedEvent>(OnTimePhaseChanged);
+            EventBus.Unsubscribe<GameLoadedEvent>(OnGameLoaded);
+            EventBus.Unsubscribe<DebugDaySkippedEvent>(OnDebugDaySkipped);
         }
         
         /// <summary>
@@ -184,9 +199,25 @@ namespace SunnysideIsland.Weather
             PreviousWeather = _defaultWeather;
             UpdateLighting();
         }
+
+        private void RefreshTimeStateFromManager()
+        {
+            if (_timeManager == null)
+            {
+                _timeManager = FindObjectOfType<TimeManager>();
+            }
+
+            if (_timeManager == null)
+            {
+                return;
+            }
+
+            _currentTimePhase = _timeManager.CurrentTimePhase;
+            _isNight = _currentTimePhase == TimePhase.Night;
+        }
         
         /// <summary>
-        /// RainEffect ?� 초기??
+        /// 
         /// </summary>
         private void InitializeRainPool()
         {
@@ -204,7 +235,7 @@ namespace SunnysideIsland.Weather
         }
         
         /// <summary>
-        /// ?�음 ?�씨 변�??�약
+        /// 
         /// </summary>
         private void ScheduleNextWeatherChange()
         {
@@ -215,7 +246,7 @@ namespace SunnysideIsland.Weather
         }
         
         /// <summary>
-        /// ?�씨 진행 (Sunny ??Cloudy ??Random)
+        /// 
         /// </summary>
         private void ProgressWeather()
         {
@@ -451,6 +482,7 @@ namespace SunnysideIsland.Weather
                 _nextWeatherChangeTime = Time.time + data.NextWeatherChangeTime;
                 _isWeatherChangePending = true;
                 
+                RefreshTimeStateFromManager();
                 UpdateLighting();
                 UpdateRainEffect();
             }

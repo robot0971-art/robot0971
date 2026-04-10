@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using DI;
 using SunnysideIsland.Core;
 using SunnysideIsland.Events;
@@ -62,8 +63,18 @@ namespace SunnysideIsland.Localization
 
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            
+            // 씬 로드 시 EventBus 재구독
+            SceneManager.sceneLoaded += OnSceneLoaded;
 
             Initialize();
+        }
+        
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            // EventBus Clear 후 재구독
+            EventBus.Unsubscribe<LanguageChangedEvent>(OnLanguageChangedEvent);
+            EventBus.Subscribe<LanguageChangedEvent>(OnLanguageChangedEvent);
         }
 
         private void OnDestroy()

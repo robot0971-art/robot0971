@@ -101,6 +101,11 @@ namespace SunnysideIsland.UI.HUD
 
         private void Update()
         {
+            if (GameManager.Instance != null && GameManager.Instance.CurrentState == GameState.GameOver)
+            {
+                return;
+            }
+
             if (UIManager.Instance != null
                 && UIManager.Instance.GetPanel<SunnysideIsland.UI.Menu.BoatConfirmPanel>()?.IsOpen == true)
             {

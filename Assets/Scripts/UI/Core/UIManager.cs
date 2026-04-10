@@ -60,6 +60,11 @@ namespace SunnysideIsland.UI
             Instance = this;
             DontDestroyOnLoad(gameObject);
             
+            // DI Container가 초기화되지 않았으면 초기화
+            if (DIContainer.Global == null)
+            {
+                DIContainer.InitializeGlobal();
+            }
             DIContainer.Global.RegisterInstance<IUIManager>(this);
             
             SceneManager.sceneLoaded += OnSceneLoaded;
@@ -80,6 +85,46 @@ namespace SunnysideIsland.UI
             _panelDictionary.Clear();
             InitializePanels();
 
+            var scenePanels = FindObjectsByType<UIPanel>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            foreach (var panel in scenePanels)
+            {
+                if (panel == null)
+                {
+                    continue;
+                }
+
+                // 씬 시작 시 기본으로 열려야 하는 패널 (MainMenuPanel 등)은 숨기지 않음
+                if (panel.IsOpen)
+                {
+                    Debug.Log($"[UIManager] Keeping panel open: {panel.GetType().Name}");
+                    var type = panel.GetType();
+                    if (!_panelDictionary.ContainsKey(type))
+                    {
+                        _panelDictionary[type] = panel;
+                    }
+                    if (!_panels.Contains(panel))
+                    {
+                        _panels.Add(panel);
+                    }
+                    continue;
+                }
+
+                if (panel.IsModal)
+                {
+                    panel.ForceHide();
+                }
+
+                var panelType = panel.GetType();
+                if (!_panelDictionary.ContainsKey(panelType))
+                {
+                    _panelDictionary[panelType] = panel;
+                }
+                if (!_panels.Contains(panel))
+                {
+                    _panels.Add(panel);
+                }
+            }
+
             if (UnityEventSystem.current != null)
             {
                 UnityEventSystem.current.SetSelectedGameObject(null);
@@ -98,7 +143,11 @@ namespace SunnysideIsland.UI
                     if (!_panelDictionary.ContainsKey(type))
                     {
                         _panelDictionary[type] = panel;
-                        panel.gameObject.SetActive(false);
+                        // 이미 열려있는 패널은 비활성화하지 않음
+                        if (!panel.IsOpen)
+                        {
+                            panel.gameObject.SetActive(false);
+                        }
                     }
                 }
             }
@@ -244,10 +293,14 @@ namespace SunnysideIsland.UI
         
         private void Update()
         {
-            if (SunnysideIsland.Core.GameManager.Instance != null
-                && SunnysideIsland.Core.GameManager.Instance.CurrentState == SunnysideIsland.Core.GameState.Loading)
+            if (SunnysideIsland.Core.GameManager.Instance != null)
             {
-                return;
+                var gameState = SunnysideIsland.Core.GameManager.Instance.CurrentState;
+                if (gameState == SunnysideIsland.Core.GameState.Loading
+                    || gameState == SunnysideIsland.Core.GameState.GameOver)
+                {
+                    return;
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.Escape))

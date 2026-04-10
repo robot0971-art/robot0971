@@ -85,7 +85,7 @@ namespace SunnysideIsland.UI
                 Open();
             }
         }
-        
+
         public virtual void OnBackButton()
         {
             if (_closeOnEscape)
@@ -100,7 +100,29 @@ namespace SunnysideIsland.UI
                 }
             }
         }
-        
+
+        public virtual void ForceHide()
+        {
+            _isOpen = false;
+
+            if (_canvasGroup == null)
+            {
+                _canvasGroup = GetComponent<CanvasGroup>();
+            }
+
+            if (_canvasGroup != null)
+            {
+                _canvasGroup.alpha = 0f;
+                _canvasGroup.interactable = false;
+                _canvasGroup.blocksRaycasts = false;
+            }
+
+            if (gameObject.activeSelf)
+            {
+                gameObject.SetActive(false);
+            }
+        }
+
         protected virtual void OnOpened() { }
         protected virtual void OnClosed() { }
     }

@@ -152,6 +152,28 @@ namespace SunnysideIsland.Quest
             var quest = FindQuest(questId);
             return quest?.IsCompleted ?? false;
         }
+
+        public IReadOnlyList<Quest> GetActiveQuests()
+        {
+            return _activeQuests;
+        }
+
+        public IReadOnlyList<string> GetCompletedQuestIds()
+        {
+            return _completedQuests;
+        }
+
+        public bool TryGetQuestData(string questId, out QuestData questData)
+        {
+            questData = FindQuestData(questId);
+            return questData != null;
+        }
+
+        public string GetQuestTitle(string questId)
+        {
+            var questData = FindQuestData(questId);
+            return questData != null ? questData.Title : questId;
+        }
         
         private Quest FindQuest(string questId)
         {

@@ -502,6 +502,11 @@ namespace SunnysideIsland.Core
         /// </summary>
         private void AutoSave()
         {
+            if (GameManager.Instance != null && GameManager.Instance.CurrentState != GameState.Playing)
+            {
+                return;
+            }
+
             SaveGame("autosave");
         }
         
