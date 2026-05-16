@@ -102,6 +102,11 @@ namespace SunnysideIsland.Player
             }
         }
 
+        public void RefreshEnvironmentState()
+        {
+            TickEnvironment();
+        }
+
         public void SetInput(Vector2 inputVector)
         {
             _moveDirection = inputVector.normalized;

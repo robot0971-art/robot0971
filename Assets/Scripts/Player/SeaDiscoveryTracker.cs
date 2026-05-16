@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using DI;
 using SunnysideIsland.Core;
 using SunnysideIsland.Events;
 using SunnysideIsland.Inventory;
-using SunnysideIsland.UI.Components;
 using SunnysideIsland.Pool;
+using SunnysideIsland.UI.Components;
+using UnityEngine;
 using GameDataAsset = SunnysideIsland.GameData.GameData;
 using SeaDiscoveryEntry = SunnysideIsland.GameData.SeaDiscoveryData;
 
@@ -16,10 +16,10 @@ namespace SunnysideIsland.Player
     public class SeaDiscoveryTracker : MonoBehaviour
     {
         [Header("=== Discovery Timing ===")]
-        [SerializeField] private float _checkInterval = 10f;
-        [SerializeField] private float _baseChance = 0.15f;
-        [SerializeField] private float _movementBonusPerMeter = 0.03f;
-        [SerializeField] private float _maxChance = 0.6f;
+        [SerializeField] private float _checkInterval = 3f;
+        [SerializeField] private float _baseChance = 0.85f;
+        [SerializeField] private float _movementBonusPerMeter = 0.12f;
+        [SerializeField] private float _maxChance = 1f;
         [SerializeField] private float _movementThreshold = 0.1f;
 
         [Header("=== Discovery Effects ===")]
@@ -46,8 +46,15 @@ namespace SunnysideIsland.Player
         {
             DIContainer.Inject(this);
 
-            if (_inventorySystem == null) DIContainer.TryResolve(out _inventorySystem);
-            if (_poolManager == null) DIContainer.TryResolve(out _poolManager);
+            if (_inventorySystem == null)
+            {
+                DIContainer.TryResolve(out _inventorySystem);
+            }
+
+            if (_poolManager == null)
+            {
+                DIContainer.TryResolve(out _poolManager);
+            }
 
             _timer = _checkInterval;
             _lastPosition = transform.position;
@@ -55,9 +62,12 @@ namespace SunnysideIsland.Player
 
         private void Update()
         {
-            if (_player == null || _gameData == null || _inventorySystem == null) return;
+            if (_player == null || _gameData == null || _inventorySystem == null)
+            {
+                return;
+            }
 
-            // ?�영 중일 ?�만 ?�동
+            // Only run discovery checks while swimming.
             if (!_player.IsSwimming)
             {
                 _timer = _checkInterval;
@@ -66,7 +76,10 @@ namespace SunnysideIsland.Player
             }
 
             _timer -= Time.deltaTime;
-            if (_timer > 0f) return;
+            if (_timer > 0f)
+            {
+                return;
+            }
 
             TryDiscover();
             _timer = _checkInterval;
@@ -75,36 +88,54 @@ namespace SunnysideIsland.Player
 
         private void TryDiscover()
         {
-            if (_gameData.seaDiscoveryItems == null || _gameData.seaDiscoveryItems.Count == 0) return;
+            if (_gameData.seaDiscoveryItems == null || _gameData.seaDiscoveryItems.Count == 0)
+            {
+                return;
+            }
 
-            if (Random.value > CalculateChance()) return;
+            if (Random.value > CalculateChance())
+            {
+                return;
+            }
 
             Season currentSeason = _timeManager?.CurrentSeason ?? Season.Spring;
             var candidates = new List<SeaDiscoveryEntry>();
 
             foreach (var entry in _gameData.seaDiscoveryItems)
             {
-                if (entry == null || entry.weight <= 0f) continue;
-                if (!entry.IsAvailable(currentSeason)) continue;
+                if (entry == null || entry.weight <= 0f)
+                {
+                    continue;
+                }
+
+                if (!entry.IsAvailable(currentSeason))
+                {
+                    continue;
+                }
+
                 candidates.Add(entry);
             }
 
-            if (candidates.Count == 0) return;
+            if (candidates.Count == 0)
+            {
+                return;
+            }
 
             var selection = SelectEntry(candidates);
-            if (selection == null) return;
+            if (selection == null)
+            {
+                return;
+            }
 
-            // [발견 ???�출 ?�행]
             PerformDiscoveryEffect();
 
-            // [?�이??즉시 ?�득]
             int quantity = selection.GetRandomQuantity();
             bool added = _inventorySystem.AddItem(selection.itemId, quantity);
 
             string itemName = _gameData.GetItem(selection.itemId)?.itemName ?? selection.itemId;
-            var message = added
-                ? $"바다?�서 {itemName}??�? 발견?�습?�다!"
-                : $"?�벤?�리가 가??찼습?�다. {itemName}??�? 버렸?�니??";
+            string message = added
+                ? $"바다에서 {itemName}을(를) 발견했습니다!"
+                : $"인벤토리가 가득 찼습니다. {itemName}을(를) 버렸습니다.";
 
             ToastMessage.Instance?.ShowMessage(message);
 
@@ -119,16 +150,18 @@ namespace SunnysideIsland.Player
 
         private void PerformDiscoveryEffect()
         {
-            // 1. ?�레?�어 멈춤
             if (_player != null)
             {
                 _player.PauseMovement(_pauseDuration);
             }
 
-            // 2. 마크(Dust) ?�폰
             if (_poolManager != null)
             {
-                GameObject effect = _poolManager.Spawn(_effectPoolName, transform.position + _effectOffset, Quaternion.identity);
+                GameObject effect = _poolManager.Spawn(
+                    _effectPoolName,
+                    transform.position + _effectOffset,
+                    Quaternion.identity);
+
                 if (effect != null)
                 {
                     StartCoroutine(DespawnEffectRoutine(effect, _effectDisplayTime));
@@ -139,6 +172,7 @@ namespace SunnysideIsland.Player
         private IEnumerator DespawnEffectRoutine(GameObject obj, float delay)
         {
             yield return new WaitForSeconds(delay);
+
             if (obj != null && obj.activeInHierarchy)
             {
                 _poolManager.Despawn(_effectPoolName, obj);
@@ -156,16 +190,28 @@ namespace SunnysideIsland.Player
         private static SeaDiscoveryEntry SelectEntry(List<SeaDiscoveryEntry> entries)
         {
             float totalWeight = 0f;
-            foreach (var entry in entries) totalWeight += entry.weight;
-            if (totalWeight <= 0f) return null;
+            foreach (var entry in entries)
+            {
+                totalWeight += entry.weight;
+            }
+
+            if (totalWeight <= 0f)
+            {
+                return null;
+            }
 
             float roll = Random.Range(0f, totalWeight);
             float cumulative = 0f;
+
             foreach (var entry in entries)
             {
                 cumulative += entry.weight;
-                if (roll <= cumulative) return entry;
+                if (roll <= cumulative)
+                {
+                    return entry;
+                }
             }
+
             return entries[0];
         }
     }

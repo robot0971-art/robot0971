@@ -18,6 +18,7 @@ namespace SunnysideIsland.Player
     [RequireComponent(typeof(PlayerInteraction))]
     [RequireComponent(typeof(PlayerCombat))]
     [RequireComponent(typeof(PlayerBuildController))]
+    [RequireComponent(typeof(PlayerShadowController))]
     public class PlayerController : MonoBehaviour, ISaveable
     {
         [Header("=== Movement Settings ===")]
@@ -134,6 +135,11 @@ namespace SunnysideIsland.Player
             ConfigureCombat();
             ConfigureBuildController();
             CacheAnimatorParameters();
+
+            if (GetComponent<PlayerShadowController>() == null)
+            {
+                gameObject.AddComponent<PlayerShadowController>();
+            }
 
             if (GetComponent<SeaDiscoveryTracker>() == null)
             {
@@ -465,12 +471,12 @@ namespace SunnysideIsland.Player
             {
                 transform.position = saveData.Position;
                 _movement.SetFacingDirection(new Vector2(saveData.FacingDirectionX, saveData.FacingDirectionY));
+                _movement.RefreshEnvironmentState();
             }
         }
 
         [System.Serializable]
         public class PlayerSaveData { public Vector3 Position; public float FacingDirectionX; public float FacingDirectionY; }
-
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.yellow;
